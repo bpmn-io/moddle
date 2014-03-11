@@ -1,0 +1,4 @@
+node_modules/
+tmp/
+docs/
+grunt-dbg.bat
