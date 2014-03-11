@@ -1,0 +1,21 @@
+{
+  "name": "DataTypes",
+  "uri": "http://datatypes",
+  "prefix": "dt",
+  "alias": "lowerCase",
+  "types": [
+    {
+      "name": "Root",
+      "properties": [
+        { "name": "bounds", "serialize": "xsi:type", "type": "Rect" },
+        { "name": "otherBounds", "type": "do:Rect", "serialize": "xsi:type", "isMany": true } 
+      ]
+    },
+    {
+      "name": "Rect",
+      "properties": [
+        { "name": "y", "type": "Integer", "isAttr": true }
+      ]
+    }
+  ]
+}

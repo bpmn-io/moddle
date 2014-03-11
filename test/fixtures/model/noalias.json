@@ -1,0 +1,13 @@
+{
+  "name": "NoAlias",
+  "uri": "http://noalias",
+  "prefix": "na",
+  "types": [
+    {
+      "name": "Root",
+      "properties": [
+        { "name": "id", "type": "Integer", "isAttr": true }
+      ]
+    }
+  ]
+}

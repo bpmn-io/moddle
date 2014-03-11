@@ -1,0 +1,13 @@
+{
+  "name": "DataTypes 2",
+  "uri": "http://datatypes2",
+  "prefix": "do",
+  "types": [
+    {
+      "name": "Rect",
+      "properties": [
+        { "name": "x", "type": "Integer", "isAttr": true }
+      ]
+    }
+  ]
+}
