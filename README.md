@@ -5,7 +5,7 @@ A utility library for working with meta-model based data structures.
 
 ## What is it good for?
 
-__moddle__ offers you a concise way to define [meta models](https://en.wikipedia.org/wiki/Metamodeling) in JavaScript. You can use these models to consume documents, create model elements and perform model validatio.
+__moddle__ offers you a concise way to define [meta models](https://en.wikipedia.org/wiki/Metamodeling) in JavaScript. You can use these models to consume documents, create model elements and perform model validation.
 
 A moddle description is a simple [JSON](http://json.org/) file that describes types, their properties and relationships:
 
