@@ -111,6 +111,18 @@ describe('Model', function() {
       expect(foundModel).toBe(model);
     });
 
+    describe('instance', function() {
+
+      it('should query types via __instanceOf', function() {
+
+        // given
+        var instance = model.create('props:BaseWithNumericId');
+
+        // then
+        expect(instance.__instanceOf('props:BaseWithNumericId')).toBe(true);
+        expect(instance.__instanceOf('props:Base')).toBe(true);
+      });
+    });
   });
 
   describe('base', function() {
