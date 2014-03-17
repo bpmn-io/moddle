@@ -1,5 +1,5 @@
 node_modules/
 tmp/
-docs/
+docs/api/
 grunt-dbg.bat
 moddle
