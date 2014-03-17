@@ -9,7 +9,7 @@ __moddle__ offers you a concise way to define [meta models](https://en.wikipedia
 
 A moddle description is a simple [JSON](http://json.org/) file that describes types, their properties and relationships:
 
-```
+```json
 {
   "name": "Cars",
   "uri": "http://cars",
@@ -43,7 +43,7 @@ A moddle description is a simple [JSON](http://json.org/) file that describes ty
 
 __moddle__ allows you to instantiate that definition and create objects from it:
 
-```
+```javascript
 var Moddle = require('moddle');
 
 var cars = new Moddle([ carsJSON ]);
@@ -66,7 +66,7 @@ cheapCar.get('similar').push(taiga);
 
 Then again, __moddle__ allows you to perform introspection on model instances, too.
 
-```
+```javascript
 var carDescriptor = cheapCar.$descriptor;
 
 console.log(carDescriptor.properties);
