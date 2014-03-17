@@ -73,6 +73,20 @@ console.log(carDescriptor.properties);
 // [ { name: 'id', type: 'String', ... }, { name: 'name', type: 'String', ...} ... ]
 ```
 
+Have a look at our [test coverage](https://github.com/bpmn-io/moddle/blob/master/test/spec/ModelSpec.js) to learn about everything that is currently supported.
+
+
+## Resources
+
+* [Issues](https://github.com/bpmn-io/moddle/issues)
+* [Examples](https://github.com/bpmn-io/moddle/tree/master/test/fixtures/model)
+* [Documentation](https://github.com/bpmn-io/moddle/tree/master/docs)
+
+
+## Related
+
+* [moddle-xml](https://github.com/bpmn-io/moddle-xml): read xml documents based on moddle descriptors
+
 
 ## License
 
