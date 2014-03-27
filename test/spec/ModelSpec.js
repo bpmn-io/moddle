@@ -14,6 +14,7 @@ describe('Model', function() {
 
   describe('api', function() {
 
+
     it('should provide types', function() {
 
       // given
@@ -29,6 +30,7 @@ describe('Model', function() {
       expect(Attributes).toBeDefined();
     });
 
+
     it('should provide packages by prefix', function() {
 
       // given
@@ -43,6 +45,7 @@ describe('Model', function() {
       expect(propertiesPackage.prefix).toBe('props');
     });
 
+
     it('should provide packages by uri', function() {
 
       // given
@@ -56,6 +59,7 @@ describe('Model', function() {
       expect(propertiesPackage.uri).toBe('http://properties');
       expect(propertiesPackage.prefix).toBe('props');
     });
+
 
     it('should provide type descriptor', function() {
 
@@ -86,6 +90,7 @@ describe('Model', function() {
       expect(descriptor.propertiesByName).toDeepEqual(expectedDescriptorPropertiesByName);
     });
 
+
     it('should provide type descriptor via $descriptor property', function() {
 
       // given
@@ -111,6 +116,7 @@ describe('Model', function() {
       expect(foundModel).toBe(model);
     });
 
+
     describe('instance', function() {
 
       it('should query types via __instanceOf', function() {
@@ -125,6 +131,59 @@ describe('Model', function() {
     });
   });
 
+  describe('create', function() {
+
+    it('should provide meta-data', function() {
+      // given
+      
+      // when
+      var instance = model.create('props:BaseWithNumericId');
+
+      // then
+      expect(instance.$descriptor).toBeDefined();
+      expect(instance.$type).toBe('props:BaseWithNumericId');
+    });
+
+  });
+
+
+  describe('createAny', function() {
+
+    it('should provide attrs + basic meta-data', function() {
+      // given
+      
+      // when
+      var anyInstance = model.createAny('other:Foo', 'http://other', {
+        bar: 'BAR'
+      });
+
+      // then
+      expect(anyInstance).toDeepEqual({
+        $type: 'other:Foo',
+        bar: 'BAR'
+      });
+    });
+
+
+    it('should provide ns meta-data', function() {
+      // given
+      
+      // when
+      var anyInstance = model.createAny('other:Foo', 'http://other', {
+        bar: 'BAR'
+      });
+
+      // then
+      expect(anyInstance.$descriptor).toDeepEqual({
+        name: 'other:Foo',
+        isGeneric: true,
+        ns: { prefix : 'other', localName : 'Foo', uri : 'http://other' }
+      });
+    });
+
+  });
+
+
   describe('base', function() {
 
     it('should provide type in instance', function() {
@@ -138,6 +197,7 @@ describe('Model', function() {
       // then
       expect(instance.$type).toBe('props:SimpleBody');
     });
+
 
     it('should provide type descriptor in instance', function() {
 
