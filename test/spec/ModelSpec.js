@@ -119,14 +119,14 @@ describe('Model', function() {
 
     describe('instance', function() {
 
-      it('should query types via __instanceOf', function() {
+      it('should query types via $instanceOf', function() {
 
         // given
         var instance = model.create('props:BaseWithNumericId');
 
         // then
-        expect(instance.__instanceOf('props:BaseWithNumericId')).toBe(true);
-        expect(instance.__instanceOf('props:Base')).toBe(true);
+        expect(instance.$instanceOf('props:BaseWithNumericId')).toBe(true);
+        expect(instance.$instanceOf('props:Base')).toBe(true);
       });
     });
   });
@@ -135,7 +135,7 @@ describe('Model', function() {
 
     it('should provide meta-data', function() {
       // given
-      
+
       // when
       var instance = model.create('props:BaseWithNumericId');
 
@@ -151,7 +151,7 @@ describe('Model', function() {
 
     it('should provide attrs + basic meta-data', function() {
       // given
-      
+
       // when
       var anyInstance = model.createAny('other:Foo', 'http://other', {
         bar: 'BAR'
@@ -167,7 +167,7 @@ describe('Model', function() {
 
     it('should provide ns meta-data', function() {
       // given
-      
+
       // when
       var anyInstance = model.createAny('other:Foo', 'http://other', {
         bar: 'BAR'
@@ -241,7 +241,7 @@ describe('Model', function() {
       it('should set simple properties in constructor', function() {
 
         // given
-        
+
         // when
         var attributes = model.create('props:Attributes', { id: 'ATTR_1', booleanValue: false, integerValue: -1000 });
 
@@ -264,7 +264,7 @@ describe('Model', function() {
         var referencingCollection = model.create('props:ReferencingCollection', {
           references: [ reference1, reference2 ]
         });
-        
+
         // then
         expect(referencingCollection.references).toDeepEqual([ reference1, reference2 ]);
 
@@ -396,7 +396,7 @@ describe('Model', function() {
 
           // when
           var instance = new BaseWithNumericId({ 'id': 1000 });
-                  
+
           // then
           expect(instance.idNumeric).toBe(1000);
         });
@@ -408,7 +408,7 @@ describe('Model', function() {
 
           // when
           var instance = new BaseWithNumericId({ 'id': 1000 });
-                  
+
           // then
           expect(instance.get('props:id')).toBe(1000);
         });
