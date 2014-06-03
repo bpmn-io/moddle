@@ -1,14 +1,17 @@
+'use strict';
+
 var _ = require('lodash');
 
-var Logger = require('../../../lib/util/Logger').Logger;
+var Logger = require('../../../lib/util/Logger');
 
 var Helper = require('../Helper');
+
 
 describe('Logger', function() {
 
   var log;
 
-  beforeEach(Helper.initAdditionalMatchers);
+  beforeEach(Helper.addMatchers);
 
   function createLogger() {
 
@@ -27,6 +30,7 @@ describe('Logger', function() {
     return new Logger('warn', log);
   }
 
+
   it('should forward to handler', function() {
 
     // given
@@ -39,6 +43,7 @@ describe('Logger', function() {
     expect(log.warn).toHaveBeenCalledWith('FOO', 'BAR');
   });
 
+
   it('should silence verbose', function() {
 
     // given
@@ -50,6 +55,7 @@ describe('Logger', function() {
     // then
     expect(log.debug).not.toHaveBeenCalled();
   });
+
 
   it('should configure level', function() {
 
@@ -65,6 +71,7 @@ describe('Logger', function() {
     expect(log.debug).toHaveBeenCalledWith('FOO', 'BAR');
   });
 
+
   it('should default to handler#log', function() {
 
     // given
@@ -76,4 +83,5 @@ describe('Logger', function() {
     // then
     expect(log.log).toHaveBeenCalledWith('FOO', 'BAR');
   });
+
 });

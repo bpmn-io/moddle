@@ -1,16 +1,17 @@
 var _ = require('lodash');
 
 var Model = require('../../lib/Model');
-var logger = require('../../lib/util/Logger');
 
 var Helper = require('./Helper');
 
+
 describe('Model', function() {
 
-  beforeEach(Helper.initAdditionalMatchers);
+  beforeEach(Helper.addMatchers);
 
   var createModel = Helper.createModelBuilder('test/fixtures/model/');
   var model = createModel([ 'properties' ]);
+
 
   describe('api', function() {
 

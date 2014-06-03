@@ -1,8 +1,10 @@
-var fs = require('fs');
-var _ = require('lodash');
-var util = require('util');
+'use strict';
 
-var logger = require('../../lib/util/Logger');
+var fs = require('fs'),
+    _ = require('lodash'),
+    inspect = require('util').inspect;
+
+var logger = require('../../lib/util').logger;
 var Model = require('../../lib/Model');
 
 var jsondiffpatch = require('jsondiffpatch').create({
@@ -11,18 +13,12 @@ var jsondiffpatch = require('jsondiffpatch').create({
   }
 });
 
-function ensureDirExists(dir) {
-
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir);
-  }
-}
 
 function readFile(filename) {
   return fs.readFileSync(filename, { encoding: 'UTF-8' });
 }
 
-function initAdditionalMatchers() {
+function addMatchers() {
 
   // this == jasmine
 
@@ -40,7 +36,7 @@ function initAdditionalMatchers() {
       };
 
       if (!result.pass) {
-        logger.error('[to-deep-equal] elements do not equal. diff: ', util.inspect(jsondiffpatch.diff(actualClone, expectedClone), false, 4));
+        logger.error('[to-deep-equal] elements do not equal. diff: ', inspect(jsondiffpatch.diff(actualClone, expectedClone), false, 4));
       }
 
       // jasmine 1.3.x
@@ -54,9 +50,9 @@ function createModelBuilder(base) {
   var cache = {};
 
   if (!base) {
-    throw new Error("[test-util] must specify a base directory");
+    throw new Error('[test-util] must specify a base directory');
   }
-  
+
   function createModel(packageNames) {
 
     var packages = _.collect(packageNames, function(f) {
@@ -80,20 +76,7 @@ function createModelBuilder(base) {
   return createModel;
 }
 
-/** log during execution of a test callback */
-function log(level, fn) {
-  logger.setLevel(level);
 
-  return function(done) {
-    fn(function() {
-      logger.setLevel(null);
-      done();
-    });
-  };
-}
-
-module.exports.log = log;
 module.exports.readFile = readFile;
-module.exports.ensureDirExists = ensureDirExists;
-module.exports.initAdditionalMatchers = initAdditionalMatchers;
+module.exports.addMatchers = addMatchers;
 module.exports.createModelBuilder = createModelBuilder;
