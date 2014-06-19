@@ -37,15 +37,12 @@
     "grunt-contrib-connect": "~0.6.0",
     "grunt-contrib-jshint": "~0.7.2",
     "grunt-jsdoc": "~0.5.1",
-    "load-grunt-tasks": "~0.3.0",
     "grunt-jasmine-node": "~0.2.1",
-    "jsondiffpatch": "~0.1.4",
-    "lodash": "~2.4.0",
-    "sax": "~0.6.0",
-    "grunt-release": "^0.7.0"
+    "grunt-release": "^0.7.0",
+    "load-grunt-tasks": "~0.3.0",
+    "jsondiffpatch": "~0.1.4"
   },
-  "peerDependencies": {
-    "lodash": "~2.4.0",
-    "sax": "~0.6.0"
+  "dependencies": {
+    "lodash": "~2.4.0"
   }
 }
