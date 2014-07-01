@@ -4,7 +4,6 @@ var fs = require('fs'),
     _ = require('lodash'),
     inspect = require('util').inspect;
 
-var logger = require('../../lib/util').logger;
 var Model = require('../../lib/Model');
 
 var jsondiffpatch = require('jsondiffpatch').create({
@@ -36,7 +35,7 @@ function addMatchers() {
       };
 
       if (!result.pass) {
-        logger.error('[to-deep-equal] elements do not equal. diff: ', inspect(jsondiffpatch.diff(actualClone, expectedClone), false, 4));
+        console.warn('[to-deep-equal] elements do not equal. diff: ', inspect(jsondiffpatch.diff(actualClone, expectedClone), false, 4));
       }
 
       // jasmine 1.3.x
