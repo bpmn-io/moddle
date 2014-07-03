@@ -1,5 +1,7 @@
 'use strict';
 
-module.exports = require('./lib/Model');
+module.exports = require('./lib/moddle');
 
-module.exports.util = require('./lib/util');
+module.exports.types = require('./lib/types');
+
+module.exports.ns = require('./lib/ns');

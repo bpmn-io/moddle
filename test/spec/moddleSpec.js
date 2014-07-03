@@ -1,11 +1,11 @@
-var _ = require('lodash');
+'use strict';
 
-var Model = require('../../lib/Model');
+var _ = require('lodash');
 
 var Helper = require('./Helper');
 
 
-describe('Model', function() {
+describe('Moddle', function() {
 
   beforeEach(Helper.addMatchers);
 
@@ -80,7 +80,7 @@ describe('Model', function() {
       // when
       var ComplexType = model.getType('props:Complex');
 
-      var descriptor = model.getDescriptor(ComplexType);
+      var descriptor = model.getElementDescriptor(ComplexType);
 
       // then
       expect(descriptor).toBeDefined();
@@ -96,7 +96,7 @@ describe('Model', function() {
 
       // given
       var ComplexType = model.getType('props:Complex');
-      var expectedDescriptor = model.getDescriptor(ComplexType);
+      var expectedDescriptor = model.getElementDescriptor(ComplexType);
 
       // when
       var descriptor = ComplexType.$descriptor;
@@ -104,6 +104,7 @@ describe('Model', function() {
       // then
       expect(descriptor).toBe(expectedDescriptor);
     });
+
 
     it('should provide model via $model property', function() {
 
@@ -131,6 +132,7 @@ describe('Model', function() {
       });
     });
   });
+
 
   describe('create', function() {
 
@@ -214,6 +216,7 @@ describe('Model', function() {
 
   });
 
+
   describe('properties', function() {
 
     describe('descriptor', function() {
@@ -225,7 +228,7 @@ describe('Model', function() {
         // when
         var SimpleBody = model.getType('props:SimpleBody');
 
-        var descriptor = model.getDescriptor(SimpleBody);
+        var descriptor = model.getElementDescriptor(SimpleBody);
         var idProperty = descriptor.propertiesByName['id'];
 
         // then
@@ -236,6 +239,7 @@ describe('Model', function() {
       xit('should inherit properties');
 
     });
+
 
     describe('instance', function() {
 
@@ -252,6 +256,7 @@ describe('Model', function() {
         expect(attributes.booleanValue).toBe(false);
         expect(attributes.integerValue).toBe(-1000);
       });
+
 
       it('should set collection properties in constructor (referencing)', function() {
 
@@ -290,6 +295,7 @@ describe('Model', function() {
         // TODO: establish parent relationship
       });
 
+
       it('should provide default values', function() {
 
         // given
@@ -301,6 +307,7 @@ describe('Model', function() {
         // then
         expect(instance.defaultBooleanValue).toBe(true);
       });
+
 
       it('should provide inherited default values', function() {
 
@@ -314,7 +321,9 @@ describe('Model', function() {
         expect(instance.defaultBooleanValue).toBe(true);
       });
 
+
       xit('should set collection properties in constructor');
+
 
       it('should lazy init collection properties', function() {
 
@@ -333,6 +342,7 @@ describe('Model', function() {
         expect(instance.any).toBe(any);
       });
 
+
       it('should set single property', function() {
 
         // given
@@ -345,6 +355,7 @@ describe('Model', function() {
         // then
         expect(instance.id).toBe('ATTR_1');
       });
+
 
       it('should set single property (ns)', function() {
 
@@ -362,6 +373,7 @@ describe('Model', function() {
       });
 
     });
+
 
     describe('should redefine property', function() {
 
@@ -388,6 +400,7 @@ describe('Model', function() {
         expect(refinedIdProperty).toEqual(numericIdProperty);
       });
 
+
       describe('instance', function() {
 
         it('init in constructor', function() {
@@ -402,6 +415,7 @@ describe('Model', function() {
           expect(instance.idNumeric).toBe(1000);
         });
 
+
         it('access via original name', function() {
 
           // given
@@ -413,6 +427,7 @@ describe('Model', function() {
           // then
           expect(instance.get('props:id')).toBe(1000);
         });
+
 
         it('access via original name', function() {
 
@@ -427,7 +442,9 @@ describe('Model', function() {
         });
 
       });
+
     });
+
   });
 
 });

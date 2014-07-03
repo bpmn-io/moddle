@@ -1,10 +1,12 @@
 'use strict';
 
+var debug = require('debug')('moddle-test');
+
 var fs = require('fs'),
     _ = require('lodash'),
     inspect = require('util').inspect;
 
-var Model = require('../../lib/Model');
+var Moddle = require('../../');
 
 var jsondiffpatch = require('jsondiffpatch').create({
   objectHash: function (obj) {
@@ -35,7 +37,7 @@ function addMatchers() {
       };
 
       if (!result.pass) {
-        console.warn('[to-deep-equal] elements do not equal. diff: ', inspect(jsondiffpatch.diff(actualClone, expectedClone), false, 4));
+        debug('[to-deep-equal] elements do not equal. diff: ' + inspect(jsondiffpatch.diff(actualClone, expectedClone), false, 4));
       }
 
       // jasmine 1.3.x
@@ -69,7 +71,7 @@ function createModelBuilder(base) {
       return pkg;
     });
 
-    return new Model(packages);
+    return new Moddle(packages);
   }
 
   return createModel;

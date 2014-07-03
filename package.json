@@ -40,7 +40,8 @@
     "grunt-jasmine-node": "~0.2.1",
     "grunt-release": "^0.7.0",
     "load-grunt-tasks": "~0.3.0",
-    "jsondiffpatch": "~0.1.4"
+    "jsondiffpatch": "~0.1.4",
+    "debug": "^1.0.2"
   },
   "dependencies": {
     "lodash": "~2.4.0"
