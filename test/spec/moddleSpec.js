@@ -429,6 +429,21 @@ describe('Moddle', function() {
         });
 
 
+        it('should return $attrs property on non-metamodel defined property access', function() {
+
+          // given
+          var BaseWithNumericId = model.getType('props:BaseWithNumericId');
+
+          // when
+          var instance = new BaseWithNumericId({ 'id': 1000 });
+
+          instance.$attrs.unknown = 'UNKNOWN';
+
+          // then
+          expect(instance.get('unknown')).toEqual('UNKNOWN');
+        });
+
+
         it('access via original name', function() {
 
           // given
