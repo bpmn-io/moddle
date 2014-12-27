@@ -2,12 +2,10 @@
 
 var _ = require('lodash');
 
-var Helper = require('./Helper');
+var Helper = require('../helper');
 
 
 describe('Moddle', function() {
-
-  beforeEach(Helper.addMatchers);
 
   var createModel = Helper.createModelBuilder('test/fixtures/model/');
   var model = createModel([ 'properties' ]);
@@ -26,9 +24,9 @@ describe('Moddle', function() {
       var Attributes = model.getType('props:Attributes');
 
       // then
-      expect(ComplexType).toBeDefined();
-      expect(SimpleBody).toBeDefined();
-      expect(Attributes).toBeDefined();
+      expect(ComplexType).to.exist;
+      expect(SimpleBody).to.exist;
+      expect(Attributes).to.exist;
     });
 
 
@@ -40,10 +38,10 @@ describe('Moddle', function() {
       var propertiesPackage = model.getPackage('props');
 
       // then
-      expect(propertiesPackage).toBeDefined();
-      expect(propertiesPackage.name).toBe('Properties');
-      expect(propertiesPackage.uri).toBe('http://properties');
-      expect(propertiesPackage.prefix).toBe('props');
+      expect(propertiesPackage).to.exist;
+      expect(propertiesPackage.name).to.equal('Properties');
+      expect(propertiesPackage.uri).to.equal('http://properties');
+      expect(propertiesPackage.prefix).to.equal('props');
     });
 
 
@@ -55,10 +53,10 @@ describe('Moddle', function() {
       var propertiesPackage = model.getPackage('http://properties');
 
       // then
-      expect(propertiesPackage).toBeDefined();
-      expect(propertiesPackage.name).toBe('Properties');
-      expect(propertiesPackage.uri).toBe('http://properties');
-      expect(propertiesPackage.prefix).toBe('props');
+      expect(propertiesPackage).to.exist;
+      expect(propertiesPackage.name).to.equal('Properties');
+      expect(propertiesPackage.uri).to.equal('http://properties');
+      expect(propertiesPackage.prefix).to.equal('props');
     });
 
 
@@ -83,12 +81,12 @@ describe('Moddle', function() {
       var descriptor = model.getElementDescriptor(ComplexType);
 
       // then
-      expect(descriptor).toBeDefined();
-      expect(descriptor.name).toBe('props:Complex');
+      expect(descriptor).to.exist;
+      expect(descriptor.name).to.equal('props:Complex');
 
-      expect(descriptor.ns).toDeepEqual(expectedDescriptorNs);
-      expect(descriptor.properties).toDeepEqual(expectedDescriptorProperties);
-      expect(descriptor.propertiesByName).toDeepEqual(expectedDescriptorPropertiesByName);
+      expect(descriptor.ns).to.jsonEqual(expectedDescriptorNs);
+      expect(descriptor.properties).to.jsonEqual(expectedDescriptorProperties);
+      expect(descriptor.propertiesByName).to.jsonEqual(expectedDescriptorPropertiesByName);
     });
 
 
@@ -102,7 +100,7 @@ describe('Moddle', function() {
       var descriptor = ComplexType.$descriptor;
 
       // then
-      expect(descriptor).toBe(expectedDescriptor);
+      expect(descriptor).to.equal(expectedDescriptor);
     });
 
 
@@ -115,7 +113,7 @@ describe('Moddle', function() {
       var foundModel = ComplexType.$model;
 
       // then
-      expect(foundModel).toBe(model);
+      expect(foundModel).to.equal(model);
     });
 
 
@@ -127,8 +125,8 @@ describe('Moddle', function() {
         var instance = model.create('props:BaseWithNumericId');
 
         // then
-        expect(instance.$instanceOf('props:BaseWithNumericId')).toBe(true);
-        expect(instance.$instanceOf('props:Base')).toBe(true);
+        expect(instance.$instanceOf('props:BaseWithNumericId')).to.equal(true);
+        expect(instance.$instanceOf('props:Base')).to.equal(true);
       });
     });
   });
@@ -143,8 +141,8 @@ describe('Moddle', function() {
       var instance = model.create('props:BaseWithNumericId');
 
       // then
-      expect(instance.$descriptor).toBeDefined();
-      expect(instance.$type).toBe('props:BaseWithNumericId');
+      expect(instance.$descriptor).to.exist;
+      expect(instance.$type).to.equal('props:BaseWithNumericId');
     });
 
   });
@@ -161,7 +159,7 @@ describe('Moddle', function() {
       });
 
       // then
-      expect(anyInstance).toDeepEqual({
+      expect(anyInstance).to.jsonEqual({
         $type: 'other:Foo',
         bar: 'BAR'
       });
@@ -177,7 +175,7 @@ describe('Moddle', function() {
       });
 
       // then
-      expect(anyInstance.$descriptor).toDeepEqual({
+      expect(anyInstance.$descriptor).to.jsonEqual({
         name: 'other:Foo',
         isGeneric: true,
         ns: { prefix : 'other', localName : 'Foo', uri : 'http://other' }
@@ -198,7 +196,7 @@ describe('Moddle', function() {
       var instance = new SimpleBody();
 
       // then
-      expect(instance.$type).toBe('props:SimpleBody');
+      expect(instance.$type).to.equal('props:SimpleBody');
     });
 
 
@@ -211,7 +209,7 @@ describe('Moddle', function() {
       var instance = new SimpleBody();
 
       // then
-      expect(instance.$descriptor).toEqual(SimpleBody.$descriptor);
+      expect(instance.$descriptor).to.eql(SimpleBody.$descriptor);
     });
 
   });
@@ -232,8 +230,8 @@ describe('Moddle', function() {
         var idProperty = descriptor.propertiesByName['id'];
 
         // then
-        expect(idProperty).toBeDefined();
-        expect(descriptor.properties.indexOf(idProperty)).toBe(0);
+        expect(idProperty).to.exist;
+        expect(descriptor.properties.indexOf(idProperty)).to.equal(0);
       });
 
       xit('should inherit properties');
@@ -252,9 +250,9 @@ describe('Moddle', function() {
 
         // then
         // expect constructor to have set values
-        expect(attributes.id).toBe('ATTR_1');
-        expect(attributes.booleanValue).toBe(false);
-        expect(attributes.integerValue).toBe(-1000);
+        expect(attributes.id).to.equal('ATTR_1');
+        expect(attributes.booleanValue).to.equal(false);
+        expect(attributes.integerValue).to.equal(-1000);
       });
 
 
@@ -272,7 +270,7 @@ describe('Moddle', function() {
         });
 
         // then
-        expect(referencingCollection.references).toDeepEqual([ reference1, reference2 ]);
+        expect(referencingCollection.references).to.jsonEqual([ reference1, reference2 ]);
 
         // TODO: validate not parent -> child relationship
       });
@@ -290,7 +288,7 @@ describe('Moddle', function() {
         });
 
         // then
-        expect(containedCollection.children).toDeepEqual([ child1, child2 ]);
+        expect(containedCollection.children).to.jsonEqual([ child1, child2 ]);
 
         // TODO: establish parent relationship
       });
@@ -305,7 +303,7 @@ describe('Moddle', function() {
         var instance = new Attributes();
 
         // then
-        expect(instance.defaultBooleanValue).toBe(true);
+        expect(instance.defaultBooleanValue).to.equal(true);
       });
 
 
@@ -318,7 +316,7 @@ describe('Moddle', function() {
         var instance = new SubAttributes();
 
         // then
-        expect(instance.defaultBooleanValue).toBe(true);
+        expect(instance.defaultBooleanValue).to.equal(true);
       });
 
 
@@ -332,14 +330,14 @@ describe('Moddle', function() {
         var instance = new Root();
 
         // assume
-        expect(instance.any).not.toBeDefined();
+        expect(instance.any).not.to.exist;
 
         // when
         var any = instance.get('props:any');
 
         // then
-        expect(any).toEqual([]);
-        expect(instance.any).toBe(any);
+        expect(any).to.eql([]);
+        expect(instance.any).to.equal(any);
       });
 
 
@@ -353,7 +351,7 @@ describe('Moddle', function() {
         instance.set('id', 'ATTR_1');
 
         // then
-        expect(instance.id).toBe('ATTR_1');
+        expect(instance.id).to.equal('ATTR_1');
       });
 
 
@@ -368,8 +366,8 @@ describe('Moddle', function() {
         instance.set('props:integerValue', -1000);
 
         // then
-        expect(instance.booleanValue).toBe(true);
-        expect(instance.integerValue).toBe(-1000);
+        expect(instance.booleanValue).to.equal(true);
+        expect(instance.integerValue).to.equal(-1000);
       });
 
     });
@@ -394,10 +392,10 @@ describe('Moddle', function() {
         var numericIdProperty = redefinedDescriptor.propertiesByName['idNumeric'];
 
         // then
-        expect(refinedIdProperty).not.toDeepEqual(originalIdProperty);
+        expect(refinedIdProperty).not.to.jsonEqual(originalIdProperty);
 
-        expect(refinedIdProperty).toBeDefined();
-        expect(refinedIdProperty).toEqual(numericIdProperty);
+        expect(refinedIdProperty).to.exist;
+        expect(refinedIdProperty).to.eql(numericIdProperty);
       });
 
 
@@ -412,7 +410,7 @@ describe('Moddle', function() {
           var instance = new BaseWithNumericId({ 'id': 1000 });
 
           // then
-          expect(instance.idNumeric).toBe(1000);
+          expect(instance.idNumeric).to.equal(1000);
         });
 
 
@@ -425,7 +423,7 @@ describe('Moddle', function() {
           var instance = new BaseWithNumericId({ 'id': 1000 });
 
           // then
-          expect(instance.get('props:id')).toBe(1000);
+          expect(instance.get('props:id')).to.equal(1000);
         });
 
 
@@ -440,7 +438,7 @@ describe('Moddle', function() {
           instance.$attrs.unknown = 'UNKNOWN';
 
           // then
-          expect(instance.get('unknown')).toEqual('UNKNOWN');
+          expect(instance.get('unknown')).to.eql('UNKNOWN');
         });
 
 
@@ -453,7 +451,7 @@ describe('Moddle', function() {
           var instance = new BaseWithNumericId({ 'id': 1000 });
 
           // then
-          expect(instance.get('props:idNumeric')).toBe(1000);
+          expect(instance.get('props:idNumeric')).to.equal(1000);
         });
 
       });

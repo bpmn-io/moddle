@@ -1,36 +1,33 @@
 'use strict';
 
-var Helper = require('./Helper');
+var Helper = require('../helper');
 
 var ns = require('../../lib/ns');
 
 
 describe('ns', function() {
 
-  beforeEach(Helper.addMatchers);
-
-
   describe('parseName', function() {
 
     it('should parse namespaced name', function() {
-      expect(ns.parseName('asdf:bar')).toDeepEqual({ name: 'asdf:bar', localName: 'bar', prefix: 'asdf' });
+      expect(ns.parseName('asdf:bar')).to.jsonEqual({ name: 'asdf:bar', prefix: 'asdf', localName: 'bar' });
     });
 
 
     it('should parse localName (with default ns)', function() {
-      expect(ns.parseName('bar', 'asdf')).toDeepEqual({ name: 'asdf:bar', localName: 'bar', prefix: 'asdf' });
+      expect(ns.parseName('bar', 'asdf')).to.jsonEqual({ name: 'asdf:bar', prefix: 'asdf', localName: 'bar' });
     });
 
 
     it('should parse non-ns name', function() {
-      expect(ns.parseName('bar')).toDeepEqual({ name: 'bar', localName: 'bar', prefix: undefined });
+      expect(ns.parseName('bar')).to.jsonEqual({ name: 'bar', prefix: undefined, localName: 'bar' });
     });
 
 
     it('should handle invalid input', function() {
       expect(function() {
         ns.parseName('asdf:foo:bar');
-      }).toThrow();
+      }).to.throw();
     });
 
   });
