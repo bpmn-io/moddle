@@ -75,7 +75,7 @@ console.log(carDescriptor.properties);
 // [ { name: 'id', type: 'String', ... }, { name: 'name', type: 'String', ...} ... ]
 ```
 
-Have a look at our [test coverage](https://github.com/bpmn-io/moddle/blob/master/test/spec/ModelSpec.js) to learn about everything that is currently supported.
+Have a look at our [test coverage](https://github.com/bpmn-io/moddle/blob/master/test/spec) to learn about everything that is currently supported.
 
 
 ## Resources
