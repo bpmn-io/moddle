@@ -1,18 +1,15 @@
 'use strict';
 
-var _ = require('lodash');
-
 var Helper = require('../helper');
 
 
-describe('Moddle', function() {
+describe('moddle', function() {
 
   var createModel = Helper.createModelBuilder('test/fixtures/model/');
   var model = createModel([ 'properties' ]);
 
 
   describe('api', function() {
-
 
     it('should provide types', function() {
 

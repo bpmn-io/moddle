@@ -2,7 +2,6 @@
   "name": "Extended",
   "uri": "http://extended",
   "prefix": "ext",
-  "alias": "lowerCase",
   "types": [
     {
       "name": "ExtendedComplex",
