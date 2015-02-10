@@ -62,6 +62,19 @@ describe('moddle', function() {
     });
 
 
+    describe('types', function() {
+
+      it('should provide custom types', function() {
+
+        var property = model.create('c:Property');
+
+        // then
+        expect(property.$instanceOf('c:Property')).to.be.true;
+      });
+
+    });
+
+
     describe('generic', function() {
 
       it('should extend Element', function() {
