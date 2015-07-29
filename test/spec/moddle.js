@@ -351,6 +351,18 @@ describe('moddle', function() {
         expect(instance.id).to.equal('ATTR_1');
       });
 
+      it('should delete existing properties', function() {
+
+        // given
+        var attributes = model.create('props:Attributes', { id: 'ATTR_1' });
+
+        // when
+        delete attributes.id;
+
+        // then
+        expect(attributes.id).to.not.be.defined;
+      });
+
 
       it('should set single property (ns)', function() {
 
