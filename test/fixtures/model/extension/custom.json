@@ -5,10 +5,17 @@
   "types": [
     {
       "name": "CustomRoot",
+      "superClass": [ "Base" ],
       "extends": [ "b:Root" ],
       "properties": [
         { "name": "customAttr", "type": "Integer", "isAttr": true },
         { "name": "generic", "type": "CustomGeneric", "redefines": "b:Root#generic" }
+      ]
+    },
+    {
+      "name": "Base",
+      "properties": [
+        { "name": "customBaseAttr", "type": "Integer", "isAttr": true }
       ]
     },
     {

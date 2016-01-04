@@ -63,13 +63,31 @@ describe('moddle', function() {
       var expectedDescriptorNs = { name: 'props:Complex', prefix: 'props', localName: 'Complex' };
 
       var expectedDescriptorProperties = [
-        { name: 'id', type: 'String', isAttr: true, ns: { name: 'props:id', prefix: 'props', localName: 'id' } }
+        {
+          name: 'id',
+          type: 'String',
+          isAttr: true,
+          ns: { name: 'props:id', prefix: 'props', localName: 'id' },
+          inherited: true
+        }
       ];
 
       var expectedDescriptorPropertiesByName = {
 
-        'id': { name: 'id', type: 'String', isAttr: true, ns: { name: 'props:id', prefix: 'props', localName: 'id' } },
-        'props:id': { name: 'id', type: 'String', isAttr: true, ns: { name: 'props:id', prefix: 'props', localName: 'id' } }
+        'id': {
+          name: 'id',
+          type: 'String',
+          isAttr: true,
+          ns: { name: 'props:id', prefix: 'props', localName: 'id' },
+          inherited: true
+        },
+        'props:id': {
+          name: 'id',
+          type: 'String',
+          isAttr: true,
+          ns: { name: 'props:id', prefix: 'props', localName: 'id' },
+          inherited: true
+        }
       };
 
       // when

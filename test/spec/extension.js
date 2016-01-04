@@ -13,6 +13,28 @@ describe('moddle', function() {
 
     describe('trait', function() {
 
+      describe('descriptor', function() {
+
+        it('should indicate non-inherited', function() {
+
+          // given
+          var ComplexType = model.getType('b:Root');
+
+          // when
+          var descriptor = model.getElementDescriptor(ComplexType),
+              customAttrDescriptor = descriptor.propertiesByName['customAttr'],
+              customBaseAttrDescriptor = descriptor.propertiesByName['customBaseAttr'],
+              ownAttrDescriptor = descriptor.propertiesByName['ownAttr'];
+
+          // then
+          expect(customAttrDescriptor.inherited).to.be.false;
+          expect(customBaseAttrDescriptor.inherited).to.be.false;
+          expect(ownAttrDescriptor.inherited).to.be.true;
+        });
+
+      });
+
+
       it('should plug-in into type hierarchy', function() {
 
         var root = model.create('b:Root');
