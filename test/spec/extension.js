@@ -5,11 +5,13 @@ var Helper = require('../helper');
 
 describe('moddle', function() {
 
-  var createModel = Helper.createModelBuilder('test/fixtures/model/extension/');
-  var model = createModel([ 'base', 'custom' ]);
+  var createModel = Helper.createModelBuilder('test/fixtures/model/');
 
 
   describe('extension', function() {
+
+    var model = createModel([ 'extension/base', 'extension/custom' ]);
+
 
     describe('trait', function() {
 
@@ -122,6 +124,64 @@ describe('moddle', function() {
         expect(root.genericCollection).to.eql([ customProperty ]);
       });
 
+    });
+
+  });
+
+
+  describe('property replacement', function() {
+
+    var model = createModel([ 'replace' ]);
+
+    it('should replace in descriptor', function() {
+
+      // given
+      var Extension = model.getType('r:Extension');
+
+      // when
+      var descriptor = model.getElementDescriptor(Extension),
+          propertyNames = descriptor.properties.map(function(p) {
+            return p.name;
+          });
+
+      // then
+      expect(propertyNames).to.eql([
+        'name',
+        'value',
+        'id'
+      ]);
+
+      expect(descriptor.propertiesByName['r:id'].type).to.eql('Integer');
+      expect(descriptor.propertiesByName['id'].type).to.eql('Integer');
+    })
+
+  });
+
+
+  describe('property redefinition', function() {
+
+    var model = createModel([ 'redefine' ]);
+
+    it('should redefine in descriptor', function() {
+
+      // given
+      var Extension = model.getType('r:Extension');
+
+      // when
+      var descriptor = model.getElementDescriptor(Extension),
+          propertyNames = descriptor.properties.map(function(p) {
+            return p.name;
+          });
+
+      // then
+      expect(propertyNames).to.eql([
+        'id',
+        'name',
+        'value'
+      ]);
+
+      expect(descriptor.propertiesByName['r:id'].type).to.eql('Integer');
+      expect(descriptor.propertiesByName['id'].type).to.eql('Integer');
     });
 
   });
