@@ -110,13 +110,17 @@ The domain package may define its own types on top of the base package by refere
 ```json
 {
   "name": "DomainPackage",
-  "prefix": "d"
+  "prefix": "d",
   "types": [
     {
       "name": "Base",
       "superClass": [ "b:BaseWithId" ],
       "properties": [
-        { "name": "id", "type": "Integer", redefines: "b:BaseWithId#id" }
+        {
+          "name": "id",
+          "type": "Integer",
+          "redefines": "b:BaseWithId#id"
+        }
       ]
     },
     {
