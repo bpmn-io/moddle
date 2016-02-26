@@ -1,7 +1,5 @@
 'use strict';
 
-var Helper = require('../helper');
-
 var ns = require('../../lib/ns');
 
 

@@ -1,7 +1,5 @@
 'use strict';
 
-var Helper = require('../helper');
-
 var Types = require('../../lib/types');
 
 
