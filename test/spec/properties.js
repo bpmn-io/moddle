@@ -11,7 +11,39 @@ describe('properties', function() {
 
   describe('descriptor', function() {
 
-    it('should provide default id', function() {
+    it('should provide body property', function() {
+
+      // when
+      var Complex = model.getType('props:Complex');
+
+      var descriptor = model.getElementDescriptor(Complex);
+      var idProperty = descriptor.propertiesByName.id;
+
+      // then
+      expect(idProperty).to.exist;
+      expect(idProperty.isId).to.be.true;
+
+      expect(descriptor.idProperty).to.eql(idProperty);
+    });
+
+
+    it('should provide body property', function() {
+
+      // when
+      var SimpleBody = model.getType('props:SimpleBody');
+
+      var descriptor = model.getElementDescriptor(SimpleBody);
+      var bodyProperty = descriptor.propertiesByName.body;
+
+      // then
+      expect(bodyProperty).to.exist;
+      expect(bodyProperty.isBody).to.be.true;
+
+      expect(descriptor.bodyProperty).to.eql(bodyProperty);
+    });
+
+
+    it('should NOT provide default id', function() {
 
       // when
       var SimpleBody = model.getType('props:SimpleBody');
@@ -20,9 +52,9 @@ describe('properties', function() {
       var idProperty = descriptor.propertiesByName.id;
 
       // then
-      expect(idProperty).to.exist;
-      expect(descriptor.properties.indexOf(idProperty)).to.equal(0);
+      expect(idProperty).not.to.exist;
     });
+
 
     xit('should inherit properties');
 

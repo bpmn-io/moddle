@@ -59,6 +59,7 @@ describe('moddle', function() {
         name: 'id',
         type: 'String',
         isAttr: true,
+        isId: true,
         ns: { name: 'props:id', prefix: 'props', localName: 'id' },
         inherited: true
       }
@@ -70,6 +71,7 @@ describe('moddle', function() {
         name: 'id',
         type: 'String',
         isAttr: true,
+        isId: true,
         ns: { name: 'props:id', prefix: 'props', localName: 'id' },
         inherited: true
       },
@@ -77,6 +79,7 @@ describe('moddle', function() {
         name: 'id',
         type: 'String',
         isAttr: true,
+        isId: true,
         ns: { name: 'props:id', prefix: 'props', localName: 'id' },
         inherited: true
       }

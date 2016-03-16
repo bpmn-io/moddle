@@ -6,7 +6,7 @@
     {
       "name": "Base",
       "properties": [
-        { "name": "id", "type": "Integer" },
+        { "name": "id", "type": "Integer", "isId": true },
         { "name": "name", "type": "String" }
       ]
     },
@@ -15,7 +15,7 @@
       "superClass": [ "Base" ],
       "properties": [
         { "name": "value", "type": "String" },
-        { "name": "id", "type": "Integer", "replaces": "Base#id" }
+        { "name": "id", "type": "Integer", "replaces": "Base#id", "isId": true }
       ]
     }
   ]

@@ -15,7 +15,7 @@
       "superClass": [ "Base" ],
       "properties": [
         { "name": "value", "type": "String" },
-        { "name": "id", "type": "Integer", "redefines": "Base#id" }
+        { "name": "id", "type": "Integer", "redefines": "Base#id", "isId": true }
       ]
     }
   ]

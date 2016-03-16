@@ -6,7 +6,7 @@
     {
       "name": "Root",
       "properties": [
-        { "name": "id", "type": "Integer", "isAttr": true }
+        { "name": "id", "type": "Integer", "isAttr": true, "isId": true }
       ]
     }
   ]
