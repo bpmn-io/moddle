@@ -11,7 +11,7 @@ describe('meta', function() {
   it('should have the "meta" attribute', function() {
 
     // when
-    var meta = model.getMetaInformation('c:Car');
+    var meta = model.getTypeDescriptor('c:Car').meta;
 
     // then
     expect(meta).to.exist;
@@ -21,7 +21,7 @@ describe('meta', function() {
   it('should have a "owners" property inside "meta"', function() {
 
     // when
-    var meta = model.getMetaInformation('c:Car');
+    var meta = model.getTypeDescriptor('c:Car').meta;
 
     // then
     expect(meta.owners).to.exist;

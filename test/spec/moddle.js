@@ -234,4 +234,32 @@ describe('moddle', function() {
 
   });
 
+
+  describe('helpers', function() {
+
+    it('should get property descriptor', function() {
+      // given
+      var SimpleBody = model.getType('props:SimpleBody');
+
+      var instance = new SimpleBody();
+
+      // when
+      var body = model.getPropertyDescriptor(instance, 'props:body');
+
+      // then
+      expect(body).to.include.keys([ 'name', 'type', 'isBody', 'ns' ]);
+    });
+
+
+    it('should get type descriptor', function() {
+
+      // when
+      var simpleBody = model.getTypeDescriptor('props:SimpleBody');
+
+      // then
+      expect(simpleBody).to.include.keys([ 'name', 'superClass', 'properties' ]);
+    });
+
+  });
+
 });
