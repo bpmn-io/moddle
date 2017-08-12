@@ -1,0 +1,53 @@
+{
+  "name": "Constraints",
+  "uri": "https://constraints",
+  "prefix": "cnstr",
+  "types": [
+    {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "gender",
+          "type": "String",
+          "isAttr": true,
+          "constraint": {
+            "enum": [ "male", "female", "genderFluid" ]
+          }
+        },
+        {
+          "name": "age",
+          "type": "Integer",
+          "isAttr": true,
+          "constraint": {
+            "math": "0 <= x"
+          }
+        },
+        {
+          "name": "name",
+          "type": "String",
+          "isAttr": true,
+          "constraint": {
+            "regex": "^[A-Z][a-z]* [A-Z][a-z]*(-[A-Z][a-z]*)?$"
+          }
+        },
+        {
+          "name": "emails",
+          "type": "String",
+          "isBody": true,
+          "isMany": true,
+          "constraint": {
+            "regex": "^.+@.+\\..+$"
+          }
+        },
+        {
+          "name": "Spouse",
+          "type": "Person",
+          "isBody": true,
+          "constraint": {
+            "enum": [ { "age": "10" } ]
+          }
+        }
+      ]
+    }
+  ]
+}
