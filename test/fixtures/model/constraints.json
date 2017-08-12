@@ -48,6 +48,29 @@
           }
         }
       ]
+    },
+    {
+      "name": "NonEmptyList",
+      "properties": [
+        {
+          "name": "entries",
+          "type": "Integer",
+          "isMany": true,
+          "isBody": true,
+          "isRequired": true
+        }
+      ]
+    },
+    {
+      "name": "ANumber",
+      "properties": [
+        {
+          "name": "theNumber",
+          "type": "Real",
+          "isAttribute": true,
+          "isRequired": true
+        }
+      ]
     }
   ]
 }

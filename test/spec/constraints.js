@@ -75,4 +75,24 @@ describe('constraints', function() {
       spouse: spouse
     });
   });
+
+  it('should recognize elements correctly as valid', function() {
+
+    var validList = model.create('cnstr:NonEmptyList', {
+      entries: [ 1 ]
+    });
+
+    var validNumber = model.create('cnstr:ANumber', {
+      theNumber: 1
+    });
+
+    var invalidList = model.create('cnstr:NonEmptyList');
+
+    var invalidNumber = model.create('cnstr:ANumber');
+
+    expect(validList.isValid()).to.be.true;
+    expect(validNumber.isValid()).to.be.true;
+    expect(invalidList.isValid()).to.be.false;
+    expect(invalidNumber.isValid()).to.be.false;
+  });
 });
