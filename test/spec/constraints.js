@@ -95,4 +95,12 @@ describe('constraints', function() {
     expect(invalidList.isValid()).to.be.false;
     expect(invalidNumber.isValid()).to.be.false;
   });
+
+  it('should set uniquely required properties accordingly', function() {
+
+    var number = model.create('cnstr:ANumber');
+    number.setUniquelyRequired();
+
+    expect(number.theNumber).to.equal(1);
+  });
 });
