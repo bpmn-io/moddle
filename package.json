@@ -43,6 +43,7 @@
     "mocha": "^2.1.0"
   },
   "dependencies": {
+    "mathjs": "^3.16.0",
     "lodash": "^3.0.0"
   }
 }
