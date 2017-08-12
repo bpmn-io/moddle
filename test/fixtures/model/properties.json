@@ -81,7 +81,7 @@
       "name": "BaseWithNumericId",
       "superClass": [ "BaseWithId" ],
       "properties": [
-        { "name": "idNumeric", "type": "String", "isAttr": true, "redefines": "BaseWithId#id", "isId": true }
+        { "name": "idNumeric", "type": "Integer", "isAttr": true, "redefines": "BaseWithId#id", "isId": true }
       ]
     },
     {
