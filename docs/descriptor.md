@@ -55,6 +55,25 @@ By inheriting from a super type, a type inherits all properties declared in the 
 Inherited properties will appear before own properties based on the order they are declared in the type hierarchy.
 
 
+### Extending existing Types
+
+Some meta-models require it to plug-in new properties that to certain existing model elements. This can be acomplished using the `extends` field. Consider the following type definition:
+
+```json
+{
+  "name": "BetterRoot",
+  "extends": [ "Root" ], 
+  "properties": [
+    { "name": "id", "type": "Number" }
+  ]
+}
+```
+
+With this model definition, every instance of `Root` will automatically have another property `BetterRoot#id` added. At the same time, instances of root will be instances of `BetterRoot`, too.
+
+This extension is _implicit_ when compared to [inheritance](#inheritance). In the inheritance case one would need to instantiate `BetterRoot`, to actually get the new property `id`. Extending allows us to simply instantiate `Root` with the additional property defined for it.
+
+
 ## Property Definition
 
 A property has a name, a type as well as a number of additional qualifiers and is added to a types `properties` list. 
