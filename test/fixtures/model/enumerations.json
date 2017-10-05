@@ -1,0 +1,35 @@
+{
+  "name": "Enumerations",
+  "uri": "http://enumerations",
+  "prefix": "enu",
+  "types": [
+    {
+      "name": "ColoredThing",
+      "properties": [
+        { "name": "color", "type": "Color" }
+      ]
+    },
+    {
+      "name": "MultiColoredThing",
+      "properties": [
+        { "name": "colors", "type": "Color", "isMany": true }
+      ]
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "Color",
+      "literalValues": [
+        {
+          "name": "Yellow"
+        },
+        {
+          "name": "Red"
+        },
+        {
+          "name": "Blue"
+        }
+      ]
+    }
+  ]
+}
