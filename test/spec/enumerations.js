@@ -27,7 +27,7 @@ describe('enumerations', function() {
   });
 
   it('should reject unlisted values', function() {
-    expect(() => {model.create('enu:ColoredThing', { color: 'Striped' })})
+    expect(function() {model.create('enu:ColoredThing', { color: 'Striped' })})
       .to.throw(Error);
   });
 
