@@ -15,15 +15,19 @@ module.exports = function(grunt) {
       samples: 'example'
     },
 
-    jshint: {
-      src: [
-        ['<%=config.sources %>']
-      ],
-      gruntfile: [
-        'Gruntfile.js'
-      ],
-      options: {
-        jshintrc: true
+    eslint: {
+      check: {
+        src: [
+          '{lib,test}/**/*.js'
+        ]
+      },
+      fix: {
+        src: [
+          '{lib,test}/**/*.js'
+        ],
+        options: {
+          fix: true
+        }
       }
     },
 
@@ -60,6 +64,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', [ 'mochaTest' ]);
   grunt.registerTask('auto-test', [ 'test', 'watch:test' ]);
+  grunt.registerTask('lint', [ 'eslint:check' ]);
 
-  grunt.registerTask('default', [ 'jshint', 'test' ]);
+  grunt.registerTask('default', [ 'lint', 'test' ]);
 };

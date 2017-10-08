@@ -113,7 +113,7 @@ describe('moddle', function() {
 
       it('should be part of generic collection', function() {
 
-        var customProperty = model.create('c:Property', { key: "foo", value: "bar" });
+        var customProperty = model.create('c:Property', { key: 'foo', value: 'bar' });
 
         // when
         var root = model.create('b:Root', {
@@ -153,7 +153,7 @@ describe('moddle', function() {
 
       expect(descriptor.propertiesByName['r:id'].type).to.eql('Integer');
       expect(descriptor.propertiesByName['id'].type).to.eql('Integer');
-    })
+    });
 
   });
 
