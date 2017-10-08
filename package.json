@@ -6,6 +6,8 @@
     "lib": "lib"
   },
   "scripts": {
+    "dev": "grunt auto-test",
+    "all": "grunt",
     "test": "grunt test"
   },
   "repository": {
@@ -36,6 +38,7 @@
     "eslint": "^3.19.0",
     "eslint-plugin-mocha": "^4.11.0",
     "grunt": "~0.4.2",
+    "grunt-cli": "^1.2.0",
     "grunt-contrib-connect": "~0.6.0",
     "grunt-contrib-watch": "~0.5.0",
     "grunt-eslint": "^19.0.0",
