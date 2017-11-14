@@ -56,7 +56,7 @@ describe('properties', function() {
     });
 
 
-    xit('should inherit properties');
+    it.skip('should inherit properties');
 
   });
 
@@ -138,7 +138,7 @@ describe('properties', function() {
     });
 
 
-    xit('should set collection properties in constructor');
+    it.skip('should set collection properties in constructor');
 
 
     it('should lazy init collection properties', function() {

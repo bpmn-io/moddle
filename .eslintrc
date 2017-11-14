@@ -25,7 +25,6 @@
   "globals": {
     "expect": false,
     "it": false,
-    "xit": false,
     "describe": false,
     "beforeEach": true,
     "afterEach": true,
