@@ -7,7 +7,7 @@
   },
   "scripts": {
     "all": "run-s lint test",
-    "lint": "eslint {lib,test}/**/*.js",
+    "lint": "eslint .",
     "dev": "npm test -- --watch",
     "test": "mocha -r ./test/expect --reporter=spec test/**/*.js"
   },
