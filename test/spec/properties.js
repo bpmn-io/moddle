@@ -66,7 +66,11 @@ describe('properties', function() {
     it('should set simple properties in constructor', function() {
 
       // when
-      var attributes = model.create('props:Attributes', { id: 'ATTR_1', booleanValue: false, integerValue: -1000 });
+      var attributes = model.create('props:Attributes', {
+        id: 'ATTR_1',
+        booleanValue: false,
+        integerValue: -1000
+      });
 
       // then
       // expect constructor to have set values
