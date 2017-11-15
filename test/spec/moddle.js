@@ -156,6 +156,8 @@ describe('moddle', function() {
         $type: 'other:Foo',
         bar: 'BAR'
       });
+
+      expect(anyInstance.$instanceOf('other:Foo')).to.be.true;
     });
 
 
