@@ -44,6 +44,6 @@
     "npm-run-all": "^4.1.2"
   },
   "dependencies": {
-    "min-dash": "^2.4.0"
+    "min-dash": "^3.0.0"
   }
 }
