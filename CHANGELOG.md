@@ -6,6 +6,12 @@ All notable changes to [moddle](https://github.com/bpmn-io/moddle) are documente
 
 ___Note:__ Yet to be released changes appear here._
 
+## 4.0.0
+
+### Breaking Changes
+
+* `FEAT`: migrate to ES modules. Use `esm` or a ES module aware transpiler to consume this library.
+
 ## 3.0.0
 
 * `FEAT`: drop lodash in favor of [min-dash](https://github.com/bpmn-io/min-dash)
