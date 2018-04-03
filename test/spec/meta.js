@@ -1,11 +1,13 @@
-'use strict';
+import expect from '../expect';
 
-var Helper = require('../helper');
+import {
+  createModelBuilder
+} from '../helper';
 
 
 describe('meta', function() {
 
-  var createModel = Helper.createModelBuilder('test/fixtures/model/');
+  var createModel = createModelBuilder('test/fixtures/model/');
   var model = createModel([ 'meta' ]);
 
   it('should have the "meta" attribute', function() {
@@ -17,6 +19,7 @@ describe('meta', function() {
     expect(meta).to.exist;
     expect(meta).to.be.an('object');
   });
+
 
   it('should have a "owners" property inside "meta"', function() {
 

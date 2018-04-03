@@ -46,7 +46,7 @@ A moddle description is a simple [JSON](http://json.org/) file that describes ty
 __moddle__ allows you to instantiate that definition and create objects from it:
 
 ```javascript
-var Moddle = require('moddle');
+import Moddle from 'moddle';
 
 var cars = new Moddle([ carsJSON ]);
 
@@ -76,6 +76,8 @@ console.log(carDescriptor.properties);
 ```
 
 Have a look at our [test coverage](https://github.com/bpmn-io/moddle/blob/master/test/spec) to learn about everything that is currently supported.
+
+> __Note:__ As of version `4.0.0` this library exposes ES modules. Use [esm](https://github.com/standard-things/esm) or a ES module aware transpiler such as Webpack, Rollup or Browserify + babelify to consume it.
 
 
 ## Resources

@@ -1,1 +1,3 @@
-module.exports = require('./lib/moddle');
+export {
+  default
+} from './lib/moddle';

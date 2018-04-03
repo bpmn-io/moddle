@@ -1,16 +1,17 @@
-'use strict';
+import fs from 'fs';
 
-var fs = require('fs'),
-    map = require('min-dash').map;
+import {
+  map
+} from 'min-dash';
 
-var Moddle = require('../');
+import Moddle from '../';
 
 
-function readFile(filename) {
+export function readFile(filename) {
   return fs.readFileSync(filename, { encoding: 'UTF-8' });
 }
 
-function createModelBuilder(base) {
+export function createModelBuilder(base) {
 
   var cache = {};
 
@@ -40,7 +41,3 @@ function createModelBuilder(base) {
 
   return createModel;
 }
-
-
-module.exports.readFile = readFile;
-module.exports.createModelBuilder = createModelBuilder;
