@@ -6,6 +6,10 @@ All notable changes to [moddle](https://github.com/bpmn-io/moddle) are documente
 
 ___Note:__ Yet to be released changes appear here._
 
+## 4.1.0
+
+* `CHORE`: bump utility toolbelt
+
 ## 4.0.0
 
 ### Breaking Changes
