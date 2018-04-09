@@ -23,6 +23,8 @@ The `prefix` uniquely identifies elements in a package if more multiple packages
 
 The `types` collection contains all known types.
 
+The `enumerations` and `associations` properties are reserved for future use.
+
 
 ## Type Definition
 
