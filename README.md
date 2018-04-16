@@ -1,3 +1,6 @@
+> As of version `4.0.0` this library exposes ES modules. Use [esm](https://github.com/standard-things/esm) or a ES module aware transpiler such as Webpack, Rollup or Browserify + babelify to consume it.
+
+
 # moddle
 
 [![Build Status](https://travis-ci.org/bpmn-io/moddle.svg?branch=master)](https://travis-ci.org/bpmn-io/moddle)
@@ -76,8 +79,6 @@ console.log(carDescriptor.properties);
 ```
 
 Have a look at our [test coverage](https://github.com/bpmn-io/moddle/blob/master/test/spec) to learn about everything that is currently supported.
-
-> __Note:__ As of version `4.0.0` this library exposes ES modules. Use [esm](https://github.com/standard-things/esm) or a ES module aware transpiler such as Webpack, Rollup or Browserify + babelify to consume it.
 
 
 ## Resources
