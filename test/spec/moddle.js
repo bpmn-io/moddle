@@ -163,6 +163,8 @@ describe('moddle', function() {
         });
 
         expect(anyInstance.$instanceOf('other:Foo')).to.be.true;
+
+        expect(anyInstance.$model).to.eql(model);
       });
 
 
@@ -179,6 +181,38 @@ describe('moddle', function() {
           isGeneric: true,
           ns: { prefix : 'other', localName : 'Foo', uri : 'http://other' }
         });
+      });
+
+
+      describe('api', function() {
+
+        it('should provide #get method', function() {
+
+          // when
+          var anyInstance = model.createAny('other:Foo', 'http://other', {
+            bar: 'BAR'
+          });
+
+          // then
+          expect(anyInstance.get('bar')).to.eql('BAR');
+          expect(anyInstance.get('nonexisting')).not.to.exist;
+        });
+
+
+        it('should provide #set method', function() {
+
+          // given
+          var anyInstance = model.createAny('other:Foo', 'http://other', {
+            bar: 'BAR'
+          });
+
+          // when
+          anyInstance.set('bar', 'BLUB');
+
+          // then
+          expect(anyInstance.get('bar')).to.eql('BLUB');
+        });
+
       });
 
     });
