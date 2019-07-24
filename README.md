@@ -49,7 +49,7 @@ A moddle description is a simple [JSON](http://json.org/) file that describes ty
 __moddle__ allows you to instantiate that definition and create objects from it:
 
 ```javascript
-import Moddle from 'moddle';
+import { Moddle } from 'moddle';
 
 var cars = new Moddle([ carsJSON ]);
 
