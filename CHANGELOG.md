@@ -6,6 +6,17 @@ All notable changes to [moddle](https://github.com/bpmn-io/moddle) are documente
 
 ___Note:__ Yet to be released changes appear here._
 
+## 5.0.0
+
+* `CHORE`: expose `{ Moddle }` and utilities
+* `CHORE`: provide pre-packaged distribution
+
+### Breaking Changes
+
+* We expose `Moddle` as a named export now.
+* We do not publish `lib` folder anymore, destructure the provided default export.
+* No need for `esm` to consume the library anymore.
+
 ## 4.1.0
 
 * `CHORE`: bump utility toolbelt
