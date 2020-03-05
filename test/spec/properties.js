@@ -13,7 +13,7 @@ describe('properties', function() {
 
   describe('descriptor', function() {
 
-    it('should provide body property', function() {
+    it('should provide id property', function() {
 
       // when
       var Complex = model.getType('props:Complex');
