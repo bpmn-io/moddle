@@ -3,8 +3,9 @@
   "version": "5.0.1",
   "description": "A library for importing meta-model based file formats into JS",
   "scripts": {
-    "all": "run-s lint test distro",
+    "all": "run-s lint lint:type test distro",
     "lint": "eslint .",
+    "lint:type": "tsc --pretty",
     "dev": "npm test -- --watch",
     "test": "mocha -r esm --reporter=spec --recursive test/spec",
     "distro": "run-s build test:build",
@@ -50,9 +51,10 @@
     "rollup": "^1.17.0",
     "rollup-plugin-commonjs": "^10.0.1",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-terser": "^5.1.1"
+    "rollup-plugin-terser": "^5.1.1",
+    "typescript": "^4.0.5"
   },
   "dependencies": {
-    "min-dash": "^3.0.0"
+    "min-dash": "^3.5.2"
   }
 }
