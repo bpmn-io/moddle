@@ -8,7 +8,7 @@ import {
 describe('properties', function() {
 
   var createModel = createModelBuilder('test/fixtures/model/');
-  var model = createModel([ 'properties' ]);
+  var model = createModel([ 'properties', 'properties-extended' ]);
 
 
   describe('descriptor', function() {
@@ -58,7 +58,20 @@ describe('properties', function() {
     });
 
 
-    it.skip('should inherit properties');
+    it('should inherit properties', function() {
+
+      // when
+      var ExtRoot = model.getType('ext:Root');
+
+      var descriptor = model.getElementDescriptor(ExtRoot);
+      var elementsProperty = descriptor.propertiesByName.elements;
+      var inheritedAnyProperty = descriptor.propertiesByName.any;
+
+      // then
+      expect(ExtRoot).to.exist;
+      expect(elementsProperty).to.exist;
+      expect(inheritedAnyProperty).to.exist;
+    });
 
   });
 
