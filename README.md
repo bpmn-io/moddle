@@ -1,6 +1,6 @@
 # moddle
 
-[![Build Status](https://travis-ci.com/bpmn-io/moddle.svg?branch=master)](https://travis-ci.com/bpmn-io/moddle)
+[![CI](https://github.com/bpmn-io/moddle/workflows/CI/badge.svg)](https://github.com/bpmn-io/moddle/actions?query=workflow%3ACI)
 
 A utility library for working with meta-model based data structures.
 
