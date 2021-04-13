@@ -181,6 +181,31 @@ describe('moddle', function() {
         });
       });
 
+
+      it('should return non-enumerable special props', function() {
+
+        // given
+        var anyInstance = model.createAny('other:Foo', 'http://other', {
+          bar: 'BAR'
+        });
+
+        // assume
+        expect(anyInstance).not.to.have.keys([
+          '$parent',
+          '$instanceOf'
+        ]);
+
+        // when
+        anyInstance.$parent = 'foo';
+        anyInstance.$instanceOf = 'bar';
+
+        // then
+        expect(anyInstance).not.to.have.keys([
+          '$parent',
+          '$instanceOf'
+        ]);
+      });
+
     });
 
 
