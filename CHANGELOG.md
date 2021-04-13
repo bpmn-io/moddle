@@ -6,6 +6,10 @@ All notable changes to [moddle](https://github.com/bpmn-io/moddle) are documente
 
 ___Note:__ Yet to be released changes appear here._
 
+## 5.0.2
+
+* `FIX`: make `Any` type `$instanceOf` member non-enumerable
+
 ## 5.0.1
 
 * `CHORE`: cleanup pre-built distribution
