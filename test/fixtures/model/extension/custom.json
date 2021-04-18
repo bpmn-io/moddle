@@ -4,6 +4,10 @@
   "prefix": "c",
   "types": [
     {
+      "name": "Element",
+      "isAbstract": true
+    },
+    {
       "name": "CustomRoot",
       "superClass": [ "Base" ],
       "extends": [ "b:Root" ],
