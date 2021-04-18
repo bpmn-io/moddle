@@ -109,7 +109,7 @@ describe('moddle', function() {
         var customGeneric = model.create('c:CustomGeneric', { count: 100 });
 
         // then
-        expect(customGeneric.$instanceOf('Element')).to.be.true;
+        expect(customGeneric.$instanceOf('c:Element')).to.be.true;
       });
 
 
