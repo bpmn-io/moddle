@@ -33,14 +33,6 @@ describe('Types', function() {
       expect(coerceType('Integer', '12012')).to.equal(12012);
     });
 
-
-    it('should NOT convert complex', function() {
-      var complexElement = { a: 'A' };
-      expect(coerceType('Element', complexElement)).to.equal(complexElement);
-    });
-
   });
 
 });
-
-
