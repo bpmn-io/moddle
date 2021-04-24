@@ -1,0 +1,21 @@
+{
+  "name": "Element",
+  "uri": "http://element",
+  "prefix": "e",
+  "types": [
+    {
+      "name": "Element",
+      "isAbstract": true,
+      "properties": [
+        { "name": "children", "type": "Element", "isMany": true }
+      ]
+    },
+    {
+      "name": "NamedElement",
+      "superClass": [ "Element" ],
+      "properties": [
+        { "name": "name", "type": "String" }
+      ]
+    }
+  ]
+}
