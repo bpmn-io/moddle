@@ -1,0 +1,11 @@
+{
+  "name": "UML",
+  "uri": "http://www.omg.org/spec/UML/20131001",
+  "prefix": "uml",
+  "types": [
+    {
+      "name": "Element",
+      "properties": []
+    }
+  ]
+}

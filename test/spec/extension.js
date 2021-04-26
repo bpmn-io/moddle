@@ -10,6 +10,24 @@ describe('moddle', function() {
   var createModel = createModelBuilder('test/fixtures/model/');
 
 
+  describe('name shadowing', function() {
+
+    it('should allow to shadow Element', function() {
+
+      // given
+      var model = createModel([ 'extension/uml' ]);
+
+      // when
+      var element = model.create('uml:Element');
+
+      // then
+      expect(element).to.exist;
+      expect(element.$instanceOf('uml:Element')).to.be.true;
+    });
+
+  });
+
+
   describe('extension', function() {
 
     var model = createModel([ 'extension/base', 'extension/custom' ]);
