@@ -9,6 +9,7 @@
     "test": "mocha -r esm --reporter=spec --recursive test/spec",
     "distro": "run-s build test:build",
     "build": "rollup -c",
+    "prepare": "npm run build",
     "test:build": "mocha --reporter=spec --recursive test/distro",
     "prepublishOnly": "run-s distro"
   },
