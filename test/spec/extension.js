@@ -10,9 +10,9 @@ describe('moddle', function() {
   var createModel = createModelBuilder('test/fixtures/model/');
 
 
-  describe('name shadowing', function() {
+  describe('built in name shadowing', function() {
 
-    it('should allow to shadow Element', function() {
+    it('should shadow <Element>', function() {
 
       // given
       var model = createModel([ 'extension/uml' ]);
@@ -23,6 +23,21 @@ describe('moddle', function() {
       // then
       expect(element).to.exist;
       expect(element.$instanceOf('uml:Element')).to.be.true;
+    });
+
+
+    it('should shadow <Element> in inheritance hierarchy', function() {
+
+      // given
+      var model = createModel([ 'extension/uml' ]);
+
+      // when
+      var element = model.create('uml:NamedElement');
+
+      // then
+      expect(element).to.exist;
+      expect(element.$instanceOf('uml:Element')).to.be.true;
+      expect(element.$instanceOf('uml:NamedElement')).to.be.true;
     });
 
   });

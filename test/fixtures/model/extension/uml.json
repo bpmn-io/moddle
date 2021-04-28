@@ -6,6 +6,10 @@
     {
       "name": "Element",
       "properties": []
+    },
+    {
+      "name": "NamedElement",
+      "superClass": [ "uml:Element" ]
     }
   ]
 }
