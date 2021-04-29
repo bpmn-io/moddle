@@ -73,6 +73,16 @@ describe('properties', function() {
       expect(inheritedAnyProperty).to.exist;
     });
 
+    it('should NOT add already defined property without redefine', function() {
+
+      // when
+      var getType = function () {
+        model.getType('props:BaseWithAlreadyDefinedId');
+      };
+
+      // then
+      expect(getType).to.throw(Error);
+    });
   });
 
 
