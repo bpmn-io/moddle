@@ -77,7 +77,7 @@ describe('properties', function() {
     it('should NOT add already defined property without redefine', function() {
 
       // when
-      var getType = function () {
+      var getType = function() {
         model.getType('props:BaseWithAlreadyDefinedId');
       };
 
@@ -504,7 +504,6 @@ describe('properties', function() {
         expect(instance).to.exist;
       });
 
-
       describe('get', function() {
 
         it('access via original name', function() {
@@ -513,7 +512,7 @@ describe('properties', function() {
           var instance = mhModel.create('mh:MultipleInherited');
 
           // when
-          var property = instance.get("any");
+          var property = instance.get('any');
 
           // then
           expect(property).to.exist;
@@ -526,7 +525,7 @@ describe('properties', function() {
           var instance = mhModel.create('mh:MultipleInherited');
 
           // when
-          var property = instance.get("mh:any");
+          var property = instance.get('mh:any');
 
           // then
           expect(property).to.exist;
@@ -539,7 +538,7 @@ describe('properties', function() {
           var instance = mhModel.create('mh:MultipleInherited');
 
           // when
-          var property = instance.get("props:any");
+          var property = instance.get('props:any');
 
           // then
           expect(property).to.exist;
@@ -556,10 +555,10 @@ describe('properties', function() {
           var instance = mhModel.create('mh:MultipleInherited');
 
           // when
-          instance.set("any", [ "test" ]);
-          var originalProperty = instance.get("any");
-          var localProperty = instance.get("mh:any");
-          var otherProperty = instance.get("props:any");
+          instance.set('any', [ 'test' ]);
+          var originalProperty = instance.get('any');
+          var localProperty = instance.get('mh:any');
+          var otherProperty = instance.get('props:any');
 
           // then
           expect(originalProperty.length).to.equal(1);
@@ -571,10 +570,10 @@ describe('properties', function() {
 
           // when
           var instance = mhModel.create('mh:MultipleInherited');
-          instance.set("mh:any", [ "test" ]);
-          var originalProperty = instance.get("any");
-          var localProperty = instance.get("mh:any");
-          var otherProperty = instance.get("props:any");
+          instance.set('mh:any', [ 'test' ]);
+          var originalProperty = instance.get('any');
+          var localProperty = instance.get('mh:any');
+          var otherProperty = instance.get('props:any');
 
           // then
           expect(originalProperty.length).to.equal(1);
@@ -587,10 +586,10 @@ describe('properties', function() {
 
           // when
           var instance = mhModel.create('mh:MultipleInherited');
-          instance.set("props:any", [ "test" ]);
-          var originalProperty = instance.get("any");
-          var localProperty = instance.get("mh:any");
-          var otherProperty = instance.get("props:any");
+          instance.set('props:any', [ 'test' ]);
+          var originalProperty = instance.get('any');
+          var localProperty = instance.get('mh:any');
+          var otherProperty = instance.get('props:any');
 
           // then
           expect(originalProperty.length).to.equal(0);
