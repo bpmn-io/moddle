@@ -1,0 +1,23 @@
+{
+  "name": "MultipleInheritance",
+  "uri": "http://multipleinheritance",
+  "prefix": "mh",
+  "types": [
+    {
+      "name": "AnotherRoot",
+      "properties": [
+        {
+          "name": "any",
+          "type": "AnotherRoot",
+          "isMany": true
+        }
+      ]
+    },
+    {
+      "name": "MultipleInherited",
+      "superClass": [ "AnotherRoot", "props:Root" ],
+      "properties": [
+      ]
+    }
+  ]
+}

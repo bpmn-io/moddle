@@ -73,6 +73,18 @@ describe('properties', function() {
       expect(inheritedAnyProperty).to.exist;
     });
 
+
+    it('should NOT add already defined property without redefine', function() {
+
+      // when
+      var getType = function() {
+        model.getType('props:BaseWithAlreadyDefinedId');
+      };
+
+      // then
+      expect(getType).to.throw(Error);
+    });
+
   });
 
 
@@ -454,5 +466,141 @@ describe('properties', function() {
     });
 
   });
+
+  describe('multiple inherited properties', function() {
+
+    // const createModel = createModelBuilder('test/fixtures/model/');
+    var mhModel = createModel([
+      'properties',
+      'multiple-inherited-properties'
+    ]);
+
+    describe('descriptor', function() {
+
+      it('should provide type', function() {
+
+        // when
+        var Type = mhModel.getType('mh:MultipleInherited');
+        var descriptor = model.getElementDescriptor(Type);
+
+        // then
+        expect(Type).to.exist;
+        expect(descriptor).to.exist;
+        expect(descriptor.propertiesByName.any).to.exist;
+        expect(descriptor.propertiesByName['mh:any']).to.exist;
+        expect(descriptor.propertiesByName['props:any']).to.exist;
+      });
+
+    });
+
+    describe('instance', function() {
+
+      it('should create instance', function() {
+
+        // when
+        var instance = mhModel.create('mh:MultipleInherited');
+
+        // then
+        expect(instance).to.exist;
+      });
+
+      describe('get', function() {
+
+        it('access via original name', function() {
+
+          // given
+          var instance = mhModel.create('mh:MultipleInherited');
+
+          // when
+          var property = instance.get('any');
+
+          // then
+          expect(property).to.exist;
+        });
+
+
+        it('access via local name', function() {
+
+          // given
+          var instance = mhModel.create('mh:MultipleInherited');
+
+          // when
+          var property = instance.get('mh:any');
+
+          // then
+          expect(property).to.exist;
+        });
+
+
+        it('access via other name', function() {
+
+          // given
+          var instance = mhModel.create('mh:MultipleInherited');
+
+          // when
+          var property = instance.get('props:any');
+
+          // then
+          expect(property).to.exist;
+        });
+
+      }); // describe(multiple inherited properties/instance/get)
+
+
+      describe('set', function() {
+
+        it('via original name', function() {
+
+          // given
+          var instance = mhModel.create('mh:MultipleInherited');
+
+          // when
+          instance.set('any', [ 'test' ]);
+          var originalProperty = instance.get('any');
+          var localProperty = instance.get('mh:any');
+          var otherProperty = instance.get('props:any');
+
+          // then
+          expect(originalProperty.length).to.equal(1);
+          expect(localProperty.length).to.equal(1);
+          expect(otherProperty.length).to.equal(0);
+        });
+
+        it('via local name', function() {
+
+          // when
+          var instance = mhModel.create('mh:MultipleInherited');
+          instance.set('mh:any', [ 'test' ]);
+          var originalProperty = instance.get('any');
+          var localProperty = instance.get('mh:any');
+          var otherProperty = instance.get('props:any');
+
+          // then
+          expect(originalProperty.length).to.equal(1);
+          expect(localProperty.length).to.equal(1);
+          expect(otherProperty.length).to.equal(0);
+        });
+
+
+        it('via other name', function() {
+
+          // when
+          var instance = mhModel.create('mh:MultipleInherited');
+          instance.set('props:any', [ 'test' ]);
+          var originalProperty = instance.get('any');
+          var localProperty = instance.get('mh:any');
+          var otherProperty = instance.get('props:any');
+
+          // then
+          expect(originalProperty.length).to.equal(0);
+          expect(localProperty.length).to.equal(0);
+          expect(otherProperty.length).to.equal(1);
+        });
+
+      }); // describe(multiple inherited properties/instance/set)
+
+    }); // describe(multiple inherited properties/instance)
+
+  }); // describe(multiple inherited properties)
 
 });

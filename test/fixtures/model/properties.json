@@ -85,6 +85,13 @@
       ]
     },
     {
+      "name": "BaseWithAlreadyDefinedId",
+      "superClass": [ "BaseWithId" ],
+      "properties": [
+        { "name": "id", "type": "Integer", "isAttr": true, "isId": true }
+      ]
+    },
+    {
       "name": "Attributes",
       "superClass": [ "BaseWithId" ],
       "properties": [
