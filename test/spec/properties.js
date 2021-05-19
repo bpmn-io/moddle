@@ -518,11 +518,9 @@ describe('properties', function() {
         it('should describe propertiesByName', function() {
 
           // when
-          var properties = descriptor.propertiesByName;
+          var properties = descriptor.propertiesByName
 
           // then
-          expect(properties).to.exist;
-
           expect(properties.any).to.exist;
           expect(properties['mh:any']).to.exist;
           expect(properties['props:any']).to.exist;
@@ -534,6 +532,10 @@ describe('properties', function() {
           expect(properties.single).to.exist;
           expect(properties['mh:single']).to.exist;
           expect(properties['props:single']).to.exist;
+
+          expect(properties.defaultSingle).to.exist;
+          expect(properties['mh:defaultSingle']).to.exist;
+          expect(properties['props:defaultSingle']).to.exist;
         });
 
       }); // describe(multiple inherited/Type/descriptor)
@@ -553,13 +555,46 @@ describe('properties', function() {
 
       describe('non-many', function() {
 
+        describe('default', function() {
+
+          // given
+          var instance = mhModel.create('mh:MultipleInherited');
+
+          // when
+          var originalProperty = instance.defaultSingle;
+
+          // Note: access to local and other name ONLY with 'get()'. Not
+          // mapped into the object!
+
+          var localProperty = instance.get('mh:defaultSingle');
+          var otherProperty = instance['props:defaultSingle'];
+          // var otherProperty = instance.get('props:defaultSingle');
+
+          it('should exist', function() {
+
+            // then
+            expect(originalProperty).to.exist;
+            expect(localProperty).to.exist;
+            expect(otherProperty).to.exist;
+          });
+
+          it('should hold different values', function() {
+
+            // then
+            expect(originalProperty).to.equal('mh-default-string');
+            expect(otherProperty).to.equal(42);
+            expect(originalProperty).to.eql(localProperty);
+          });
+
+        }); // describe(multiple inherited/instance/non-many/default)
+
         describe('initialize with create', function() {
 
           it('should initialize values via original name', function() {
 
             // given
             var instance = mhModel.create('mh:MultipleInherited', {
-              single: 'string',
+              single: 'non-default-string',
               'props:single': 23
             });
 
@@ -573,16 +608,16 @@ describe('properties', function() {
             var otherProperty = instance['props:single'];
 
             // then
-            expect(originalProperty).to.equal('string');
+            expect(originalProperty).to.equal('non-default-string');
             expect(otherProperty).to.equal(23);
-            expect(originalProperty).to.equal(localProperty);
+            expect(originalProperty).to.eql(localProperty);
           });
 
           it('should initialize values via local name', function() {
 
             // given
             var instance = mhModel.create('mh:MultipleInherited', {
-              'mh:single': 'mh-string',
+              'mh:single': 'mh-non-default-string',
               'props:single': 23
             });
 
@@ -592,9 +627,9 @@ describe('properties', function() {
             var otherProperty = instance['props:single'];
 
             // then
-            expect(originalProperty).to.equal('mh-string');
+            expect(originalProperty).to.equal('mh-non-default-string');
             expect(otherProperty).to.equal(23);
-            expect(originalProperty).to.equal(localProperty);
+            expect(originalProperty).to.eql(localProperty);
           });
 
         }); // describe(multiple inherited/instance/non-many/initialize with create)

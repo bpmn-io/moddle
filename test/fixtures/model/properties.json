@@ -138,6 +138,11 @@
         {
           "name": "single",
           "type": "Integer"
+        },
+        {
+          "name": "defaultSingle",
+          "type": "Integer",
+          "default": 42
         }
       ]
     },

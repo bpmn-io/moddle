@@ -19,6 +19,11 @@
         {
           "name": "single",
           "type": "String"
+        },
+        {
+          "name": "defaultSingle",
+          "type": "String",
+          "default": "mh-default-string"
         }
       ]
     },
