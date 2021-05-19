@@ -518,7 +518,7 @@ describe('properties', function() {
         it('should describe propertiesByName', function() {
 
           // when
-          var properties = descriptor.propertiesByName
+          var properties = descriptor.propertiesByName;
 
           // then
           expect(properties.any).to.exist;
