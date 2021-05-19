@@ -10,6 +10,15 @@
           "name": "any",
           "type": "AnotherRoot",
           "isMany": true
+        },
+        {
+          "name": "many",
+          "type": "String",
+          "isMany": true
+        },
+        {
+          "name": "single",
+          "type": "String"
         }
       ]
     },

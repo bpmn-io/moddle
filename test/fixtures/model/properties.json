@@ -129,6 +129,15 @@
           "name": "any",
           "type": "Base",
           "isMany": true
+        },
+        {
+          "name": "many",
+          "type": "Integer",
+          "isMany": true
+        },
+        {
+          "name": "single",
+          "type": "Integer"
         }
       ]
     },
