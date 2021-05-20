@@ -477,7 +477,8 @@ describe('properties', function() {
     // namespaces.
     var mhModel = createModel([
       'properties',
-      'multiple-inherited-properties'
+      'multiple-inherited-properties',
+      "datatype"
     ]);
 
     it('should provide Type', function() {
@@ -527,18 +528,23 @@ describe('properties', function() {
           expect(properties.any).to.exist;
           expect(properties['mh:any']).to.exist;
           expect(properties['props:any']).to.exist;
+          expect(properties.any).to.eql(properties['mh:any']);
 
           expect(properties.many).to.exist;
           expect(properties['mh:many']).to.exist;
           expect(properties['props:many']).to.exist;
+          expect(properties.many).to.eql(properties['mh:many']);
 
           expect(properties.single).to.exist;
           expect(properties['mh:single']).to.exist;
           expect(properties['props:single']).to.exist;
+          expect(properties.single).to.equal(properties['mh:single']);
 
           expect(properties.defaultSingle).to.exist;
           expect(properties['mh:defaultSingle']).to.exist;
           expect(properties['props:defaultSingle']).to.exist;
+          expect(properties.defaultSingle).to
+            .equal(properties['mh:defaultSingle']);
         });
 
       }); // describe(multiple inherited/Type/descriptor)
