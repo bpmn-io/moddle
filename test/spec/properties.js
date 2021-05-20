@@ -488,7 +488,7 @@ describe('properties', function() {
       };
 
       // then
-      expect(getType).to.not.throw(Error);
+      expect(getType).to.not.throw();
 
       var Type = eval(getType);
       expect(Type).to.exist;
@@ -507,7 +507,7 @@ describe('properties', function() {
         };
 
         // then
-        expect(getDescriptor).to.not.throw(Error);
+        expect(getDescriptor).to.not.throw();
 
         var descriptor = eval(getDescriptor);
         expect(descriptor).to.exist;
