@@ -477,8 +477,7 @@ describe('properties', function() {
     // namespaces.
     var mhModel = createModel([
       'properties',
-      'multiple-inherited-properties',
-      "datatype"
+      'multiple-inherited-properties'
     ]);
 
     it('should provide Type', function() {
