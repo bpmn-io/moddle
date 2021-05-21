@@ -37,6 +37,17 @@
           "default": false
         }
       ]
+    },
+    {
+      "name": "InvalidMultipleInherited",
+      "superClass": [ "AnotherRoot", "props:Root" ],
+      "properties": [
+        {
+          "name": "defaultSingle",
+          "type": "Boolean",
+          "default": false
+        }
+      ]
     }
   ]
 }

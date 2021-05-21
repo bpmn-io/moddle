@@ -49,6 +49,25 @@ describe('multiple inherited properties', function() {
       expect(descriptor).to.exist;
     });
 
+    describe('invalid', function() {
+
+      it('should NOT provide Type', function() {
+
+        // when
+        var getType = function() {
+          mhModel.getType('mh:InvalidMultipleInherited');
+        };
+
+        // then
+        expect(getType)
+          .to.throw('property <defaultSingle> already defined; override of ' +
+                    '<mh:AnotherRoot#mh:defaultSingle> by ' +
+                    '<mh:InvalidMultipleInherited#mh:defaultSingle> not ' +
+                    'allowed without redefines');
+      });
+
+    }); // describe(multiple inherited/Type/invalid)
+
     describe('descriptor', function() {
 
       // given
