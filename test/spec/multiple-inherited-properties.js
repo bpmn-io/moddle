@@ -45,7 +45,7 @@ describe('multiple inherited properties', function() {
       // then
       expect(getDescriptor).to.not.throw();
 
-      var descriptor = eval(getDescriptor);
+      var descriptor = mhModel.getElementDescriptor(Type);
       expect(descriptor).to.exist;
     });
 
