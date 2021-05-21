@@ -143,6 +143,11 @@
           "name": "defaultSingle",
           "type": "Integer",
           "default": 42
+        },
+        {
+          "name": "anotherDefaultSingle",
+          "type": "Integer",
+          "default": 23
         }
       ]
     },

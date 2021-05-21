@@ -80,6 +80,12 @@ describe('multiple inherited properties', function() {
         expect(propsByName['dt:defaultSingle']).to.exist;
         expect(propsByName.defaultSingle).to
           .equal(propsByName['mh:defaultSingle']);
+
+        expect(propsByName.anotherDefaultSingle).to.exist;
+        expect(propsByName['mh:anotherDefaultSingle']).to.exist;
+        expect(propsByName['props:anotherDefaultSingle']).to.exist;
+        expect(propsByName.anotherDefaultSingle).to
+          .equal(propsByName['mh:anotherDefaultSingle']);
       });
 
       it('should describe defined property type', function() {
@@ -89,6 +95,7 @@ describe('multiple inherited properties', function() {
 
         // Note: no need to test 'mh:any' as we test equality with 'any' in
         // 'should map properties by name'
+
         expect(propsByName['props:any'].type).to.equal('props:Base');
 
         expect(propsByName.many.type).to.equal('String');
@@ -100,6 +107,10 @@ describe('multiple inherited properties', function() {
         expect(propsByName.defaultSingle.type).to.equal('String');
         expect(propsByName['props:defaultSingle'].type).to.equal('Integer');
         expect(propsByName['dt:defaultSingle'].type).to.equal('Boolean');
+
+        expect(propsByName.anotherDefaultSingle.type).to.equal('Boolean');
+        expect(propsByName['props:anotherDefaultSingle'].type).to
+          .equal('Integer');
       });
 
     }); // describe(multiple inherited/Type/descriptor)
@@ -127,13 +138,12 @@ describe('multiple inherited properties', function() {
         // when
         var originalProperty = instance.defaultSingle;
 
-        // Note: access to local and other name ONLY with 'get()'. Not
+        // Note: access to local name ONLY with 'get()'. The local name is NOT
         // mapped into the object!
 
         var localProperty = instance.get('mh:defaultSingle');
         var otherProperty = instance['props:defaultSingle'];
         var anotherProperty = instance['dt:defaultSingle'];
-        // var otherProperty = instance.get('props:defaultSingle');
 
         it('should exist', function() {
 
@@ -168,8 +178,8 @@ describe('multiple inherited properties', function() {
           // when
           var originalProperty = instance.single;
 
-          // Note: access to local name ALWAYS ONLY with 'get()'. Not mapped
-          // into the object!
+          // Note: access to local name ONLY with 'get()'. The local name is NOT
+          // mapped into the object!
 
           var localProperty = instance.get('mh:single');
           var otherProperty = instance['props:single'];

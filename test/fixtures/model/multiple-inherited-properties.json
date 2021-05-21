@@ -31,6 +31,11 @@
       "name": "MultipleInherited",
       "superClass": [ "AnotherRoot", "props:Root", "dt:Root" ],
       "properties": [
+        {
+          "name": "anotherDefaultSingle",
+          "type": "Boolean",
+          "default": false
+        }
       ]
     }
   ]
