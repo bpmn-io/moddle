@@ -477,7 +477,8 @@ describe('properties', function() {
     // namespaces.
     var mhModel = createModel([
       'properties',
-      'multiple-inherited-properties'
+      'multiple-inherited-properties',
+      'datatype'
     ]);
 
     it('should provide Type', function() {
@@ -517,36 +518,55 @@ describe('properties', function() {
 
         // given
         var descriptor = mhModel.getElementDescriptor(Type);
+        var propsByName = descriptor.propertiesByName;
 
-        it('should describe propertiesByName', function() {
-
-          // when
-          var properties = descriptor.propertiesByName;
+        it('should map properties by name', function() {
 
           // then
-          expect(properties.any).to.exist;
-          expect(properties['mh:any']).to.exist;
-          expect(properties['props:any']).to.exist;
-          expect(properties.any).to.eql(properties['mh:any']);
+          expect(propsByName.any).to.exist;
+          expect(propsByName['mh:any']).to.exist;
+          expect(propsByName['props:any']).to.exist;
+          expect(propsByName.any).to.eql(propsByName['mh:any']);
 
-          expect(properties.many).to.exist;
-          expect(properties['mh:many']).to.exist;
-          expect(properties['props:many']).to.exist;
-          expect(properties.many).to.eql(properties['mh:many']);
+          expect(propsByName.many).to.exist;
+          expect(propsByName['mh:many']).to.exist;
+          expect(propsByName['props:many']).to.exist;
+          expect(propsByName.many).to.eql(propsByName['mh:many']);
 
-          expect(properties.single).to.exist;
-          expect(properties['mh:single']).to.exist;
-          expect(properties['props:single']).to.exist;
-          expect(properties.single).to.equal(properties['mh:single']);
+          expect(propsByName.single).to.exist;
+          expect(propsByName['mh:single']).to.exist;
+          expect(propsByName['props:single']).to.exist;
+          expect(propsByName.single).to.equal(propsByName['mh:single']);
 
-          expect(properties.defaultSingle).to.exist;
-          expect(properties['mh:defaultSingle']).to.exist;
-          expect(properties['props:defaultSingle']).to.exist;
-          expect(properties.defaultSingle).to
-            .equal(properties['mh:defaultSingle']);
+          expect(propsByName.defaultSingle).to.exist;
+          expect(propsByName['mh:defaultSingle']).to.exist;
+          expect(propsByName['props:defaultSingle']).to.exist;
+          expect(propsByName['dt:defaultSingle']).to.exist;
+          expect(propsByName.defaultSingle).to
+            .equal(propsByName['mh:defaultSingle']);
         });
 
-      }); // describe(multiple inherited/Type/descriptor)
+        it('should describe defined property type', function() {
+
+          // then
+          expect(propsByName.any.type).to.equal('mh:AnotherRoot');
+
+          // Note: no need to test 'mh:any' as we test equality with 'any' in
+          // 'should map properties by name'
+          expect(propsByName['props:any'].type).to.equal('props:Base');
+
+          expect(propsByName.many.type).to.equal('String');
+          expect(propsByName['props:many'].type).to.equal('Integer');
+
+          expect(propsByName.single.type).to.equal('String');
+          expect(propsByName['props:single'].type).to.equal('Integer');
+
+          expect(propsByName.defaultSingle.type).to.equal('String');
+          expect(propsByName['props:defaultSingle'].type).to.equal('Integer');
+          expect(propsByName['dt:defaultSingle'].type).to.equal('Boolean');
+        });
+
+      }); // describe(multiple inherited/Type/descriptor.propertiesByName)
 
     }); // describe(multiple inherited/Type)
 
@@ -576,6 +596,7 @@ describe('properties', function() {
 
           var localProperty = instance.get('mh:defaultSingle');
           var otherProperty = instance['props:defaultSingle'];
+          var anotherProperty = instance['dt:defaultSingle'];
           // var otherProperty = instance.get('props:defaultSingle');
 
           it('should exist', function() {
@@ -584,6 +605,7 @@ describe('properties', function() {
             expect(originalProperty).to.exist;
             expect(localProperty).to.exist;
             expect(otherProperty).to.exist;
+            expect(anotherProperty).to.exist;
           });
 
           it('should hold different values', function() {
@@ -591,6 +613,7 @@ describe('properties', function() {
             // then
             expect(originalProperty).to.equal('mh-default-string');
             expect(otherProperty).to.equal(42);
+            expect(anotherProperty).to.equal(true);
             expect(originalProperty).to.eql(localProperty);
           });
 

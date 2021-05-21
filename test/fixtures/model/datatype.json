@@ -7,7 +7,16 @@
       "name": "Root",
       "properties": [
         { "name": "bounds", "serialize": "xsi:type", "type": "Rect" },
-        { "name": "otherBounds", "type": "do:Rect", "serialize": "xsi:type", "isMany": true }
+        { "name": "otherBounds",
+          "type": "do:Rect",
+          "serialize": "xsi:type",
+          "isMany": true
+        },
+        {
+          "name": "defaultSingle",
+          "type": "Boolean",
+          "default": true
+        }
       ]
     },
     {

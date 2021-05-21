@@ -29,7 +29,7 @@
     },
     {
       "name": "MultipleInherited",
-      "superClass": [ "AnotherRoot", "props:Root" ],
+      "superClass": [ "AnotherRoot", "props:Root", "dt:Root" ],
       "properties": [
       ]
     }
