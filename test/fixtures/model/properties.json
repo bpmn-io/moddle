@@ -85,6 +85,13 @@
       ]
     },
     {
+      "name": "BaseWithAlreadyDefinedId",
+      "superClass": [ "BaseWithId" ],
+      "properties": [
+        { "name": "id", "type": "Integer", "isAttr": true, "isId": true }
+      ]
+    },
+    {
       "name": "Attributes",
       "superClass": [ "BaseWithId" ],
       "properties": [
@@ -122,6 +129,25 @@
           "name": "any",
           "type": "Base",
           "isMany": true
+        },
+        {
+          "name": "many",
+          "type": "Integer",
+          "isMany": true
+        },
+        {
+          "name": "single",
+          "type": "Integer"
+        },
+        {
+          "name": "defaultSingle",
+          "type": "Integer",
+          "default": 42
+        },
+        {
+          "name": "anotherDefaultSingle",
+          "type": "Integer",
+          "default": 23
         }
       ]
     },

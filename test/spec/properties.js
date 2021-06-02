@@ -4,7 +4,6 @@ import {
   createModelBuilder
 } from '../helper';
 
-
 describe('properties', function() {
 
   var createModel = createModelBuilder('test/fixtures/model/');
@@ -71,6 +70,22 @@ describe('properties', function() {
       expect(ExtRoot).to.exist;
       expect(elementsProperty).to.exist;
       expect(inheritedAnyProperty).to.exist;
+    });
+
+
+    it('should NOT add already defined property without redefine', function() {
+
+      // when
+      var getType = function() {
+        model.getType('props:BaseWithAlreadyDefinedId');
+      };
+
+      // then
+      expect(getType).to.throw(
+        'property <id> already defined in namespace <props>; ' +
+          'override of <props:BaseWithId#id> by ' +
+          '<props:BaseWithAlreadyDefinedId#id> not allowed ' +
+          'without redefines or replaces');
     });
 
   });

@@ -1,0 +1,53 @@
+{
+  "name": "MultipleInheritance",
+  "uri": "http://multipleinheritance",
+  "prefix": "mh",
+  "types": [
+    {
+      "name": "AnotherRoot",
+      "properties": [
+        {
+          "name": "any",
+          "type": "AnotherRoot",
+          "isMany": true
+        },
+        {
+          "name": "many",
+          "type": "String",
+          "isMany": true
+        },
+        {
+          "name": "single",
+          "type": "String"
+        },
+        {
+          "name": "defaultSingle",
+          "type": "String",
+          "default": "mh-default-string"
+        }
+      ]
+    },
+    {
+      "name": "MultipleInherited",
+      "superClass": [ "AnotherRoot", "props:Root", "dt:Root" ],
+      "properties": [
+        {
+          "name": "anotherDefaultSingle",
+          "type": "Boolean",
+          "default": false
+        }
+      ]
+    },
+    {
+      "name": "InvalidMultipleInherited",
+      "superClass": [ "AnotherRoot", "props:Root" ],
+      "properties": [
+        {
+          "name": "defaultSingle",
+          "type": "Boolean",
+          "default": false
+        }
+      ]
+    }
+  ]
+}
