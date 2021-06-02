@@ -101,8 +101,8 @@ describe('moddle', function() {
 
       expect(descriptor.ns).to.jsonEqual(expectedDescriptorNs);
       expect(descriptor.properties).to.jsonEqual(expectedDescriptorProperties);
-      expect(descriptor.propertiesByName.id).to.equal(descriptor.propertiesByName['props:id']);
-        .jsonEqual(expectedDescriptorPropertiesByName.id);
+      expect(descriptor.propertiesByName.id).to
+        .equal(descriptor.propertiesByName['props:id']);
       expect(descriptor.propertiesByName['props:id']).to
         .jsonEqual(expectedDescriptorPropertiesByName['props:id']);
     });
