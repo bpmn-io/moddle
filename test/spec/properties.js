@@ -81,10 +81,11 @@ describe('properties', function() {
       };
 
       // then
-      expect(getType).to.throw('property <id> already defined; override of ' +
-                               '<props:BaseWithId#props:id> by ' +
-                               '<props:BaseWithAlreadyDefinedId#props:id> ' +
-                               'not allowed without redefines');
+      expect(getType).to.throw(
+        'property <id> already defined in namespace <props>; ' +
+          'override of <props:BaseWithId#id> by ' +
+          '<props:BaseWithAlreadyDefinedId#id> not allowed ' +
+          'without redefines or replaces');
     });
 
   });
