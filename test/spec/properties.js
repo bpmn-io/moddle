@@ -455,4 +455,26 @@ describe('properties', function() {
 
   });
 
+
+  describe('integration', function() {
+    /* global Proxy */
+
+    var proxyConfig = {
+      get(target, property) {
+        return new Proxy(target[property], proxyConfig);
+      }
+    };
+
+    it('should support proxies', function() {
+      var Complex = model.getType('props:Complex');
+
+      // when
+      var proxy = new Proxy(Complex, proxyConfig);
+
+      // then
+      expect(proxy.$descriptor).to.exist;
+    });
+
+  });
+
 });
