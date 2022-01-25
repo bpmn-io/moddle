@@ -6,6 +6,11 @@ All notable changes to [moddle](https://github.com/bpmn-io/moddle) are documente
 
 ___Note:__ Yet to be released changes appear here._
 
+## 5.0.3
+
+* `FIX`: use getters for read-only properties ([#40](https://github.com/bpmn-io/moddle/pull/40))
+* `CHORE`: add prepare script ([#33](https://github.com/bpmn-io/moddle/pull/33)))
+
 ## 5.0.2
 
 * `FIX`: make `Any` type `$instanceOf` member non-enumerable
