@@ -1,3 +1,5 @@
+import { forEach } from 'min-dash';
+
 import expect from '../expect';
 
 import {
@@ -235,6 +237,49 @@ describe('properties', function() {
         expect(instance).not.to.have.keys('foo', 'namespace:foo');
       });
 
+
+      it('should reject empty string as property name', function() {
+
+        // given
+        var instance = model.create('props:Attributes');
+
+        // when
+        var set = function() {
+          instance.set('', 'foo');
+        };
+
+        // then
+        expect(set).to.throw(TypeError, 'property name must be a non-empty string');
+      });
+
+
+      forEach([
+        false,
+        true,
+        undefined,
+        null,
+        NaN,
+        Function,
+        0,
+        1,
+        Infinity
+      ], function(invalidName) {
+
+        it('should reject non-string property name <' + invalidName + '>', function() {
+
+          // given
+          var instance = model.create('props:Attributes');
+
+          // when
+          var set = function() {
+            instance.set(invalidName, 'foo');
+          };
+
+          // then
+          expect(set).to.throw(TypeError, 'property name must be a non-empty string');
+        });
+
+      });
     });
 
 
