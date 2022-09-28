@@ -6,6 +6,10 @@ All notable changes to [moddle](https://github.com/bpmn-io/moddle) are documente
 
 ___Note:__ Yet to be released changes appear here._
 
+## 5.0.4
+
+* `FIX`: guard against `ModdleElement#set` miss-use ([#43](https://github.com/bpmn-io/moddle/issues/43))
+
 ## 5.0.3
 
 * `FIX`: use getters for read-only properties ([#40](https://github.com/bpmn-io/moddle/pull/40))
