@@ -6,6 +6,11 @@ All notable changes to [moddle](https://github.com/bpmn-io/moddle) are documente
 
 ___Note:__ Yet to be released changes appear here._
 
+## 6.0.0
+
+* `DEPS`: bump to `min-dash@4`
+* `CHORE`: turn into ES module
+
 ## 5.0.4
 
 * `FIX`: guard against `ModdleElement#set` miss-use ([#43](https://github.com/bpmn-io/moddle/issues/43))
