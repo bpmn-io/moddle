@@ -29,7 +29,7 @@ export function createModelBuilder(base) {
         try {
           pkg = cache[f] = JSON.parse(readFile(base + f + '.json'));
         } catch (e) {
-          throw new Error('[Helper] failed to parse <' + file + '> as JSON: ' +  e.message);
+          throw new Error('[Helper] failed to parse <' + file + '> as JSON: ' + e.message);
         }
       }
 

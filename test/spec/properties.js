@@ -502,7 +502,6 @@ describe('properties', function() {
 
 
   describe('integration', function() {
-    /* global Proxy */
 
     var proxyConfig = {
       get(target, property) {

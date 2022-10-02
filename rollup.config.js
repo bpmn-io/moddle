@@ -5,7 +5,7 @@ import commonjs from 'rollup-plugin-commonjs';
 
 import pkg from './package.json';
 
-function pgl(plugins=[]) {
+function pgl(plugins = []) {
   return plugins;
 }
 
@@ -16,6 +16,7 @@ const umdDist = pkg['umd:main'];
 const umdName = 'Moddle';
 
 export default [
+
   // browser-friendly UMD build
   {
     input: srcEntry,

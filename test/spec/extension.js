@@ -94,6 +94,7 @@ describe('moddle', function() {
 
 
       it('should refine property', function() {
+
         // given
         var Type = model.getType('b:Root');
 

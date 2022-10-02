@@ -270,6 +270,7 @@ describe('moddle', function() {
     describe('helpers', function() {
 
       it('should get property descriptor', function() {
+
         // given
         var SimpleBody = model.getType('props:SimpleBody');
 
