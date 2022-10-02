@@ -1,10 +1,10 @@
 import { forEach } from 'min-dash';
 
-import expect from '../expect';
+import expect from '../expect.js';
 
 import {
   createModelBuilder
-} from '../helper';
+} from '../helper.js';
 
 
 describe('properties', function() {

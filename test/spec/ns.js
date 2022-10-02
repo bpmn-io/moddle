@@ -1,8 +1,8 @@
-import expect from '../expect';
+import expect from '../expect.js';
 
 import {
   parseName
-} from '../../lib/ns';
+} from '../../lib/ns.js';
 
 
 describe('ns', function() {

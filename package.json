@@ -6,20 +6,21 @@
     "all": "run-s lint test distro",
     "lint": "eslint .",
     "dev": "npm test -- --watch",
-    "test": "mocha -r esm --reporter=spec --recursive test/spec",
+    "test": "mocha --reporter=spec --recursive test/spec",
     "distro": "run-s build test:build",
     "build": "rollup -c",
     "prepare": "npm run build",
     "test:build": "mocha --reporter=spec --recursive test/distro",
     "prepublishOnly": "run-s distro"
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/bpmn-io/moddle"
   },
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "module": "dist/index.esm.js",
-  "umd:main": "dist/moddle.umd.js",
+  "umd:main": "dist/moddle.umd.cjs",
   "source": "lib/index.js",
   "keywords": [
     "model",
@@ -47,7 +48,6 @@
     "chai": "^4.3.6",
     "eslint": "^8.24.0",
     "eslint-plugin-bpmn-io": "^0.16.0",
-    "esm": "^3.2.25",
     "mocha": "^10.0.0",
     "npm-run-all": "^4.1.2",
     "rollup": "^2.79.1",

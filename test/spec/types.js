@@ -1,8 +1,8 @@
-import expect from '../expect';
+import expect from '../expect.js';
 
 import {
   coerceType
-} from '../../lib/types';
+} from '../../lib/types.js';
 
 
 describe('Types', function() {

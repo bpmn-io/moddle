@@ -4,7 +4,7 @@ import {
   map
 } from 'min-dash';
 
-import { Moddle } from '../lib';
+import { Moddle } from '../lib/index.js';
 
 
 export function readFile(filename) {

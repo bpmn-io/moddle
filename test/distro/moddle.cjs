@@ -2,6 +2,8 @@ const {
   expect
 } = require('chai');
 
+const pkg = require('../../package.json');
+
 
 describe('moddle', function() {
 
@@ -13,7 +15,7 @@ describe('moddle', function() {
       isBuiltInType,
       parseNameNS,
       coerceType
-    } = require('../..');
+    } = require('../../' + pkg['main']);
 
     expect(new Moddle()).to.exist;
 
@@ -31,7 +33,7 @@ describe('moddle', function() {
       isBuiltInType,
       parseNameNS,
       coerceType
-    } = require('../../dist/moddle.umd.prod');
+    } = require('../../' + pkg['umd:main']);
 
     expect(new Moddle()).to.exist;
 
