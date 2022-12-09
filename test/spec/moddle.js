@@ -316,4 +316,64 @@ describe('moddle', function() {
 
   });
 
+
+  describe('property access', function() {
+
+    const moddle = createModel([
+      'properties',
+      'properties-extended'
+    ]);
+
+
+    describe('typed', function() {
+
+      it('should access property', function() {
+
+        // when
+        const element = moddle.create('ext:ExtendedComplex', {
+          count: 10
+        });
+
+        // then
+        expect(element.get('numCount')).to.eql(10);
+        expect(element.get('ext:numCount')).to.eql(10);
+        expect(element.get('count')).to.eql(10);
+        expect(element.get('props:count')).to.eql(10);
+      });
+
+
+      it('should access refined property', function() {
+
+        // when
+        const element = moddle.create('ext:ExtendedComplex', {
+          numCount: 10
+        });
+
+        // then
+        expect(element.get('numCount')).to.eql(10);
+        expect(element.get('ext:numCount')).to.eql(10);
+        expect(element.get('count')).to.eql(10);
+        expect(element.get('props:count')).to.eql(10);
+      });
+
+    });
+
+
+    describe('any', function() {
+
+      it('should access property', function() {
+
+        // when
+        const element = moddle.createAny('foo:Bar', 'http://tata', {
+          count: 10
+        });
+
+        // then
+        expect(element['count']).to.eql(10);
+      });
+
+    });
+
+  });
+
 });
