@@ -1,7 +1,7 @@
 {
-  "name": "UML",
-  "uri": "http://www.omg.org/spec/UML/20131001",
-  "prefix": "uml",
+  "name": "Shadow",
+  "uri": "http://shadow",
+  "prefix": "s",
   "types": [
     {
       "name": "Element",
@@ -9,7 +9,7 @@
     },
     {
       "name": "NamedElement",
-      "superClass": [ "uml:Element" ]
+      "superClass": [ "s:Element" ]
     }
   ]
 }
