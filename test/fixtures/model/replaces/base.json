@@ -1,7 +1,7 @@
 {
-  "name": "Replace",
-  "uri": "http://replace",
-  "prefix": "r",
+  "name": "Replaces Base",
+  "uri": "http://replaces",
+  "prefix": "b",
   "types": [
     {
       "name": "Base",

@@ -177,12 +177,12 @@ describe('extension', function() {
 
   describe('property replacement', function() {
 
-    var model = createModel([ 'replace' ]);
+    var model = createModel([ 'replaces/base' ]);
 
     it('should replace in descriptor', function() {
 
       // given
-      var Extension = model.getType('r:Extension');
+      var Extension = model.getType('b:Extension');
 
       // when
       var descriptor = model.getElementDescriptor(Extension),
@@ -197,7 +197,7 @@ describe('extension', function() {
         'id'
       ]);
 
-      expect(descriptor.propertiesByName['r:id'].type).to.eql('Integer');
+      expect(descriptor.propertiesByName['b:id'].type).to.eql('Integer');
       expect(descriptor.propertiesByName['id'].type).to.eql('Integer');
     });
 
@@ -206,12 +206,12 @@ describe('extension', function() {
 
   describe('property redefinition', function() {
 
-    var model = createModel([ 'redefine' ]);
+    var model = createModel([ 'redefines/base' ]);
 
     it('should redefine in descriptor', function() {
 
       // given
-      var Extension = model.getType('r:Extension');
+      var Extension = model.getType('b:Extension');
 
       // when
       var descriptor = model.getElementDescriptor(Extension),
@@ -226,7 +226,7 @@ describe('extension', function() {
         'value'
       ]);
 
-      expect(descriptor.propertiesByName['r:id'].type).to.eql('Integer');
+      expect(descriptor.propertiesByName['b:id'].type).to.eql('Integer');
       expect(descriptor.propertiesByName['id'].type).to.eql('Integer');
     });
 
