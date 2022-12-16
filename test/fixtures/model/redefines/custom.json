@@ -1,0 +1,17 @@
+{
+  "name": "Redefines Custom",
+  "uri": "http://redefines-custom",
+  "prefix": "c",
+  "types": [
+    {
+      "name": "Base",
+      "extends": [
+        "b:Base"
+      ],
+      "properties": [
+        { "name": "value", "type": "String" },
+        { "name": "id", "type": "Integer", "redefines": "b:Base#id", "isId": true }
+      ]
+    }
+  ]
+}

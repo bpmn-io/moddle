@@ -1,0 +1,17 @@
+{
+  "name": "Redefines Extension",
+  "uri": "http://redefines-extension",
+  "prefix": "e",
+  "types": [
+    {
+      "name": "Base",
+      "superClass": [
+        "b:Base"
+      ],
+      "properties": [
+        { "name": "value", "type": "String" },
+        { "name": "id", "type": "Integer", "redefines": "b:Base#id", "isId": true }
+      ]
+    }
+  ]
+}
