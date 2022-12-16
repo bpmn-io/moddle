@@ -10,6 +10,7 @@ describe('meta', function() {
   var createModel = createModelBuilder('test/fixtures/model/');
   var model = createModel([ 'meta' ]);
 
+
   it('should have the "meta" attribute', function() {
 
     // when
