@@ -61,6 +61,18 @@ describe('extension', function() {
       });
 
 
+      describe('traits', function() {
+
+        it('should not provide meta-data', function() {
+
+          expect(() => {
+            model.getType('c:CustomRoot');
+          }).to.throw(/cannot create <c:CustomRoot> extending <b:Root>/);
+        });
+
+      });
+
+
       describe('properties', function() {
 
         it('should register', function() {
