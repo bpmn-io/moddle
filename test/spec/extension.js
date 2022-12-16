@@ -60,15 +60,42 @@ describe('extension', function() {
           var ComplexType = model.getType('b:Root');
 
           // when
-          var descriptor = model.getElementDescriptor(ComplexType),
-              customAttrDescriptor = descriptor.propertiesByName['customAttr'],
-              customBaseAttrDescriptor = descriptor.propertiesByName['customBaseAttr'],
-              ownAttrDescriptor = descriptor.propertiesByName['ownAttr'];
+          var descriptor = model.getElementDescriptor(ComplexType);
+          var propertiesByName = descriptor.propertiesByName;
 
           // then
-          expect(customAttrDescriptor.inherited).to.be.false;
-          expect(customBaseAttrDescriptor.inherited).to.be.false;
-          expect(ownAttrDescriptor.inherited).to.be.true;
+          expect(propertiesByName).to.include.keys([
+            'c:customAttr',
+            'c:customBaseAttr',
+            'ownAttr'
+          ]);
+
+          expect(propertiesByName).not.to.include.keys([
+            'customAttr',
+            'customBaseAttr'
+          ]);
+
+          // then
+          expect(propertiesByName['c:customAttr']).to.have.property('inherited', false);
+          expect(propertiesByName['c:customBaseAttr']).to.have.property('inherited', false);
+          expect(propertiesByName['ownAttr']).to.have.property('inherited', true);
+        });
+
+
+        it('should handle conflicting names', function() {
+
+          // given
+          var ComplexType = model.getType('b:Root');
+
+          // when
+          var descriptor = model.getElementDescriptor(ComplexType);
+          var propertiesByName = descriptor.propertiesByName;
+
+          // then
+          expect(propertiesByName).to.include.keys([
+            'own',
+            'c:own'
+          ]);
         });
 
       });
@@ -91,7 +118,13 @@ describe('extension', function() {
         });
 
         // then
-        expect(root.customAttr).to.eql(-1);
+        expect(root.customAttr).not.to.exist;
+
+        expect(root['c:customAttr']).not.to.exist;
+        expect(root.get('c:customAttr')).not.to.exist;
+
+        // but saved as extension attribute
+        expect(root.get('customAttr')).to.eql(-1);
       });
 
 
@@ -118,7 +151,7 @@ describe('extension', function() {
         });
 
         // then
-        expect(root.generic).to.eql(customGeneric);
+        expect(root['c:generic']).to.eql(customGeneric);
       });
 
     });
