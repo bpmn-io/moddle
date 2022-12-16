@@ -6,6 +6,7 @@
     {
       "name": "Root",
       "properties": [
+        { "name": "id", "type": "String" },
         { "name": "own", "type": "Own" },
         { "name": "ownAttr", "type": "String", "isAttr": true },
         { "name": "generic", "type": "Element" },

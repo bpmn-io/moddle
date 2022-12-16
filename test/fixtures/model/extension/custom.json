@@ -10,7 +10,8 @@
       "properties": [
         { "name": "own", "type": "b:Own" },
         { "name": "customAttr", "type": "Integer", "isAttr": true },
-        { "name": "generic", "type": "CustomGeneric", "redefines": "b:Root#generic" }
+        { "name": "generic", "type": "CustomGeneric", "redefines": "b:Root#generic" },
+        { "name": "id", "type": "String", "replaces": "b:Root#id", "isAttr": true, "isId": true }
       ]
     },
     {
