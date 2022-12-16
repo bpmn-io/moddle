@@ -8,6 +8,7 @@
       "superClass": [ "Base" ],
       "extends": [ "b:Root" ],
       "properties": [
+        { "name": "own", "type": "b:Own" },
         { "name": "customAttr", "type": "Integer", "isAttr": true },
         { "name": "generic", "type": "CustomGeneric", "redefines": "b:Root#generic" }
       ]
