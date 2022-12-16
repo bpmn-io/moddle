@@ -327,7 +327,23 @@ describe('moddle', function() {
 
     describe('typed', function() {
 
-      it('should access property', function() {
+      it('should access basic', function() {
+
+        // when
+        const element = moddle.create('props:ComplexCount', {
+          count: 10
+        });
+
+        // then
+        expect(element.get('count')).to.eql(10);
+        expect(element.get('props:count')).to.eql(10);
+
+        // available under base name
+        expect(element.count).to.exist;
+      });
+
+
+      it('should access refined property, created via base name', function() {
 
         // when
         const element = moddle.create('ext:ExtendedComplex', {
@@ -339,10 +355,14 @@ describe('moddle', function() {
         expect(element.get('ext:numCount')).to.eql(10);
         expect(element.get('count')).to.eql(10);
         expect(element.get('props:count')).to.eql(10);
+
+        // available under refined name
+        expect(element.numCount).to.eql(10);
+        expect(element.count).not.to.exist;
       });
 
 
-      it('should access refined property', function() {
+      it('should access refined property, created via refined name', function() {
 
         // when
         const element = moddle.create('ext:ExtendedComplex', {
@@ -354,6 +374,10 @@ describe('moddle', function() {
         expect(element.get('ext:numCount')).to.eql(10);
         expect(element.get('count')).to.eql(10);
         expect(element.get('props:count')).to.eql(10);
+
+        // available under refined name
+        expect(element.numCount).to.eql(10);
+        expect(element.count).not.to.exist;
       });
 
 
