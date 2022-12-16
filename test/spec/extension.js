@@ -10,34 +10,36 @@ describe('extension', function() {
   var createModel = createModelBuilder('test/fixtures/model/');
 
 
-  describe('built in name shadowing', function() {
+  describe('types', function() {
 
-    it('should shadow <Element>', function() {
-
-      // given
-      var model = createModel([ 'extension/uml' ]);
-
-      // when
-      var element = model.create('uml:Element');
-
-      // then
-      expect(element).to.exist;
-      expect(element.$instanceOf('uml:Element')).to.be.true;
-    });
-
-
-    it('should shadow <Element> in inheritance hierarchy', function() {
+    describe('built-in shadowing', function() {
 
       // given
-      var model = createModel([ 'extension/uml' ]);
+      var model = createModel([ 'shadow' ]);
 
-      // when
-      var element = model.create('uml:NamedElement');
 
-      // then
-      expect(element).to.exist;
-      expect(element.$instanceOf('uml:Element')).to.be.true;
-      expect(element.$instanceOf('uml:NamedElement')).to.be.true;
+      it('should shadow <Element>', function() {
+
+        // when
+        var element = model.create('s:Element');
+
+        // then
+        expect(element).to.exist;
+        expect(element.$instanceOf('s:Element')).to.be.true;
+      });
+
+
+      it('should shadow <Element> in inheritance hierarchy', function() {
+
+        // when
+        var element = model.create('s:NamedElement');
+
+        // then
+        expect(element).to.exist;
+        expect(element.$instanceOf('s:Element')).to.be.true;
+        expect(element.$instanceOf('s:NamedElement')).to.be.true;
+      });
+
     });
 
   });
