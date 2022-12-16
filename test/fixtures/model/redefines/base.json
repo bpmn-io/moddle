@@ -1,7 +1,7 @@
 {
-  "name": "Redefine",
+  "name": "Redefines Base",
   "uri": "http://redefine",
-  "prefix": "r",
+  "prefix": "b",
   "types": [
     {
       "name": "Base",
