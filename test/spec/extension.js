@@ -5,7 +5,7 @@ import {
 } from '../helper.js';
 
 
-describe('moddle', function() {
+describe('extension', function() {
 
   var createModel = createModelBuilder('test/fixtures/model/');
 
