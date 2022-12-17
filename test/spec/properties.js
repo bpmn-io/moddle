@@ -3,7 +3,8 @@ import { forEach } from 'min-dash';
 import expect from '../expect.js';
 
 import {
-  createModelBuilder
+  createModelBuilder,
+  getEffectiveDescriptor
 } from '../helper.js';
 
 
@@ -60,19 +61,45 @@ describe('properties', function() {
     });
 
 
-    it('should inherit properties', function() {
+    describe('should inherit', function() {
 
-      // when
-      var ExtRoot = model.getType('ext:Root');
+      it('single parent', function() {
 
-      var descriptor = model.getElementDescriptor(ExtRoot);
-      var elementsProperty = descriptor.propertiesByName.elements;
-      var inheritedAnyProperty = descriptor.propertiesByName.any;
+        // when
+        var descriptor = getEffectiveDescriptor(model, 'ext:Root');
 
-      // then
-      expect(ExtRoot).to.exist;
-      expect(elementsProperty).to.exist;
-      expect(inheritedAnyProperty).to.exist;
+        var propertiesByName = descriptor.propertiesByName;
+
+        // then
+        expect(propertiesByName).to.include.keys([
+          'any',
+          'elements'
+        ]);
+
+        // then
+        expect(propertiesByName['elements']).to.have.property('inherited', true);
+        expect(propertiesByName['any']).to.have.property('inherited', true);
+      });
+
+
+      it('multiple parents', function() {
+
+        // when
+        var descriptor = getEffectiveDescriptor(model, 'props:MultipleSuper');
+
+        var propertiesByName = descriptor.propertiesByName;
+
+        // then
+        expect(propertiesByName).to.include.keys([
+          'id',
+          'body'
+        ]);
+
+        // then
+        expect(propertiesByName['id']).to.have.property('inherited', true);
+        expect(propertiesByName['body']).to.have.property('inherited', true);
+      });
+
     });
 
   });
@@ -97,65 +124,73 @@ describe('properties', function() {
     });
 
 
-    it('should set collection properties in constructor (referencing)', function() {
+    describe('should set collection properties in constructor', function() {
 
-      // given
-      var reference1 = model.create('props:ComplexCount');
-      var reference2 = model.create('props:ComplexNesting');
+      it('referencing', function() {
 
-      // when
-      var referencingCollection = model.create('props:ReferencingCollection', {
-        references: [ reference1, reference2 ]
+        // given
+        var reference1 = model.create('props:ComplexCount');
+        var reference2 = model.create('props:ComplexNesting');
+
+        // when
+        var referencingCollection = model.create('props:ReferencingCollection', {
+          references: [ reference1, reference2 ]
+        });
+
+        // then
+        expect(referencingCollection.references).to.jsonEqual([ reference1, reference2 ]);
+
+        // TODO: validate not parent -> child relationship
       });
 
-      // then
-      expect(referencingCollection.references).to.jsonEqual([ reference1, reference2 ]);
 
-      // TODO: validate not parent -> child relationship
-    });
+      it('containment', function() {
 
+        // given
+        var child1 = model.create('props:ComplexCount');
+        var child2 = model.create('props:ComplexNesting');
 
-    it('should set collection properties in constructor (containment)', function() {
+        // when
+        var containedCollection = model.create('props:ContainedCollection', {
+          children: [ child1, child2 ]
+        });
 
-      // given
-      var child1 = model.create('props:ComplexCount');
-      var child2 = model.create('props:ComplexNesting');
+        // then
+        expect(containedCollection.children).to.jsonEqual([ child1, child2 ]);
 
-      // when
-      var containedCollection = model.create('props:ContainedCollection', {
-        children: [ child1, child2 ]
+        // TODO: establish parent relationship
       });
 
-      // then
-      expect(containedCollection.children).to.jsonEqual([ child1, child2 ]);
-
-      // TODO: establish parent relationship
     });
 
 
-    it('should provide default values', function() {
+    describe('should provide default values', function() {
 
-      // given
-      var Attributes = model.getType('props:Attributes');
+      it('local', function() {
 
-      // when
-      var instance = new Attributes();
+        // given
+        var Attributes = model.getType('props:Attributes');
 
-      // then
-      expect(instance.defaultBooleanValue).to.equal(true);
-    });
+        // when
+        var instance = new Attributes();
+
+        // then
+        expect(instance.defaultBooleanValue).to.equal(true);
+      });
 
 
-    it('should provide inherited default values', function() {
+      it('inherited', function() {
 
-      // given
-      var SubAttributes = model.getType('props:SubAttributes');
+        // given
+        var SubAttributes = model.getType('props:SubAttributes');
 
-      // when
-      var instance = new SubAttributes();
+        // when
+        var instance = new SubAttributes();
 
-      // then
-      expect(instance.defaultBooleanValue).to.equal(true);
+        // then
+        expect(instance.defaultBooleanValue).to.equal(true);
+      });
+
     });
 
 
