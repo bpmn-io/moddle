@@ -400,4 +400,69 @@ describe('moddle', function() {
 
   });
 
+
+  describe('property access (strict)', function() {
+
+    const moddle = createModel([
+      'properties'
+    ], {
+      strict: true
+    });
+
+
+    it('should configure in strict mode', function() {
+
+      // then
+      expect(moddle.config.strict).to.be.true;
+    });
+
+
+    describe('typed', function() {
+
+      it('should access basic', function() {
+
+        // when
+        const element = moddle.create('props:ComplexCount', {
+          count: 10
+        });
+
+        // then
+        expect(element.get('count')).to.eql(10);
+        expect(element.get('props:count')).to.eql(10);
+
+        // available under base name
+        expect(element.count).to.exist;
+      });
+
+
+      it('fail accessing unknown property', function() {
+
+        // when
+        const element = moddle.create('props:ComplexCount');
+
+        // then
+        expect(() => {
+          element.get('foo');
+        }).to.throw(/unknown property <foo> on <props:ComplexCount>/);
+
+        expect(() => {
+          element.set('foo', 10);
+        }).to.throw(/unknown property <foo> on <props:ComplexCount>/);
+      });
+
+
+      it('fail instantiating with unknown property', function() {
+
+        // then
+        expect(() => {
+          moddle.create('props:ComplexCount', {
+            foo: 10
+          });
+        }).to.throw(/unknown property <foo> on <props:ComplexCount>/);
+      });
+
+    });
+
+  });
+
 });
