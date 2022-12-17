@@ -169,6 +169,14 @@
           "isMany": true
         }
       ]
+    },
+    {
+      "name": "MultipleSuper",
+      "superClass": [
+        "Base",
+        "BaseWithId",
+        "SimpleBody"
+      ]
     }
   ]
 }
