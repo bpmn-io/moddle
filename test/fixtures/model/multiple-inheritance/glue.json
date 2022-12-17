@@ -1,0 +1,16 @@
+{
+  "name": "Multiple Inheritance Glue",
+  "uri": "http://multiple-inheritance-glue",
+  "prefix": "g",
+  "types": [
+    {
+      "name": "Diagram",
+      "superClass": [
+        "b:PackageableElement"
+      ],
+      "extends": [
+        "o:Diagram"
+      ]
+    }
+  ]
+}
