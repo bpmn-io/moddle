@@ -212,6 +212,34 @@ describe('extension', function() {
 
     });
 
+
+    describe('name clashes', function() {
+
+      var model = createModel([
+        'multiple-inheritance/base',
+        'multiple-inheritance/other',
+        'multiple-inheritance/glue'
+      ]);
+
+
+      it('should handle multiple inheritance through virtual package', function() {
+
+        var baseElement = model.create('b:Element');
+
+        var otherElement = model.create('o:DiagramElement');
+
+        var diagram = model.create('o:Diagram', {
+          'b:ownedElement': [ baseElement ],
+          ownedElement: [ otherElement ]
+        });
+
+        // then
+        expect(diagram.$instanceOf('b:Element')).to.be.true;
+        expect(diagram.$instanceOf('o:DiagramElement')).to.be.true;
+      });
+
+    });
+
   });
 
 

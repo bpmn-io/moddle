@@ -1,0 +1,17 @@
+{
+  "name": "Multiple Inheritance Base",
+  "uri": "http://multiple-inheritance-base",
+  "prefix": "b",
+  "types": [
+    {
+      "name": "Element",
+      "properties": [
+        { "name": "ownedElement", "type": "b:Element", "isMany": true }
+      ]
+    },
+    {
+      "name": "PackageableElement",
+      "superClass": [ "b:Element" ]
+    }
+  ]
+}
