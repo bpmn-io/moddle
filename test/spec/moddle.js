@@ -377,6 +377,33 @@ describe('moddle', function() {
   });
 
 
+  describe('property access (lax)', function() {
+
+    const moddle = createModel([
+      'properties'
+    ], {
+      strict: false
+    });
+
+
+    describe('typed', function() {
+
+      it('should access unknown attribute', function() {
+
+        // when
+        const element = moddle.create('props:ComplexCount', {
+          foo: 'bar'
+        });
+
+        // then
+        expect(element.get('foo')).to.eql('bar');
+      });
+
+    });
+
+  });
+
+
   describe('property access (strict)', function() {
 
     const moddle = createModel([
