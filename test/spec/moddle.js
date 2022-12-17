@@ -356,6 +356,38 @@ describe('moddle', function() {
         expect(element.get('props:count')).to.eql(10);
       });
 
+
+      it('should access global name', function() {
+
+        // when
+        const element = moddle.create('props:ComplexCount', {
+          ':xmlns': 'http://foo'
+        });
+
+        // then
+        expect(element.get(':xmlns')).to.eql('http://foo');
+        expect(element.get('xmlns')).to.eql('http://foo');
+
+        // available as extension attribute
+        expect(element.$attrs).to.have.property('xmlns');
+      });
+
+
+      it('should access global name (no prefix)', function() {
+
+        // when
+        const element = moddle.create('props:ComplexCount', {
+          'xmlns': 'http://foo'
+        });
+
+        // then
+        expect(element.get(':xmlns')).to.eql('http://foo');
+        expect(element.get('xmlns')).to.eql('http://foo');
+
+        // available as extension attribute
+        expect(element.$attrs).to.have.property('xmlns');
+      });
+
     });
 
 
@@ -435,6 +467,25 @@ describe('moddle', function() {
 
         // available under base name
         expect(element.count).to.exist;
+      });
+
+
+      it('should access global name', function() {
+
+        // when
+        const element = moddle.create('props:ComplexCount', {
+          ':xmlns': 'http://foo'
+        });
+
+        // then
+        expect(element.get(':xmlns')).to.eql('http://foo');
+
+        expect(() => {
+          element.get('xmlns');
+        }).to.throw(/unknown property <xmlns> on <props:ComplexCount>/);
+
+        // available as extension attribute
+        expect(element.$attrs).to.have.property('xmlns');
       });
 
 
