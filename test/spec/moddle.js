@@ -343,6 +343,21 @@ describe('moddle', function() {
       });
 
 
+      it('should access global name', function() {
+
+        // when
+        const element = moddle.create('props:ComplexCount', {
+          ':xmlns': 'http://foo'
+        });
+
+        // then
+        expect(element.get(':xmlns')).to.eql('http://foo');
+
+        // available as extension attribute
+        expect(element.$attrs).to.have.property('xmlns');
+      });
+
+
       it('should access refined property, created via base name', function() {
 
         // when
@@ -432,6 +447,21 @@ describe('moddle', function() {
 
         // available under base name
         expect(element.count).to.exist;
+      });
+
+
+      it('should access global name', function() {
+
+        // when
+        const element = moddle.create('props:ComplexCount', {
+          ':xmlns': 'http://foo'
+        });
+
+        // then
+        expect(element.get(':xmlns')).to.eql('http://foo');
+
+        // available as extension attribute
+        expect(element.$attrs).to.have.property('xmlns');
       });
 
 
