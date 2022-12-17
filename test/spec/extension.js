@@ -1,7 +1,9 @@
 import expect from '../expect.js';
 
 import {
-  createModelBuilder
+  createModelBuilder,
+  expectOrderedProperties,
+  getEffectiveDescriptor
 } from '../helper.js';
 
 
@@ -77,11 +79,8 @@ describe('extension', function() {
 
         it('should register', function() {
 
-          // given
-          var ComplexType = model.getType('b:Root');
-
           // when
-          var descriptor = model.getElementDescriptor(ComplexType);
+          var descriptor = getEffectiveDescriptor(model, 'b:Root');
 
           // then
           // local properties remain
@@ -99,11 +98,8 @@ describe('extension', function() {
 
         it('should refine', function() {
 
-          // given
-          var ComplexType = model.getType('b:Root');
-
           // when
-          var descriptor = model.getElementDescriptor(ComplexType);
+          var descriptor = getEffectiveDescriptor(model, 'b:Root');
 
           var genericProperty = descriptor.propertiesByName['c:generic'];
 
@@ -119,11 +115,8 @@ describe('extension', function() {
 
         it('should replace', function() {
 
-          // given
-          var ComplexType = model.getType('b:Root');
-
           // when
-          var descriptor = model.getElementDescriptor(ComplexType);
+          var descriptor = getEffectiveDescriptor(model, 'b:Root');
 
           var idProperty = descriptor.propertiesByName['c:id'];
 
@@ -138,37 +131,37 @@ describe('extension', function() {
 
         it('should indicate extended', function() {
 
-          // given
-          var ComplexType = model.getType('b:Root');
-
           // when
-          var descriptor = model.getElementDescriptor(ComplexType),
-              customAttrDescriptor = descriptor.propertiesByName['c:customAttr'],
-              customBaseAttrDescriptor = descriptor.propertiesByName['c:customBaseAttr'],
-              ownAttrDescriptor = descriptor.propertiesByName['ownAttr'];
+          var descriptor = getEffectiveDescriptor(model, 'b:Root');
+
+          var propertiesByName = descriptor.propertiesByName;
+
+          // assume
+          expect(propertiesByName).to.include.keys([
+            'c:customAttr',
+            'c:customBaseAttr',
+            'ownAttr'
+          ]);
 
           // then
-          expect(customAttrDescriptor).to.have.property('inherited', false);
-          expect(customBaseAttrDescriptor).to.have.property('inherited', false);
-          expect(ownAttrDescriptor).to.have.property('inherited', true);
+          expect(propertiesByName['c:customAttr']).to.have.property('inherited', false);
+          expect(propertiesByName['c:customBaseAttr']).to.have.property('inherited', false);
+          expect(propertiesByName['ownAttr']).to.have.property('inherited', true);
         });
 
 
         it('should handle conflicting names', function() {
 
-          // given
-          var ComplexType = model.getType('b:Root');
-
           // when
-          var descriptor = model.getElementDescriptor(ComplexType);
-          var propertiesByName = descriptor.propertiesByName;
+          var descriptor = getEffectiveDescriptor(model, 'b:Root');
 
           // then
-          expect(propertiesByName).to.include.keys([
+          expect(descriptor.propertiesByName).to.include.keys([
             'own',
             'c:own'
           ]);
         });
+
       });
 
 
@@ -229,17 +222,11 @@ describe('extension', function() {
 
         it('should modify descriptor', function() {
 
-          // given
-          var Extension = model.getType('b:Extension');
-
           // when
-          var descriptor = model.getElementDescriptor(Extension);
-          var propertyNames = descriptor.properties.map(function(p) {
-            return p.name;
-          });
+          var descriptor = getEffectiveDescriptor(model, 'b:Extension');
 
           // then
-          expect(propertyNames).to.eql([
+          expectOrderedProperties(descriptor, [
             'name',
             'value',
             'id'
@@ -338,17 +325,11 @@ describe('extension', function() {
 
         it('should modify descriptor', function() {
 
-          // given
-          var Base = model.getType('e:Base');
-
           // when
-          var descriptor = model.getElementDescriptor(Base);
-          var propertyNames = descriptor.properties.map(function(p) {
-            return p.name;
-          });
+          var descriptor = getEffectiveDescriptor(model, 'e:Base');
 
           // then
-          expect(propertyNames).to.eql([
+          expectOrderedProperties(descriptor, [
             'name',
             'value',
             'id'
@@ -452,17 +433,11 @@ describe('extension', function() {
 
         it('should modify descriptor', function() {
 
-          // given
-          var Base = model.getType('b:Base');
-
           // when
-          var descriptor = model.getElementDescriptor(Base);
-          var propertyNames = descriptor.properties.map(function(p) {
-            return p.name;
-          });
+          var descriptor = getEffectiveDescriptor(model, 'b:Base');
 
           // then
-          expect(propertyNames).to.eql([
+          expectOrderedProperties(descriptor, [
             'name',
             'c:value',
             'c:id'
@@ -567,17 +542,11 @@ describe('extension', function() {
 
         it('should modify descriptor', function() {
 
-          // given
-          var Extension = model.getType('b:Extension');
-
           // when
-          var descriptor = model.getElementDescriptor(Extension);
-          var propertyNames = descriptor.properties.map(function(p) {
-            return p.name;
-          });
+          var descriptor = getEffectiveDescriptor(model, 'b:Extension');
 
           // then
-          expect(propertyNames).to.eql([
+          expectOrderedProperties(descriptor, [
             'id',
             'name',
             'value'
@@ -676,17 +645,11 @@ describe('extension', function() {
 
         it('should modify descriptor', function() {
 
-          // given
-          var Base = model.getType('e:Base');
-
           // when
-          var descriptor = model.getElementDescriptor(Base);
-          var propertyNames = descriptor.properties.map(function(p) {
-            return p.name;
-          });
+          var descriptor = getEffectiveDescriptor(model, 'e:Base');
 
           // then
-          expect(propertyNames).to.eql([
+          expectOrderedProperties(descriptor, [
             'id',
             'name',
             'value'
