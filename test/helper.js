@@ -6,6 +6,8 @@ import {
 
 import { Moddle } from '../lib/index.js';
 
+import expect from './expect.js';
+
 
 export function readFile(filename) {
   return fs.readFileSync(filename, { encoding: 'UTF-8' });
@@ -40,4 +42,29 @@ export function createModelBuilder(base) {
   }
 
   return createModel;
+}
+
+/**
+ * @param {Object} descriptor
+ * @param {string[]} expectedPropertyNames
+ */
+export function expectOrderedProperties(descriptor, expectedPropertyNames) {
+  var propertyNames = descriptor.properties.map(function(p) {
+    return p.name;
+  });
+
+  // then
+  expect(propertyNames).to.eql(expectedPropertyNames);
+}
+
+/**
+ * @param {Moddle} model
+ * @param {string} typeName
+ *
+ * @return {Object} descriptor
+ */
+export function getEffectiveDescriptor(model, typeName) {
+  var Type = model.getType(typeName);
+
+  return model.getElementDescriptor(Type);
 }
