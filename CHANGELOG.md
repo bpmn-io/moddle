@@ -6,6 +6,11 @@ All notable changes to [moddle](https://github.com/bpmn-io/moddle) are documente
 
 ___Note:__ Yet to be released changes appear here._
 
+## 6.1.0
+
+* `FEAT`: improve error thrown on trait introspection ([#38](https://github.com/bpmn-io/moddle/issues/38), [#46](https://github.com/bpmn-io/moddle/pull/46))
+* `FIX`: correctly handle `inherits` flag with multiple parents ([#47](https://github.com/bpmn-io/moddle/pull/47))
+
 ## 6.0.0
 
 * `DEPS`: bump to `min-dash@4`
