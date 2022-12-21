@@ -6,6 +6,12 @@ All notable changes to [moddle](https://github.com/bpmn-io/moddle) are documente
 
 ___Note:__ Yet to be released changes appear here._
 
+## 6.2.0
+
+* `FEAT`: add ability to configure moddle ([#48](https://github.com/bpmn-io/moddle/pull/48))
+* `FEAT`: add ability to explicitly mark property as global ([#48](https://github.com/bpmn-io/moddle/pull/48))
+* `FEAT`: add `strict` mode / ability to log unknown property access ([#48](https://github.com/bpmn-io/moddle/pull/48))
+
 ## 6.1.0
 
 * `FEAT`: improve error thrown on trait introspection ([#38](https://github.com/bpmn-io/moddle/issues/38), [#46](https://github.com/bpmn-io/moddle/pull/46))
