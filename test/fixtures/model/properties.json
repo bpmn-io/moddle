@@ -171,6 +171,18 @@
       ]
     },
     {
+      "name": "Containers",
+      "superClass": [ "BaseWithId" ],
+      "properties": [
+        { "name": "embedded", "type": "Complex" },
+        { "name": "otherEmbedded", "type": "Complex" },
+        { "name": "children", "type": "Complex", "isMany": true },
+        { "name": "references", "type": "Complex", "isMany": true, "isReference": true },
+        { "name": "generic", "type": "Element" },
+        { "name": "genericChildren", "type": "Element", "isMany": true }
+      ]
+    },
+    {
       "name": "MultipleSuper",
       "superClass": [
         "Base",

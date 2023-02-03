@@ -140,7 +140,8 @@ describe('properties', function() {
         // then
         expect(referencingCollection.references).to.jsonEqual([ reference1, reference2 ]);
 
-        // TODO: validate not parent -> child relationship
+        expect(reference1.$parent).not.to.exist;
+        expect(reference2.$parent).not.to.exist;
       });
 
 
@@ -158,7 +159,8 @@ describe('properties', function() {
         // then
         expect(containedCollection.children).to.jsonEqual([ child1, child2 ]);
 
-        // TODO: establish parent relationship
+        expect(child1.$parent).to.equal(containedCollection);
+        expect(child2.$parent).to.equal(containedCollection);
       });
 
     });
@@ -288,6 +290,614 @@ describe('properties', function() {
       });
 
 
+      describe('parent', function() {
+
+        describe('create', function() {
+
+          it('should set parent of contained element', function() {
+
+            // given
+            var embeddedComplex = model.create('props:Complex');
+
+            // when
+            var embedding = model.create('props:Embedding', {
+              embeddedComplex
+            });
+
+            // then
+            expect(embeddedComplex.$parent).to.equal(embedding);
+          });
+
+
+          it('should set parent of contained elements', function() {
+
+            // given
+            var nested = [
+              model.create('props:Complex'),
+              model.create('props:Complex')
+            ];
+
+            // when
+            var complexNesting = model.create('props:ComplexNesting', {
+              nested
+            });
+
+            // then
+            nested.forEach(function(element) {
+              expect(element.$parent).to.equal(complexNesting);
+            });
+          });
+
+
+          it('should not set parent of referenced element', function() {
+
+            // given
+            var referencedComplex = model.create('props:Complex');
+
+            // when
+            model.create('props:ReferencingSingle', {
+              referencedComplex
+            });
+
+            // then
+            expect(referencedComplex.$parent).not.to.exist;
+          });
+
+        });
+
+
+        describe('set', function() {
+
+          describe('single', function() {
+
+            it('should set parent', function() {
+
+              // given
+              var embedding = model.create('props:Embedding'),
+                  embeddedComplex = model.create('props:Complex');
+
+              // when
+              embedding.set('embeddedComplex', embeddedComplex);
+
+              // then
+              expect(embeddedComplex.$parent).to.equal(embedding);
+            });
+
+
+            it('should update parent of element contained elsewhere', function() {
+
+              // given
+              var embeddedComplex = model.create('props:Complex');
+
+              model.create('props:Embedding', { embeddedComplex });
+
+              var otherEmbedding = model.create('props:Embedding');
+
+              // when
+              otherEmbedding.set('embeddedComplex', embeddedComplex);
+
+              // then
+              expect(embeddedComplex.$parent).to.equal(otherEmbedding);
+            });
+
+
+            it('should unset parent of replaced element', function() {
+
+              // given
+              var embeddedComplex = model.create('props:Complex');
+
+              var embedding = model.create('props:Embedding', { embeddedComplex });
+
+              // when
+              embedding.set('embeddedComplex', model.create('props:Complex'));
+
+              // then
+              expect(embeddedComplex.$parent).not.to.exist;
+            });
+
+
+            it('should unset parent of removed element', function() {
+
+              // given
+              var embeddedComplex = model.create('props:Complex');
+
+              var embedding = model.create('props:Embedding', { embeddedComplex });
+
+              // when
+              embedding.set('embeddedComplex', undefined);
+
+              // then
+              expect(embeddedComplex.$parent).not.to.exist;
+            });
+
+
+            it('should keep parent of removed element contained elsewhere', function() {
+
+              // given
+              var embeddedComplex = model.create('props:Complex');
+
+              var embedding = model.create('props:Embedding', { embeddedComplex });
+
+              var otherEmbedding = model.create('props:Embedding', { embeddedComplex });
+
+              // when
+              embedding.set('embeddedComplex', undefined);
+
+              // then
+              expect(embeddedComplex.$parent).to.equal(otherEmbedding);
+            });
+
+
+            it('should keep parent of element moved within target', function() {
+
+              // given
+              var embedded = model.create('props:Complex');
+
+              var containers = model.create('props:Containers', { embedded });
+
+              containers.set('otherEmbedded', embedded);
+
+              // when
+              containers.set('embedded', undefined);
+
+              // then
+              expect(embedded.$parent).to.equal(containers);
+            });
+
+
+            it('should keep parents of swapped elements', function() {
+
+              // given
+              var embedded = model.create('props:Complex'),
+                  otherEmbedded = model.create('props:Complex');
+
+              var containers = model.create('props:Containers', { embedded, otherEmbedded });
+
+              containers.set('embedded', otherEmbedded);
+
+              // when
+              containers.set('otherEmbedded', embedded);
+
+              // then
+              expect(embedded.$parent).to.equal(containers);
+              expect(otherEmbedded.$parent).to.equal(containers);
+            });
+
+
+            it('should unset parent of element replaced with null', function() {
+
+              // given
+              var embeddedComplex = model.create('props:Complex');
+
+              var embedding = model.create('props:Embedding', { embeddedComplex });
+
+              // when
+              embedding.set('embeddedComplex', null);
+
+              // then
+              expect(embeddedComplex.$parent).not.to.exist;
+            });
+
+
+            it('should set parent of generic element', function() {
+
+              // given
+              var embedding = model.create('props:Embedding'),
+                  anyElement = model.createAny('other:Foo', 'http://other');
+
+              // when
+              embedding.set('embeddedComplex', anyElement);
+
+              // then
+              expect(anyElement.$parent).to.equal(embedding);
+            });
+
+
+            it('should ignore non-model element', function() {
+
+              // given
+              var embedding = model.create('props:Embedding'),
+                  value = {};
+
+              // when
+              embedding.set('embeddedComplex', value);
+
+              // then
+              expect(value.$parent).not.to.exist;
+            });
+
+
+            it('should ignore removed non-model element', function() {
+
+              // given
+              var value = { $parent: 'foo' };
+
+              var embedding = model.create('props:Embedding', { embeddedComplex: value });
+
+              // when
+              embedding.set('embeddedComplex', undefined);
+
+              // then
+              expect(value.$parent).to.equal('foo');
+            });
+
+
+            it('should not set parent of referenced element', function() {
+
+              // given
+              var referencingSingle = model.create('props:ReferencingSingle'),
+                  referencedComplex = model.create('props:Complex');
+
+              // when
+              referencingSingle.set('referencedComplex', referencedComplex);
+
+              // then
+              expect(referencedComplex.$parent).not.to.exist;
+            });
+
+
+            it('should not unset parent of replaced referenced element', function() {
+
+              // given
+              var referencedComplex = model.create('props:Complex');
+
+              var embedding = model.create('props:Embedding', {
+                embeddedComplex: referencedComplex
+              });
+
+              var referencingSingle = model.create('props:ReferencingSingle', {
+                referencedComplex
+              });
+
+              // when
+              referencingSingle.set('referencedComplex', model.create('props:Complex'));
+
+              // then
+              expect(referencedComplex.$parent).to.equal(embedding);
+            });
+
+
+            it('should not unset parent of removed referenced element', function() {
+
+              // given
+              var referencedComplex = model.create('props:Complex');
+
+              var embedding = model.create('props:Embedding', {
+                embeddedComplex: referencedComplex
+              });
+
+              var referencingSingle = model.create('props:ReferencingSingle', {
+                referencedComplex
+              });
+
+              // when
+              referencingSingle.set('referencedComplex', undefined);
+
+              // then
+              expect(referencedComplex.$parent).to.equal(embedding);
+            });
+
+          });
+
+
+          describe('many', function() {
+
+            it('should set parents', function() {
+
+              // given
+              var containedCollection = model.create('props:ContainedCollection');
+
+              var children = [
+                model.create('props:Complex'),
+                model.create('props:Complex')
+              ];
+
+              // when
+              containedCollection.set('children', children);
+
+              // then
+              children.forEach(function(child) {
+                expect(child.$parent).to.equal(containedCollection);
+              });
+            });
+
+
+            it('should keep parent of retained element', function() {
+
+              // given
+              var fooChild = model.create('props:Complex'),
+                  barChild = model.create('props:Complex');
+
+              var containedCollection = model.create('props:ContainedCollection', {
+                children: [ fooChild, barChild ]
+              });
+
+              // when
+              containedCollection.set('children', [ fooChild ]);
+
+              // then
+              expect(fooChild.$parent).to.equal(containedCollection);
+            });
+
+
+            it('should unset parent of removed element', function() {
+
+              // given
+              var fooChild = model.create('props:Complex'),
+                  barChild = model.create('props:Complex');
+
+              var containedCollection = model.create('props:ContainedCollection', {
+                children: [ fooChild, barChild ]
+              });
+
+              // when
+              containedCollection.set('children', [ fooChild ]);
+
+              // then
+              expect(barChild.$parent).not.to.exist;
+            });
+
+
+            it('should keep parent of removed element contained elsewhere', function() {
+
+              // given
+              var child = model.create('props:Complex');
+
+              var containedCollection = model.create('props:ContainedCollection', {
+                children: [ child ]
+              });
+
+              var otherCollection = model.create('props:ContainedCollection', {
+                children: [ child ]
+              });
+
+              // when
+              containedCollection.set('children', []);
+
+              // then
+              expect(child.$parent).to.equal(otherCollection);
+            });
+
+
+            it('should keep parent of element moved within target', function() {
+
+              // given
+              var child = model.create('props:Complex');
+
+              var containers = model.create('props:Containers', {
+                children: [ child ]
+              });
+
+              containers.set('embedded', child);
+
+              // when
+              containers.set('children', []);
+
+              // then
+              expect(child.$parent).to.equal(containers);
+            });
+
+
+            it('should set parents of generic elements', function() {
+
+              // given
+              var containers = model.create('props:Containers');
+
+              var children = [
+                model.createAny('other:Foo', 'http://other'),
+                model.createAny('other:Bar', 'http://other')
+              ];
+
+              // when
+              containers.set('children', children);
+
+              // then
+              children.forEach(function(child) {
+                expect(child.$parent).to.equal(containers);
+              });
+            });
+
+
+            it('should ignore non-model elements', function() {
+
+              // given
+              var containedCollection = model.create('props:ContainedCollection'),
+                  values = [ {}, {} ];
+
+              // when
+              containedCollection.set('children', values);
+
+              // then
+              values.forEach(function(value) {
+                expect(value.$parent).not.to.exist;
+              });
+            });
+
+
+            it('should not set parent of referenced elements', function() {
+
+              // given
+              var referencingCollection = model.create('props:ReferencingCollection'),
+                  referencedComplex = model.create('props:Complex');
+
+              // when
+              referencingCollection.set('references', [ referencedComplex ]);
+
+              // then
+              expect(referencedComplex.$parent).not.to.exist;
+            });
+
+
+            it('should not unset parent of removed referenced elements', function() {
+
+              // given
+              var referencedComplex = model.create('props:Complex');
+
+              var containedCollection = model.create('props:ContainedCollection', {
+                children: [ referencedComplex ]
+              });
+
+              var referencingCollection = model.create('props:ReferencingCollection', {
+                references: [ referencedComplex ]
+              });
+
+              // when
+              referencingCollection.set('references', undefined);
+
+              // then
+              expect(referencedComplex.$parent).to.equal(containedCollection);
+            });
+
+
+            it('should not unset parent of removed referenced element contained by target', function() {
+
+              // given
+              var child = model.create('props:Complex');
+
+              var containers = model.create('props:Containers', {
+                children: [ child ],
+                references: [ child ]
+              });
+
+              // when
+              containers.set('references', []);
+
+              // then
+              expect(child.$parent).to.equal(containers);
+            });
+
+          });
+
+
+          describe('Element type', function() {
+
+            it('should set parent on create', function() {
+
+              // given
+              var generic = model.create('props:Complex'),
+                  genericChild = model.createAny('other:Foo', 'http://other');
+
+              // when
+              var containers = model.create('props:Containers', {
+                generic,
+                genericChildren: [ genericChild ]
+              });
+
+              // then
+              expect(generic.$parent).to.equal(containers);
+              expect(genericChild.$parent).to.equal(containers);
+            });
+
+
+            it('should set parent', function() {
+
+              // given
+              var containers = model.create('props:Containers'),
+                  generic = model.createAny('other:Foo', 'http://other');
+
+              // when
+              containers.set('generic', generic);
+
+              // then
+              expect(generic.$parent).to.equal(containers);
+            });
+
+
+            it('should unset parent of removed element', function() {
+
+              // given
+              var generic = model.createAny('other:Foo', 'http://other');
+
+              var containers = model.create('props:Containers', { generic });
+
+              // when
+              containers.set('generic', undefined);
+
+              // then
+              expect(generic.$parent).not.to.exist;
+            });
+
+
+            it('should set parents', function() {
+
+              // given
+              var containers = model.create('props:Containers');
+
+              var genericChildren = [
+                model.create('props:Complex'),
+                model.createAny('other:Foo', 'http://other')
+              ];
+
+              // when
+              containers.set('genericChildren', genericChildren);
+
+              // then
+              genericChildren.forEach(function(child) {
+                expect(child.$parent).to.equal(containers);
+              });
+            });
+
+
+            it('should unset parent of removed elements', function() {
+
+              // given
+              var child = model.createAny('other:Foo', 'http://other'),
+                  otherChild = model.createAny('other:Bar', 'http://other');
+
+              var containers = model.create('props:Containers', {
+                genericChildren: [ child, otherChild ]
+              });
+
+              // when
+              containers.set('genericChildren', [ otherChild ]);
+
+              // then
+              expect(child.$parent).not.to.exist;
+              expect(otherChild.$parent).to.equal(containers);
+            });
+
+
+            it('should keep parent of element moved into Element property', function() {
+
+              // given
+              var embedded = model.create('props:Complex');
+
+              var containers = model.create('props:Containers', { embedded });
+
+              containers.set('generic', embedded);
+
+              // when
+              containers.set('embedded', undefined);
+
+              // then
+              expect(embedded.$parent).to.equal(containers);
+            });
+
+
+            it('should keep parent of element moved out of Element property', function() {
+
+              // given
+              var child = model.create('props:Complex');
+
+              var containers = model.create('props:Containers', {
+                genericChildren: [ child ]
+              });
+
+              containers.set('children', [ child ]);
+
+              // when
+              containers.set('genericChildren', []);
+
+              // then
+              expect(child.$parent).to.equal(containers);
+            });
+
+          });
+
+        });
+
+      });
+
       forEach([
         false,
         true,
@@ -315,6 +925,7 @@ describe('properties', function() {
         });
 
       });
+
     });
 
 
