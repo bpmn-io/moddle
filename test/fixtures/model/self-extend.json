@@ -1,0 +1,18 @@
+{
+  "name": "Self Extend",
+  "uri": "http://self-extend",
+  "prefix": "se",
+  "types": [
+    {
+      "name": "Rect"
+    },
+    {
+      "name": "ExtendedRect",
+      "extends": [ "Rect" ]
+    },
+    {
+      "name": "OtherExtendedRect",
+      "extends": [ "se:Rect" ]
+    }
+  ]
+}
