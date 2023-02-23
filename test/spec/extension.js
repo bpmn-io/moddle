@@ -232,4 +232,17 @@ describe('extension', function() {
 
   });
 
+
+  it('should self-extend', async function() {
+
+    // when
+    var model = createModel([ 'self-extend' ]);
+
+    var element = model.create('se:Rect');
+
+    // then
+    expect(element.$instanceOf('se:ExtendedRect')).to.be.true;
+    expect(element.$instanceOf('se:OtherExtendedRect')).to.be.true;
+  });
+
 });
