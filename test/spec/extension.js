@@ -40,6 +40,18 @@ describe('extension', function() {
         expect(element.$instanceOf('s:NamedElement')).to.be.true;
       });
 
+
+      it('should provide <Element> built-in type', function() {
+
+        // when
+        var element = model.create('s:ExtendsBuiltinElement');
+
+        // then
+        expect(element).to.exist;
+        expect(element.$instanceOf('Element')).to.be.true;
+        expect(element.$instanceOf('s:ExtendsBuiltinElement')).to.be.true;
+      });
+
     });
 
   });
@@ -231,5 +243,11 @@ describe('extension', function() {
     });
 
   });
+
+});
+
+
+describe('extension - self extend', function() {
+
 
 });

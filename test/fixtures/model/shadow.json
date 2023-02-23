@@ -10,6 +10,12 @@
     {
       "name": "NamedElement",
       "superClass": [ "s:Element" ]
+    },
+    {
+      "name": "ExtendsBuiltinElement",
+      "superClass": [
+        "Element"
+      ]
     }
   ]
 }
