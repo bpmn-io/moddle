@@ -40,6 +40,18 @@ describe('extension', function() {
         expect(element.$instanceOf('s:NamedElement')).to.be.true;
       });
 
+
+      it('should provide <Element> built-in type', function() {
+
+        // when
+        var element = model.create('s:ExtendsBuiltinElement');
+
+        // then
+        expect(element).to.exist;
+        expect(element.$instanceOf('Element')).to.be.true;
+        expect(element.$instanceOf('s:ExtendsBuiltinElement')).to.be.true;
+      });
+
     });
 
   });
@@ -233,16 +245,18 @@ describe('extension', function() {
   });
 
 
-  it('should self-extend', async function() {
+  describe('extension - self extend', function() {
 
-    // when
-    var model = createModel([ 'self-extend' ]);
+    it('should self-extend', async function() {
 
-    var element = model.create('se:Rect');
+      // when
+      var model = createModel([ 'self-extend' ]);
 
-    // then
-    expect(element.$instanceOf('se:ExtendedRect')).to.be.true;
-    expect(element.$instanceOf('se:OtherExtendedRect')).to.be.true;
+      var element = model.create('se:Rect');
+
+      // then
+      expect(element.$instanceOf('se:ExtendedRect')).to.be.true;
+      expect(element.$instanceOf('se:OtherExtendedRect')).to.be.true;
+    });
   });
-
 });
