@@ -6,6 +6,10 @@ All notable changes to [moddle](https://github.com/bpmn-io/moddle) are documente
 
 ___Note:__ Yet to be released changes appear here._
 
+## 6.2.1
+
+* `FIX`: allow self-extension using local name ([#52](https://github.com/bpmn-io/moddle/pull/52))
+
 ## 6.2.0
 
 * `FEAT`: add ability to configure moddle ([#48](https://github.com/bpmn-io/moddle/pull/48))
