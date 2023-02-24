@@ -1,9 +1,12 @@
-import { terser } from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
 
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 
-import pkg from './package.json';
+import fs from 'node:fs';
+
+
+const pkg = JSON.parse(fs.readFileSync('./package.json'));
 
 function pgl(plugins = []) {
   return plugins;
