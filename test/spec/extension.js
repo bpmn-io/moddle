@@ -1,13 +1,31 @@
 import expect from '../expect.js';
 
 import {
-  createModelBuilder
+  createModelBuilder,
+  expectOrderedProperties,
+  getEffectiveDescriptor
 } from '../helper.js';
 
 
 describe('extension', function() {
 
   var createModel = createModelBuilder('test/fixtures/model/');
+
+
+  describe('trait', function() {
+
+    it('should not provide meta-data', function() {
+
+      // given
+      var model = createModel([ 'extension/base', 'extension/custom' ]);
+
+      // then
+      expect(() => {
+        model.getType('c:CustomRoot');
+      }).to.throw(/cannot create <c:CustomRoot> extending <b:Root>/);
+    });
+
+  });
 
 
   describe('types', function() {
@@ -54,132 +72,182 @@ describe('extension', function() {
 
     });
 
-  });
+
+    describe('extending', function() {
+
+      var model = createModel([ 'extension/base', 'extension/custom' ]);
 
 
-  describe('extension', function() {
+      describe('basics', function() {
 
-    var model = createModel([ 'extension/base', 'extension/custom' ]);
+        it('should plug-in into type hierarchy', function() {
 
-
-    describe('trait', function() {
-
-      it('should not provide meta-data', function() {
-
-        expect(() => {
-          model.getType('c:CustomRoot');
-        }).to.throw(/cannot create <c:CustomRoot> extending <b:Root>/);
-      });
-
-
-      describe('descriptor', function() {
-
-        it('should indicate non-inherited', function() {
-
-          // given
-          var ComplexType = model.getType('b:Root');
-
-          // when
-          var descriptor = model.getElementDescriptor(ComplexType),
-              customAttrDescriptor = descriptor.propertiesByName['customAttr'],
-              customBaseAttrDescriptor = descriptor.propertiesByName['customBaseAttr'],
-              ownAttrDescriptor = descriptor.propertiesByName['ownAttr'];
+          var root = model.create('b:Root');
 
           // then
-          expect(customAttrDescriptor.inherited).to.be.false;
-          expect(customBaseAttrDescriptor.inherited).to.be.false;
-          expect(ownAttrDescriptor.inherited).to.be.true;
+          expect(root.$instanceOf('c:CustomRoot')).to.be.true;
         });
 
       });
 
 
-      it('should plug-in into type hierarchy', function() {
+      describe('properties', function() {
 
-        var root = model.create('b:Root');
+        it('should register', function() {
 
-        // then
-        expect(root.$instanceOf('c:CustomRoot')).to.be.true;
-      });
+          // when
+          var descriptor = getEffectiveDescriptor(model, 'b:Root');
 
+          // then
+          // local properties remain
+          expect(descriptor.propertiesByName).to.have.property('ownAttr');
 
-      it('should add custom attribute', function() {
+          // extension properties are not local
+          expect(descriptor.propertiesByName).not.to.have.property('customAttr');
+          expect(descriptor.propertiesByName).not.to.have.property('customBaseAttr');
 
-        // when
-        var root = model.create('b:Root', {
-          customAttr: -1
+          // but registered as extension properties
+          expect(descriptor.propertiesByName).to.have.property('c:customAttr');
+          expect(descriptor.propertiesByName).to.have.property('c:customBaseAttr');
         });
 
-        // then
-        expect(root.customAttr).to.eql(-1);
-      });
 
+        it('should refine', function() {
 
-      it('should refine property', function() {
+          // when
+          var descriptor = getEffectiveDescriptor(model, 'b:Root');
 
-        // given
-        var Type = model.getType('b:Root');
+          var genericProperty = descriptor.propertiesByName['c:generic'];
 
-        // when
-        var genericProperty = Type.$descriptor.propertiesByName['generic'];
+          // then
+          expect(genericProperty).to.exist;
+          expect(genericProperty.name).to.eql('c:generic');
+          expect(genericProperty.type).to.eql('c:CustomGeneric');
 
-        // then
-        expect(genericProperty.type).to.eql('c:CustomGeneric');
-      });
-
-
-      it('should use refined property', function() {
-
-        var customGeneric = model.create('c:CustomGeneric', { count: 100 });
-
-        // when
-        var root = model.create('b:Root', {
-          generic: customGeneric
+          // and refined original, too
+          expect(descriptor.propertiesByName).to.have.property('generic', genericProperty);
         });
 
-        // then
-        expect(root.generic).to.eql(customGeneric);
+
+        it('should replace', function() {
+
+          // when
+          var descriptor = getEffectiveDescriptor(model, 'b:Root');
+
+          var idProperty = descriptor.propertiesByName['c:id'];
+
+          // then
+          expect(idProperty).to.exist;
+          expect(idProperty.name).to.eql('c:id');
+
+          // and replaced original, too
+          expect(descriptor.propertiesByName).to.have.property('id', idProperty);
+        });
+
+
+        it('should indicate extended', function() {
+
+          // when
+          var descriptor = getEffectiveDescriptor(model, 'b:Root');
+
+          var propertiesByName = descriptor.propertiesByName;
+
+          // assume
+          expect(propertiesByName).to.include.keys([
+            'c:customAttr',
+            'c:customBaseAttr',
+            'ownAttr'
+          ]);
+
+          // then
+          expect(propertiesByName['c:customAttr']).to.have.property('inherited', false);
+          expect(propertiesByName['c:customBaseAttr']).to.have.property('inherited', false);
+          expect(propertiesByName['ownAttr']).to.have.property('inherited', true);
+        });
+
+
+        it('should handle conflicting names', function() {
+
+          // when
+          var descriptor = getEffectiveDescriptor(model, 'b:Root');
+
+          // then
+          expect(descriptor.propertiesByName).to.include.keys([
+            'own',
+            'c:own'
+          ]);
+        });
+
+      });
+
+
+      describe('types', function() {
+
+        it('should provide custom', function() {
+
+          var property = model.create('c:Property');
+
+          // then
+          expect(property.$instanceOf('c:Property')).to.be.true;
+        });
+
+      });
+
+
+      describe('generics', function() {
+
+        it('should extend Element', function() {
+
+          // when
+          var customGeneric = model.create('c:CustomGeneric', { count: 100 });
+
+          // then
+          expect(customGeneric.$instanceOf('Element')).to.be.true;
+        });
+
+
+        it('should be part of generic collection', function() {
+
+          var customProperty = model.create('c:Property', { key: 'foo', value: 'bar' });
+
+          // when
+          var root = model.create('b:Root', {
+            genericCollection: [ customProperty ]
+          });
+
+          // then
+          expect(root.genericCollection).to.eql([ customProperty ]);
+          expect(root.get('b:genericCollection')).to.eql([ customProperty ]);
+        });
+
       });
 
     });
 
 
-    describe('types', function() {
+    describe('name clashes', function() {
 
-      it('should provide custom types', function() {
-
-        var property = model.create('c:Property');
-
-        // then
-        expect(property.$instanceOf('c:Property')).to.be.true;
-      });
-
-    });
+      var model = createModel([
+        'multiple-inheritance/base',
+        'multiple-inheritance/other',
+        'multiple-inheritance/glue'
+      ]);
 
 
-    describe('generic', function() {
+      it('should handle multiple inheritance through virtual package', function() {
 
-      it('should extend Element', function() {
+        var baseElement = model.create('b:Element');
 
-        // when
-        var customGeneric = model.create('c:CustomGeneric', { count: 100 });
+        var otherElement = model.create('o:DiagramElement');
 
-        // then
-        expect(customGeneric.$instanceOf('Element')).to.be.true;
-      });
-
-
-      it('should be part of generic collection', function() {
-
-        var customProperty = model.create('c:Property', { key: 'foo', value: 'bar' });
-
-        // when
-        var root = model.create('b:Root', {
-          genericCollection: [ customProperty ]
+        var diagram = model.create('o:Diagram', {
+          'b:ownedElement': [ baseElement ],
+          ownedElement: [ otherElement ]
         });
 
         // then
-        expect(root.genericCollection).to.eql([ customProperty ]);
+        expect(diagram.$instanceOf('b:Element')).to.be.true;
+        expect(diagram.$instanceOf('o:DiagramElement')).to.be.true;
       });
 
     });
@@ -187,59 +255,655 @@ describe('extension', function() {
   });
 
 
-  describe('property replacement', function() {
+  describe('properties', function() {
 
-    var model = createModel([ 'replaces/base' ]);
+    describe('<replaces>', function() {
 
-    it('should replace in descriptor', function() {
+      describe('same package', function() {
 
-      // given
-      var Extension = model.getType('b:Extension');
+        var model = createModel([ 'replaces/base' ]);
 
-      // when
-      var descriptor = model.getElementDescriptor(Extension),
-          propertyNames = descriptor.properties.map(function(p) {
-            return p.name;
+
+        it('should modify descriptor', function() {
+
+          // when
+          var descriptor = getEffectiveDescriptor(model, 'b:Extension');
+
+          // then
+          expectOrderedProperties(descriptor, [
+            'name',
+            'value',
+            'id'
+          ]);
+
+          const idProperty = descriptor.propertiesByName['id'];
+
+          expect(idProperty).to.exist;
+          expect(descriptor.propertiesByName).to.have.property('b:id', idProperty);
+        });
+
+
+        it('should instantiate', function() {
+
+          // when
+          var extension = model.create('b:Extension', {
+            id: 10
           });
 
-      // then
-      expect(propertyNames).to.eql([
-        'name',
-        'value',
-        'id'
-      ]);
+          // then
+          expect(extension.id).to.eql(10);
 
-      expect(descriptor.propertiesByName['b:id'].type).to.eql('Integer');
-      expect(descriptor.propertiesByName['id'].type).to.eql('Integer');
+          // unavailable via namespaced name
+          expect(extension['b:id']).not.to.exist;
+
+          expect(extension.get('id')).to.eql(10);
+          expect(extension.get('b:id')).to.eql(10);
+        });
+
+
+        it('should instantiate (ns property)', function() {
+
+          // when
+          var extension = model.create('b:Extension', {
+            'b:id': 10
+          });
+
+          // then
+          expect(extension.id).to.eql(10);
+
+          // unavailable via namespaced name
+          expect(extension['b:id']).not.to.exist;
+
+          expect(extension.get('id')).to.eql(10);
+          expect(extension.get('b:id')).to.eql(10);
+        });
+
+
+        it('should set', function() {
+
+          // given
+          var extension = model.create('b:Extension');
+
+          // when
+          extension.set('id', 10);
+
+          // then
+          expect(extension.id).to.eql(10);
+
+          // unavailable via namespaced name
+          expect(extension['b:id']).not.to.exist;
+
+          expect(extension.get('id')).to.eql(10);
+          expect(extension.get('b:id')).to.eql(10);
+        });
+
+
+        it('should set (ns property)', function() {
+
+          // given
+          var extension = model.create('b:Extension');
+
+          // when
+          extension.set('b:id', 10);
+
+          // then
+          expect(extension.id).to.eql(10);
+
+          // unavailable via namespaced name
+          expect(extension['b:id']).not.to.exist;
+
+          expect(extension.get('id')).to.eql(10);
+          expect(extension.get('b:id')).to.eql(10);
+        });
+
+      });
+
+
+      describe('other package <superClass>', function() {
+
+        var model = createModel([
+          'replaces/base',
+          'replaces/extension'
+        ]);
+
+
+        it('should modify descriptor', function() {
+
+          // when
+          var descriptor = getEffectiveDescriptor(model, 'e:Base');
+
+          // then
+          expectOrderedProperties(descriptor, [
+            'name',
+            'value',
+            'id'
+          ]);
+
+          const idProperty = descriptor.propertiesByName['id'];
+
+          expect(idProperty).to.exist;
+          expect(descriptor.propertiesByName).to.have.property('b:id', idProperty);
+          expect(descriptor.propertiesByName).to.have.property('e:id', idProperty);
+        });
+
+
+        it('should instantiate', function() {
+
+          // when
+          var extension = model.create('e:Base', {
+            id: 10
+          });
+
+          // then
+          expect(extension.id).to.eql(10);
+
+          // unavailable via namespaced name
+          expect(extension['b:id']).not.to.exist;
+
+          expect(extension.get('id')).to.eql(10);
+          expect(extension.get('b:id')).to.eql(10);
+          expect(extension.get('e:id')).to.eql(10);
+        });
+
+
+        it('should instantiate (ns property)', function() {
+
+          // when
+          var extension = model.create('e:Base', {
+            'e:id': 10
+          });
+
+          // then
+          expect(extension.id).to.eql(10);
+
+          // unavailable via namespaced name
+          expect(extension['b:id']).not.to.exist;
+
+          expect(extension.get('id')).to.eql(10);
+          expect(extension.get('b:id')).to.eql(10);
+          expect(extension.get('e:id')).to.eql(10);
+        });
+
+
+        it('should set', function() {
+
+          // given
+          var extension = model.create('e:Base');
+
+          // when
+          extension.set('id', 10);
+
+          // then
+          expect(extension.id).to.eql(10);
+
+          // unavailable via namespaced name
+          expect(extension['b:id']).not.to.exist;
+
+          expect(extension.get('id')).to.eql(10);
+          expect(extension.get('b:id')).to.eql(10);
+          expect(extension.get('e:id')).to.eql(10);
+        });
+
+
+        it('should set (ns property)', function() {
+
+          // given
+          var extension = model.create('e:Base');
+
+          // when
+          extension.set('e:id', 10);
+
+          // then
+          expect(extension.id).to.eql(10);
+
+          // unavailable via namespaced name
+          expect(extension['b:id']).not.to.exist;
+
+          expect(extension.get('id')).to.eql(10);
+          expect(extension.get('b:id')).to.eql(10);
+          expect(extension.get('e:id')).to.eql(10);
+        });
+
+      });
+
+
+      describe('other package <extends>', function() {
+
+        var model = createModel([
+          'replaces/base',
+          'replaces/custom'
+        ]);
+
+
+        it('should modify descriptor', function() {
+
+          // when
+          var descriptor = getEffectiveDescriptor(model, 'b:Base');
+
+          // then
+          expectOrderedProperties(descriptor, [
+            'name',
+            'c:value',
+            'c:id'
+          ]);
+
+          const idProperty = descriptor.propertiesByName['id'];
+
+          expect(idProperty).to.exist;
+          expect(descriptor.propertiesByName).to.have.property('b:id', idProperty);
+          expect(descriptor.propertiesByName).to.have.property('c:id', idProperty);
+        });
+
+
+        it('should instantiate', function() {
+
+          // when
+          var extension = model.create('b:Base', {
+            id: 10
+          });
+
+          // then
+          expect(extension['c:id']).to.eql(10);
+
+          // unavailable via local name
+          expect(extension.id).not.to.exist;
+
+          expect(extension.get('id')).to.eql(10);
+          expect(extension.get('b:id')).to.eql(10);
+          expect(extension.get('c:id')).to.eql(10);
+        });
+
+
+        it('should instantiate (ns property)', function() {
+
+          // when
+          var extension = model.create('b:Base', {
+            'c:id': 10
+          });
+
+          // then
+          expect(extension['c:id']).to.eql(10);
+
+          // unavailable via local name
+          expect(extension.id).not.to.exist;
+
+          expect(extension.get('id')).to.eql(10);
+          expect(extension.get('b:id')).to.eql(10);
+          expect(extension.get('c:id')).to.eql(10);
+        });
+
+
+        it('should set', function() {
+
+          // given
+          var extension = model.create('b:Base');
+
+          // when
+          extension.set('id', 10);
+
+          // then
+          expect(extension['c:id']).to.eql(10);
+
+          // unavailable via local name
+          expect(extension.id).not.to.exist;
+
+          expect(extension.get('id')).to.eql(10);
+          expect(extension.get('b:id')).to.eql(10);
+          expect(extension.get('c:id')).to.eql(10);
+        });
+
+
+        it('should set (ns property)', function() {
+
+          // given
+          var extension = model.create('b:Base');
+
+          // when
+          extension.set('id', 10);
+
+          // then
+          expect(extension['c:id']).to.eql(10);
+
+          // unavailable via local name
+          expect(extension.id).not.to.exist;
+
+          expect(extension.get('id')).to.eql(10);
+          expect(extension.get('b:id')).to.eql(10);
+          expect(extension.get('c:id')).to.eql(10);
+        });
+
+      });
+
     });
 
-  });
+
+    describe('<redefines>', function() {
+
+      describe('same package', function() {
+
+        var model = createModel([ 'redefines/base' ]);
 
 
-  describe('property redefinition', function() {
+        it('should modify descriptor', function() {
 
-    var model = createModel([ 'redefines/base' ]);
+          // when
+          var descriptor = getEffectiveDescriptor(model, 'b:Extension');
 
-    it('should redefine in descriptor', function() {
+          // then
+          expectOrderedProperties(descriptor, [
+            'id',
+            'name',
+            'value'
+          ]);
 
-      // given
-      var Extension = model.getType('b:Extension');
+          const idProperty = descriptor.propertiesByName['id'];
 
-      // when
-      var descriptor = model.getElementDescriptor(Extension),
-          propertyNames = descriptor.properties.map(function(p) {
+          expect(idProperty).to.exist;
+          expect(descriptor.propertiesByName).to.have.property('b:id', idProperty);
+        });
+
+
+        it('should instantiate', function() {
+
+          // when
+          var extension = model.create('b:Extension', {
+            id: 10
+          });
+
+          // then
+          expect(extension.id).to.eql(10);
+
+          // unavailable via namespaced name
+          expect(extension['b:id']).not.to.exist;
+
+          expect(extension.get('id')).to.eql(10);
+          expect(extension.get('b:id')).to.eql(10);
+        });
+
+
+        it('should instantiate (ns property)', function() {
+
+          // when
+          var extension = model.create('b:Extension', {
+            'b:id': 10
+          });
+
+          // then
+          expect(extension.id).to.eql(10);
+
+          // unavailable via namespaced name
+          expect(extension['b:id']).not.to.exist;
+
+          expect(extension.get('id')).to.eql(10);
+          expect(extension.get('b:id')).to.eql(10);
+        });
+
+
+        it('should set', function() {
+
+          // given
+          var extension = model.create('b:Extension');
+
+          // when
+          extension.set('id', 10);
+
+          // then
+          expect(extension.id).to.eql(10);
+
+          // unavailable via namespaced name
+          expect(extension['b:id']).not.to.exist;
+
+          expect(extension.get('id')).to.eql(10);
+          expect(extension.get('b:id')).to.eql(10);
+        });
+
+
+        it('should set (ns property)', function() {
+
+          // given
+          var extension = model.create('b:Extension');
+
+          // when
+          extension.set('b:id', 10);
+
+          // then
+          expect(extension.id).to.eql(10);
+
+          // unavailable via namespaced name
+          expect(extension['b:id']).not.to.exist;
+
+          expect(extension.get('id')).to.eql(10);
+          expect(extension.get('b:id')).to.eql(10);
+        });
+
+      });
+
+
+      describe('other package <superClass>', function() {
+
+        var model = createModel([
+          'redefines/base',
+          'redefines/extension'
+        ]);
+
+
+        it('should modify descriptor', function() {
+
+          // when
+          var descriptor = getEffectiveDescriptor(model, 'e:Base');
+
+          // then
+          expectOrderedProperties(descriptor, [
+            'id',
+            'name',
+            'value'
+          ]);
+
+          const idProperty = descriptor.propertiesByName['id'];
+
+          expect(idProperty).to.exist;
+          expect(descriptor.propertiesByName).to.have.property('b:id', idProperty);
+          expect(descriptor.propertiesByName).to.have.property('e:id', idProperty);
+        });
+
+
+        it('should instantiate', function() {
+
+          // when
+          var extension = model.create('e:Base', {
+            id: 10
+          });
+
+          // then
+          expect(extension.id).to.eql(10);
+
+          // unavailable via namespaced names
+          expect(extension['e:id']).not.to.exist;
+          expect(extension['b:id']).not.to.exist;
+
+          expect(extension.get('id')).to.eql(10);
+          expect(extension.get('b:id')).to.eql(10);
+          expect(extension.get('e:id')).to.eql(10);
+        });
+
+
+        it('should instantiate (ns property)', function() {
+
+          // when
+          var extension = model.create('e:Base', {
+            'e:id': 10
+          });
+
+          // then
+          expect(extension.id).to.eql(10);
+
+          // unavailable via namespaced names
+          expect(extension['e:id']).not.to.exist;
+          expect(extension['b:id']).not.to.exist;
+
+          expect(extension.get('id')).to.eql(10);
+          expect(extension.get('b:id')).to.eql(10);
+          expect(extension.get('e:id')).to.eql(10);
+        });
+
+
+        it('should set', function() {
+
+          // given
+          var extension = model.create('e:Base');
+
+          // when
+          extension.set('id', 10);
+
+          // then
+          expect(extension.id).to.eql(10);
+
+          // unavailable via namespaced names
+          expect(extension['e:id']).not.to.exist;
+          expect(extension['b:id']).not.to.exist;
+
+          expect(extension.get('id')).to.eql(10);
+          expect(extension.get('b:id')).to.eql(10);
+          expect(extension.get('e:id')).to.eql(10);
+        });
+
+
+        it('should set (ns property)', function() {
+
+          // given
+          var extension = model.create('e:Base');
+
+          // when
+          extension.set('e:id', 10);
+
+          // then
+          expect(extension.id).to.eql(10);
+
+          // unavailable via namespaced names
+          expect(extension['e:id']).not.to.exist;
+          expect(extension['b:id']).not.to.exist;
+
+          expect(extension.get('id')).to.eql(10);
+          expect(extension.get('b:id')).to.eql(10);
+          expect(extension.get('e:id')).to.eql(10);
+        });
+
+      });
+
+
+      describe('other package <extends>', function() {
+
+        var model = createModel([
+          'redefines/base',
+          'redefines/custom'
+        ]);
+
+
+        it('should modify descriptor', function() {
+
+          // given
+          var Base = model.getType('b:Base');
+
+          // when
+          var descriptor = model.getElementDescriptor(Base);
+          var propertyNames = descriptor.properties.map(function(p) {
             return p.name;
           });
 
-      // then
-      expect(propertyNames).to.eql([
-        'id',
-        'name',
-        'value'
-      ]);
+          // then
+          expect(propertyNames).to.eql([
+            'c:id',
+            'name',
+            'c:value'
+          ]);
 
-      expect(descriptor.propertiesByName['b:id'].type).to.eql('Integer');
-      expect(descriptor.propertiesByName['id'].type).to.eql('Integer');
+          const idProperty = descriptor.propertiesByName['id'];
+
+          expect(idProperty).to.exist;
+          expect(descriptor.propertiesByName).to.have.property('b:id', idProperty);
+          expect(descriptor.propertiesByName).to.have.property('c:id', idProperty);
+        });
+
+
+        it('should instantiate', function() {
+
+          // when
+          var extension = model.create('b:Base', {
+            id: 10
+          });
+
+          // then
+          expect(extension['c:id']).to.eql(10);
+
+          // unavailable via local name
+          expect(extension['id']).not.to.exist;
+
+          expect(extension.get('id')).to.eql(10);
+          expect(extension.get('b:id')).to.eql(10);
+          expect(extension.get('c:id')).to.eql(10);
+        });
+
+
+        it('should instantiate (ns property)', function() {
+
+          // when
+          var extension = model.create('b:Base', {
+            'c:id': 10
+          });
+
+          // then
+          expect(extension['c:id']).to.eql(10);
+
+          // unavailable via local name
+          expect(extension['id']).not.to.exist;
+
+          expect(extension.get('id')).to.eql(10);
+          expect(extension.get('b:id')).to.eql(10);
+          expect(extension.get('c:id')).to.eql(10);
+        });
+
+
+        it('should set', function() {
+
+          // given
+          var extension = model.create('b:Base');
+
+          // when
+          extension.set('id', 10);
+
+          // then
+          expect(extension['c:id']).to.eql(10);
+
+          // unavailable via local name
+          expect(extension['id']).not.to.exist;
+
+          expect(extension.get('id')).to.eql(10);
+          expect(extension.get('b:id')).to.eql(10);
+          expect(extension.get('c:id')).to.eql(10);
+        });
+
+
+        it('should set (ns property)', function() {
+
+          // given
+          var extension = model.create('b:Base');
+
+          // when
+          extension.set('c:id', 10);
+
+          // then
+          expect(extension['c:id']).to.eql(10);
+
+          // unavailable via local name
+          expect(extension['id']).not.to.exist;
+
+          expect(extension.get('id')).to.eql(10);
+          expect(extension.get('b:id')).to.eql(10);
+          expect(extension.get('c:id')).to.eql(10);
+        });
+
+      });
+
     });
 
   });

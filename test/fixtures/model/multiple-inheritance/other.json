@@ -1,0 +1,19 @@
+{
+  "name": "Multiple Inheritance Other",
+  "uri": "http://multiple-inheritance-other",
+  "prefix": "o",
+  "types": [
+    {
+      "name": "DiagramElement",
+      "properties": [
+        { "name": "ownedElement", "type": "DiagramElement", "isMany": true }
+      ]
+    },
+    {
+      "name": "Diagram",
+      "superClass": [
+        "DiagramElement"
+      ]
+    }
+  ]
+}

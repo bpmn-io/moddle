@@ -1,0 +1,17 @@
+{
+  "name": "Replaces Extension",
+  "uri": "http://replace-extension",
+  "prefix": "c",
+  "types": [
+    {
+      "name": "Base",
+      "extends": [
+        "b:Base"
+      ],
+      "properties": [
+        { "name": "value", "type": "String" },
+        { "name": "id", "type": "Integer", "replaces": "b:Base#id", "isId": true }
+      ]
+    }
+  ]
+}
