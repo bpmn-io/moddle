@@ -7,12 +7,12 @@ A utility library for working with meta-model based data structures.
 
 ## What is it good for?
 
-[moddle](https://github.com/bpmn-io/moddle) offers you a concise way to define [meta models](https://en.wikipedia.org/wiki/Metamodeling) in JavaScript. You can use these models to consume documents, create model elements and perform model validation.
+[moddle](https://github.com/bpmn-io/moddle) offers you a concise way to define [meta models](https://en.wikipedia.org/wiki/Metamodeling) in JavaScript. You can use these models to consume documents, create model elements, and perform model validation.
 
 
 ### Define a schema
 
-You start by creating a [moddle schema](./docs/descriptor.md). It is a [JSON](http://json.org/) file that that describes types, their properties and relationships:
+You start by creating a [moddle schema](./docs/descriptor.md). It is a [JSON](http://json.org/) file which describes types, their properties, and relationships:
 
 ```json
 {
