@@ -7,9 +7,12 @@ A utility library for working with meta-model based data structures.
 
 ## What is it good for?
 
-__moddle__ offers you a concise way to define [meta models](https://en.wikipedia.org/wiki/Metamodeling) in JavaScript. You can use these models to consume documents, create model elements and perform model validation.
+[moddle](https://github.com/bpmn-io/moddle) offers you a concise way to define [meta models](https://en.wikipedia.org/wiki/Metamodeling) in JavaScript. You can use these models to consume documents, create model elements, and perform model validation.
 
-A moddle description is a simple [JSON](http://json.org/) file that describes types, their properties and relationships:
+
+### Define a schema
+
+You start by creating a [moddle schema](./docs/descriptor.md). It is a [JSON](http://json.org/) file which describes types, their properties, and relationships:
 
 ```json
 {
@@ -36,20 +39,31 @@ A moddle description is a simple [JSON](http://json.org/) file that describes ty
       "properties": [
         { "name": "name", "type": "String", "isAttr": true, "default": "No Name" },
         { "name": "power", "type": "Integer", "isAttr": true },
-        { "name": "similar", "type": "Car", "isMany": true, "isReference": true }
+        { "name": "similar", "type": "Car", "isMany": true, "isReference": true },
+        { "name": "trunk", "type": "Element", "isMany": true }
       ]
     }
   ]
 }
 ```
 
-__moddle__ allows you to instantiate that definition and create objects from it:
+
+### Instantiate moddle
+
+You can instantiate a moddle instance with a set of defined schemas: 
 
 ```javascript
 import { Moddle } from 'moddle';
 
 var cars = new Moddle([ carsJSON ]);
+```
 
+
+### Create objects
+
+Use a [moddle](https://github.com/bpmn-io/moddle) instance to create objects of your defined types:
+
+```javascript
 var taiga = cars.create('c:Car', { name: 'Taiga' });
 
 console.log(taiga);
@@ -66,7 +80,10 @@ console.log(cheapCar.name);
 cheapCar.get('similar').push(taiga);
 ```
 
-Then again, __moddle__ allows you to perform introspection on model instances, too.
+
+### Introspect things
+
+Then again, given the knowledge [moddle](https://github.com/bpmn-io/moddle) has, you can perform deep introspection:
 
 ```javascript
 var carDescriptor = cheapCar.$descriptor;
@@ -74,6 +91,31 @@ var carDescriptor = cheapCar.$descriptor;
 console.log(carDescriptor.properties);
 // [ { name: 'id', type: 'String', ... }, { name: 'name', type: 'String', ...} ... ]
 ```
+
+
+### Access extensions
+
+moddle is friendly towards extensions and keeps unknown _any_ properties around:
+
+```javascript
+taiga.set('specialProperty', 'not known to moddle');
+
+console.log(taiga.get('specialProperty'));
+// 'not known to moddle'
+```
+
+It also allows you to create _any_ elements for namespaces that you did not explicitly define:
+
+```javascript
+var screwdriver = cars.createAny('tools:Screwdriver', 'http://tools', {
+  make: 'ScrewIt!'
+});
+
+car.trunk.push(screwdriver);
+```
+
+
+### There is more
 
 Have a look at our [test coverage](https://github.com/bpmn-io/moddle/blob/master/test/spec) to learn about everything that is currently supported.
 
