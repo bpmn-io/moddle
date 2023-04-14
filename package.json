@@ -7,13 +7,15 @@
     "lint": "eslint .",
     "dev": "npm test -- --watch",
     "test": "mocha --reporter=spec --recursive test/spec",
-    "distro": "run-s build test:build",
+    "distro": "run-s copy build test:build",
     "build": "rollup -c",
     "prepare": "npm run build",
     "test:build": "mocha --reporter=spec --recursive test/distro",
-    "prepublishOnly": "run-s distro"
+    "prepublishOnly": "run-s distro",
+    "copy": "cpx \"lib/*.d.ts\" dist"
   },
   "type": "module",
+  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/bpmn-io/moddle"
@@ -47,6 +49,7 @@
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-terser": "^0.4.0",
     "chai": "^4.3.7",
+    "cpx": "^1.5.0",
     "eslint": "^8.34.0",
     "eslint-plugin-bpmn-io": "^1.0.0",
     "mocha": "^10.2.0",
