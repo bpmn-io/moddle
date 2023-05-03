@@ -206,6 +206,30 @@ describe('moddle', function() {
         ]);
       });
 
+
+      it('should have getters', function() {
+
+        // when
+        var anyInstance = model.createAny('other:Foo', 'http://other', {
+          bar: 'BAR'
+        });
+
+        // then
+        expect(anyInstance.get('bar')).to.eql('BAR');
+      });
+
+
+      it('should have setters', function() {
+
+        // given
+        var anyInstance = model.createAny('other:Foo', 'http://other');
+
+        // when
+        anyInstance.set('bar', 'BAR');
+
+        // then
+        expect(anyInstance.get('bar')).to.eql('BAR');
+      });
     });
 
 
