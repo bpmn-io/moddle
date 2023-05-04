@@ -230,6 +230,33 @@ describe('moddle', function() {
         // then
         expect(anyInstance.get('bar')).to.eql('BAR');
       });
+
+
+      it('should prevent prototype pollution', function() {
+
+        // given
+        var anyInstance = model.createAny('other:Foo', 'http://other');
+
+        // when
+
+        expect(function() {
+          anyInstance.set('__proto__', { hacked() { console.log('hacked'); } });
+        }).to.throw('illegal key: __proto__');
+
+      });
+
+
+      it('should NOT allow array as key', function() {
+
+        // given
+        var anyInstance = model.createAny('other:Foo', 'http://other');
+
+        // when
+        expect(function() {
+          anyInstance.set([ 'path', 'to', 'key' ], 'value');
+        }).to.throw('illegal key type: object. Key should be of type number or string.');
+      });
+
     });
 
 
