@@ -6,6 +6,10 @@ All notable changes to [moddle](https://github.com/bpmn-io/moddle) are documente
 
 ___Note:__ Yet to be released changes appear here._
 
+## 6.2.2
+
+* `FIX`: add accessors for elements created by `createAny` ([#54](https://github.com/bpmn-io/moddle/pull/54))
+
 ## 6.2.1
 
 * `FIX`: allow self-extension using local name ([#52](https://github.com/bpmn-io/moddle/pull/52))
