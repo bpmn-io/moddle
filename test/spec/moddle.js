@@ -257,6 +257,21 @@ describe('moddle', function() {
         }).to.throw('illegal key type: object. Key should be of type number or string.');
       });
 
+
+      it('should mark accessors as special props', function() {
+
+        // given
+        var anyInstance = model.createAny('other:Foo', 'http://other', {
+          bar: 'BAR'
+        });
+
+        // then
+        expect(anyInstance).not.to.have.keys([
+          'get',
+          'set'
+        ]);
+      });
+
     });
 
 
