@@ -1,0 +1,25 @@
+{
+  "name": "zeebe",
+  "prefix": "zeebe",
+  "uri": "http://camunda.org/schema/zeebe/1.0",
+  "xml": {
+    "tagAlias": "lowerCase"
+  },
+  "associations": [],
+  "types": [
+    {
+      "name": "TemplateSupported",
+      "isAbstract": true,
+      "extends": [
+        "b:Root"
+      ],
+      "properties": [
+        {
+          "name": "modelerTemplate",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    }
+  ]
+}

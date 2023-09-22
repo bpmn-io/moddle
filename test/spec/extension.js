@@ -259,4 +259,21 @@ describe('extension', function() {
       expect(element.$instanceOf('se:OtherExtendedRect')).to.be.true;
     });
   });
+
+
+  describe('overlapping types', function() {
+
+    var model = createModel([ 'extension/base', 'extension/overlaps/camunda', 'extension/overlaps/zeebe' ]);
+
+    it('should allow namespace types with the same name', function() {
+
+      var property = model.create('b:Root', {
+        'zeebe:modelerTemplate': 'foo'
+      });
+
+      expect(property.get('zeebe:modelerTemplate')).to.eql('foo');
+    });
+
+  });
+
 });
