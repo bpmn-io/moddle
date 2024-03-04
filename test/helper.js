@@ -4,7 +4,7 @@ import {
   map
 } from 'min-dash';
 
-import { Moddle } from '../lib/index.js';
+import { Moddle } from 'moddle';
 
 import expect from './expect.js';
 
