@@ -3,6 +3,7 @@ const {
 } = require('chai');
 
 const pkg = require('../../package.json');
+const pkgExports = pkg.exports['.'];
 
 
 describe('moddle', function() {
@@ -15,7 +16,7 @@ describe('moddle', function() {
       isBuiltInType,
       parseNameNS,
       coerceType
-    } = require('../../' + pkg['main']);
+    } = require('../../' + pkgExports.require);
 
     expect(new Moddle()).to.exist;
 
