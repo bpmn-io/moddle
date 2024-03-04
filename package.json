@@ -8,7 +8,6 @@
     "pretest": "run-s build",
     "dev": "npm test -- --watch",
     "test": "mocha --reporter=spec --recursive test/spec",
-    "distro": "run-s build test:build",
     "build": "rollup -c",
     "prepare": "npm run build",
     "test:build": "mocha --reporter=spec --recursive test/distro"
