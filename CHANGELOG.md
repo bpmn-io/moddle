@@ -6,6 +6,17 @@ All notable changes to [moddle](https://github.com/bpmn-io/moddle) are documente
 
 ___Note:__ Yet to be released changes appear here._
 
+## 7.0.0
+
+* `FEAT`: add `exports` configuration
+* `FIX`: remove broken `main` configuration
+* `CHORE`: drop `UMD` distribution
+* `DEPS`: update to `min-dash@4.2.1`
+
+### Breaking Changes
+
+* UMD distribution no longer bundled. The module is now available as an ES module.
+
 ## 6.2.3
 
 * `FIX`: mark accessors as non-enumerable ([#55](https://github.com/bpmn-io/moddle/pull/55))
