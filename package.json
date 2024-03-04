@@ -3,15 +3,15 @@
   "version": "6.2.3",
   "description": "A library for importing meta-model based file formats into JS",
   "scripts": {
-    "all": "run-s lint test distro",
+    "all": "run-s lint test test:build",
     "lint": "eslint .",
+    "pretest": "run-s build",
     "dev": "npm test -- --watch",
     "test": "mocha --reporter=spec --recursive test/spec",
     "distro": "run-s build test:build",
     "build": "rollup -c",
     "prepare": "npm run build",
-    "test:build": "mocha --reporter=spec --recursive test/distro",
-    "prepublishOnly": "run-s distro"
+    "test:build": "mocha --reporter=spec --recursive test/distro"
   },
   "type": "module",
   "exports": {
