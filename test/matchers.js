@@ -1,3 +1,7 @@
+/**
+ * @param {import('chai')} chai
+ * @param {import('chai').util} utils
+ */
 export default function(chai, utils) {
 
   utils.addMethod(chai.Assertion.prototype, 'jsonEqual', function(comparison) {
