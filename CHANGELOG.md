@@ -9,6 +9,7 @@ ___Note:__ Yet to be released changes appear here._
 ## 7.0.0
 
 * `FEAT`: add `exports` configuration
+* `FEAT`: add moddle descriptor JSON schema ([#57](https://github.com/bpmn-io/moddle/pull/57))
 * `FIX`: remove broken `main` configuration
 * `CHORE`: drop `UMD` distribution
 * `DEPS`: update to `min-dash@4.2.1`
