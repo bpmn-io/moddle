@@ -24,7 +24,6 @@
     "type": "git",
     "url": "https://github.com/bpmn-io/moddle"
   },
-  "umd:main": "dist/moddle.umd.cjs",
   "keywords": [
     "model",
     "meta-model",
@@ -46,9 +45,6 @@
   "license": "MIT",
   "sideEffects": false,
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^25.0.7",
-    "@rollup/plugin-node-resolve": "^15.2.3",
-    "@rollup/plugin-terser": "^0.4.4",
     "ajv": "^8.12.0",
     "chai": "^4.3.7",
     "eslint": "^8.57.0",
