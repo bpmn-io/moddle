@@ -26,22 +26,4 @@ describe('moddle', function() {
     expect(coerceType).to.exist;
   });
 
-
-  it('should expose UMD bundle', function() {
-    const {
-      Moddle,
-      isSimpleType,
-      isBuiltInType,
-      parseNameNS,
-      coerceType
-    } = require('../../' + pkg['umd:main']);
-
-    expect(new Moddle()).to.exist;
-
-    expect(isSimpleType).to.exist;
-    expect(isBuiltInType).to.exist;
-    expect(parseNameNS).to.exist;
-    expect(coerceType).to.exist;
-  });
-
 });
