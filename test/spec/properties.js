@@ -491,7 +491,20 @@ describe('properties', function() {
       });
 
 
-      it('access via original name', function() {
+      it('access via #get', function() {
+
+        // given
+        var BaseWithNumericId = model.getType('props:BaseWithNumericId');
+
+        // when
+        var instance = new BaseWithNumericId({ 'id': 1000 });
+
+        // then
+        expect(instance.get('props:idNumeric')).to.equal(1000);
+      });
+
+
+      it('access via #get + original name', function() {
 
         // given
         var BaseWithNumericId = model.getType('props:BaseWithNumericId');
@@ -516,19 +529,6 @@ describe('properties', function() {
 
         // then
         expect(instance.get('unknown')).to.eql('UNKNOWN');
-      });
-
-
-      it('access via original name', function() {
-
-        // given
-        var BaseWithNumericId = model.getType('props:BaseWithNumericId');
-
-        // when
-        var instance = new BaseWithNumericId({ 'id': 1000 });
-
-        // then
-        expect(instance.get('props:idNumeric')).to.equal(1000);
       });
 
     });
