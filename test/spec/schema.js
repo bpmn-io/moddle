@@ -5,11 +5,11 @@ import { readFile } from '../helper.js';
 import expect from '../expect.js';
 
 
-describe('JSON schema', () => {
+describe('JSON schema', function() {
 
   let validator;
 
-  before(() => {
+  before(function() {
     const schema = readFile('docs/moddle.json');
 
     validator = new Ajv().compile(JSON.parse(schema));
@@ -18,7 +18,7 @@ describe('JSON schema', () => {
 
   for (const file of FastGlob.globSync('test/fixtures/model/**/*.json')) {
 
-    it(`should validate fixture: ${file}`, () => {
+    it(`should validate fixture: ${file}`, function() {
 
       // given
       const model = JSON.parse(readFile(file));
@@ -26,5 +26,7 @@ describe('JSON schema', () => {
       // then
       expect(validator(model)).to.be.true;
     });
+
   }
+
 });
