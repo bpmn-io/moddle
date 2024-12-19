@@ -30,6 +30,7 @@
       "type": "array",
       "description": "List of types belonging to this package.",
       "items": {
+        "type": "object",
         "required": [
           "name"
         ],
@@ -52,6 +53,7 @@
           "properties": {
             "type": "array",
             "items": {
+              "type": "object",
               "properties": {
                 "name": {
                   "type": "string",
@@ -83,10 +85,16 @@
                 },
                 "default": {
                   "description": "Provides default for the property.",
-                  "type": [
-                    "boolean",
-                    "number",
-                    "string"
+                  "oneOf": [
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "string"
+                    }
                   ]
                 },
                 "redefines": {
@@ -141,6 +149,7 @@
           "literalValues": {
             "type": "array",
             "items": {
+              "type": "object",
               "properties": {
                 "name": {
                   "type": "string"
