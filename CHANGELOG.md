@@ -6,6 +6,10 @@ All notable changes to [moddle](https://github.com/bpmn-io/moddle) are documente
 
 ___Note:__ Yet to be released changes appear here._
 
+## 7.1.0
+
+* `FEAT`: provide a JSON schema to validate moddle schema ([#62](https://github.com/bpmn-io/moddle/issues/62))
+
 ## 7.0.0
 
 * `FEAT`: add `exports` configuration
