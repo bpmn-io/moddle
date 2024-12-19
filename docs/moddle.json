@@ -1,7 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://bpmn.io/20241206/moddle-package.schema.json",
-  "additionalProperties": false,
   "title": "Moddle Package Schema",
   "type": "object",
   "required": [
