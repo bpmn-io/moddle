@@ -47,10 +47,17 @@ You start by creating a [moddle schema](./docs/descriptor.md). It is a [JSON](ht
 }
 ```
 
+### Validate the schema
+
+You can validate your schema with [the provided JSON schema](./docs/moddle.json):
+
+```bash
+npx ajv-cli -s docs/moddle.json -d my-schema.json
+```
 
 ### Instantiate moddle
 
-You can instantiate a moddle instance with a set of defined schemas: 
+You can instantiate a moddle instance with a set of defined schemas:
 
 ```javascript
 import { Moddle } from 'moddle';
