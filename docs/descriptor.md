@@ -175,7 +175,7 @@ Reading and writing XML from moddle is possible via [moddle-xml](https://github.
 
 ## Validating the Schema
 
-A [JSON schema](../resources/schema/moddle.json) is available, include it via the `$schema` attribute in your moddle descriptor and it will be picked up by modern IDEs:
+A [JSON schema](../resources/schema/moddle.json) is available, include it via the `$schema` attribute in your moddle descriptor and it will be picked up by code editor:
 
 ```json
 {
