@@ -48,7 +48,7 @@ You start by creating a [moddle schema](./docs/descriptor.md). It is a [JSON](ht
 }
 ```
 
-You may attach the provided [JSON schema](./resources/schema/moddle.json) to get your moddle descriptor validated by modern IDEs.
+You may attach the provided [JSON schema](./resources/schema/moddle.json) to get your moddle descriptor validated by code editor.
 
 
 ### Instantiate moddle
