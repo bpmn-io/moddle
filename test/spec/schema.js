@@ -10,7 +10,7 @@ describe('JSON schema', function() {
   let validator;
 
   before(function() {
-    const schema = readFile('docs/moddle.json');
+    const schema = readFile('resources/schema/moddle.json');
 
     validator = new Ajv().compile(JSON.parse(schema));
   });

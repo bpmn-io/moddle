@@ -113,6 +113,7 @@ Given we got two packages, a _base_ package, and a _domain_ package that builds 
 
 ```json
 {
+  "$schema": "https://unpkg.com/moddle/resources/schema/moddle.json",
   "name": "BasePackage",
   "prefix": "b",
   "types": [
@@ -130,6 +131,7 @@ The domain package may define its own types on top of the base package by refere
 
 ```json
 {
+  "$schema": "https://unpkg.com/moddle/resources/schema/moddle.json",
   "name": "DomainPackage",
   "prefix": "d",
   "types": [
@@ -169,3 +171,15 @@ Valid locations for externally defined types and properties are
 ## Serializing to XML
 
 Reading and writing XML from moddle is possible via [moddle-xml](https://github.com/bpmn-io/moddle-xml). It requires [additional meta-data](https://github.com/bpmn-io/moddle-xml/blob/master/docs/descriptor-xml.md) to be specified in your moddle descriptor.
+
+
+## Validating the Schema
+
+A [JSON schema](../resources/schema/moddle.json) is available, include it via the `$schema` attribute in your moddle descriptor and it will be picked up by code editor:
+
+```json
+{
+  "$schema": "https://unpkg.com/moddle/resources/schema/moddle.json",
+  ...
+}
+```

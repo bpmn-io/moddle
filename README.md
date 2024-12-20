@@ -16,6 +16,7 @@ You start by creating a [moddle schema](./docs/descriptor.md). It is a [JSON](ht
 
 ```json
 {
+  "$schema": "https://unpkg.com/moddle/resources/schema/moddle.json",
   "name": "Cars",
   "uri": "http://cars",
   "prefix": "c",
@@ -47,13 +48,8 @@ You start by creating a [moddle schema](./docs/descriptor.md). It is a [JSON](ht
 }
 ```
 
-### Validate the schema
+You may attach the provided [JSON schema](./resources/schema/moddle.json) to get your moddle descriptor validated by code editor.
 
-You can validate your schema with [the provided JSON schema](./docs/moddle.json):
-
-```bash
-npx ajv-cli -s docs/moddle.json -d my-schema.json
-```
 
 ### Instantiate moddle
 

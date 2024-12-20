@@ -8,7 +8,7 @@
     "pretest": "run-s build",
     "dev": "npm test -- --watch",
     "test": "mocha --reporter=spec --recursive test",
-    "test:schema": "ajv -s docs/moddle.json -d 'test/fixtures/**/*.json'",
+    "test:schema": "ajv -s resources/schema/moddle.json -d 'test/fixtures/**/*.json'",
     "build": "rollup -c",
     "prepare": "run-s build"
   },
@@ -60,6 +60,6 @@
   },
   "files": [
     "dist",
-    "docs/moddle.json"
+    "resources/schema/moddle.json"
   ]
 }

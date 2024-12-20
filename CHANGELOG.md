@@ -6,6 +6,11 @@ All notable changes to [moddle](https://github.com/bpmn-io/moddle) are documente
 
 ___Note:__ Yet to be released changes appear here._
 
+## 7.2.0
+
+* `FEAT`: expose moddle schema via well-known folder ([#64](https://github.com/bpmn-io/moddle/pull/64))
+* `DOCS`: simplify `$schema` related documentation
+
 ## 7.1.0
 
 * `FEAT`: provide a JSON schema to validate moddle schema ([#62](https://github.com/bpmn-io/moddle/issues/62))
