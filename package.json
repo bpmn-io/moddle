@@ -3,7 +3,7 @@
   "version": "7.2.0",
   "description": "A library for importing meta-model based file formats into JS",
   "scripts": {
-    "all": "run-s lint test test:schema",
+    "all": "run-s lint test test:schema generate-types",
     "lint": "eslint .",
     "pretest": "run-s build",
     "dev": "npm test -- --watch",
@@ -19,7 +19,8 @@
   "exports": {
     ".": {
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "require": "./dist/index.cjs",
+      "types": "./lib/index.d.ts"
     },
     "./package.json": "./package.json"
   },
@@ -67,6 +68,7 @@
   },
   "files": [
     "dist",
+    "lib/*.d.ts",
     "resources/schema/moddle.json"
   ]
 }
