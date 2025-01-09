@@ -1,5 +1,16 @@
-import { BooleanType, coerceType, ElementType, IntegerType, isBuiltIn, isSimple, RealType, StringType } from './types';
 import { expectType } from 'ts-expect';
+
+import {
+  BooleanType,
+  coerceType,
+  ElementType,
+  IntegerType,
+  isBuiltIn,
+  isSimple,
+  RealType,
+  StringType
+} from './types.js';
+
 
 expectType<StringType>('String');
 expectType<BooleanType>('Boolean');

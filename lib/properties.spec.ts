@@ -1,9 +1,11 @@
-import Properties from './properties';
-import { Moddle } from './index';
 import { expectType } from 'ts-expect';
-import { ModdleElement } from './factory';
-import { EffectiveDescriptor } from './registry';
-import { AnyTypeDescriptor, PropertyDesc } from './descriptor-builder';
+
+import Properties from './properties.js';
+import { Moddle } from './index.js';
+import { ModdleElement } from './factory.js';
+import { EffectiveDescriptor } from './registry.js';
+import { AnyTypeDescriptor, PropertyDesc } from './descriptor-builder.js';
+
 
 const properties = new Properties({} as Moddle);
 

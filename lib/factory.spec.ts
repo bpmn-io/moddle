@@ -1,10 +1,12 @@
-import Factory, { AnyModdleElement, ModdleElement, ModdleElementType } from './factory';
 import { expectType } from 'ts-expect';
-import { Moddle } from './index';
-import { EffectiveDescriptor } from './registry';
-import Base from './base';
-import { AnyTypeDescriptor } from './descriptor-builder';
-import Properties from './properties';
+
+import Factory, { AnyModdleElement, ModdleElement, ModdleElementType } from './factory.js';
+import { Moddle } from './index.js';
+import { EffectiveDescriptor } from './registry.js';
+import Base from './base.js';
+import { AnyTypeDescriptor } from './descriptor-builder.js';
+import Properties from './properties.js';
+
 
 const moddelElementStub = {} as ModdleElement<{ foo: string, bar: number, baz: ModdleElement }>;
 
