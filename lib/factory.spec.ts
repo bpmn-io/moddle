@@ -48,5 +48,15 @@ expectType<AnyTypeDescriptor>(anyModdelElement.$descriptor);
 const factory = new Factory({} as Moddle, {} as Properties);
 
 expectType<ModdleElementType>(factory.createType({} as EffectiveDescriptor));
-expectType<ModdleElementType<{ foo: string }>>(factory.createType<{ foo: string }>({} as EffectiveDescriptor));
 
+// when
+const Element = factory.createType<{ foo: string }>({} as EffectiveDescriptor);
+
+// then
+expectType<ModdleElementType<{ foo: string }>>(Element);
+
+const element = new Element();
+
+expectType<string | undefined>(element.foo);
+expectType<string>(element.$type);
+expectType<Moddle>(element.$model);
