@@ -4,12 +4,36 @@ import Factory, { AnyModdleElement, ModdleElement, ModdleElementType } from './f
 import { Moddle } from './index.js';
 import { EffectiveDescriptor } from './registry.js';
 import Base from './base.js';
-import { AnyTypeDescriptor } from './descriptor-builder.js';
 import Properties from './properties.js';
 
+const factory = new Factory({} as Moddle, {} as Properties);
 
+
+// when
+const elementTypeFromFactory = factory.createType({} as EffectiveDescriptor);
+// then
+expectType<ModdleElementType>(elementTypeFromFactory);
+
+
+// when
+const Element = factory.createType<{ foo: string }>({} as EffectiveDescriptor);
+// then
+expectType<ModdleElementType<{ foo: string }>>(Element);
+
+
+// when
+const element = new Element();
+// then
+expectType<string | undefined>(element.foo);
+expectType<string>(element.$type);
+expectType<Moddle>(element.$model);
+
+
+// asset valid type values
+
+// when
 const moddelElementStub = {} as ModdleElement<{ foo: string, bar: number, baz: ModdleElement }>;
-
+// then
 expectType<Base['get']>(moddelElementStub.get);
 expectType<Base['set']>(moddelElementStub.set);
 expectType<Moddle>(moddelElementStub.$model);
@@ -23,40 +47,19 @@ expectType<string>(moddelElementStub.foo);
 expectType<number>(moddelElementStub.bar);
 expectType<ModdleElement>(moddelElementStub.baz);
 
-expectType<any>(({} as ModdleElement).someProperty);
-
-const ModdelElementType = {} as ModdleElementType<{ foo: string, bar: number, baz: ModdleElement }>;
-
-expectType<ModdleElement<{ foo: string, bar: number, baz: ModdleElement }>>(new ModdelElementType({ foo: 'bar' }));
-expectType<Moddle>(ModdelElementType.$model);
-expectType<EffectiveDescriptor>(ModdelElementType.$descriptor);
-expectType<ModdleElement<{ foo: string, bar: number, baz: ModdleElement }>>(ModdelElementType.prototype);
-
-const anyModdelElement = {} as AnyModdleElement<{ foo: string, bar: number, baz: ModdleElement }>;
-
-expectType<Base['get']>(anyModdelElement.get);
-expectType<Base['set']>(anyModdelElement.set);
-expectType<string>(anyModdelElement.foo);
-expectType<number>(anyModdelElement.bar);
-expectType<ModdleElement>(anyModdelElement.baz);
-expectType<string>(anyModdelElement.$type);
-expectType<(type: string) => boolean>(anyModdelElement.$instanceOf);
-expectType<ModdleElement | AnyModdleElement | undefined>(anyModdelElement.$parent);
-expectType<Moddle>(anyModdelElement.$model);
-expectType<AnyTypeDescriptor>(anyModdelElement.$descriptor);
-
-const factory = new Factory({} as Moddle, {} as Properties);
-
-expectType<ModdleElementType>(factory.createType({} as EffectiveDescriptor));
 
 // when
-const Element = factory.createType<{ foo: string }>({} as EffectiveDescriptor);
-
+const fuzzyElement = {} as ModdleElement;
 // then
-expectType<ModdleElementType<{ foo: string }>>(Element);
+expectType<any>(fuzzyElement.someProperty);
 
-const element = new Element();
 
-expectType<string | undefined>(element.foo);
-expectType<string>(element.$type);
-expectType<Moddle>(element.$model);
+// when
+type RefType = { foo: string, bar: number, baz: ModdleElement };
+const ModdelElementType = {} as ModdleElementType<RefType>;
+const moddelElementType = new ModdelElementType({ foo: 'bar' });
+// then
+expectType<ModdleElement<RefType>>(moddelElementType);
+expectType<Moddle>(ModdelElementType.$model);
+expectType<EffectiveDescriptor>(ModdelElementType.$descriptor);
+expectType<ModdleElement<RefType>>(ModdelElementType.prototype);

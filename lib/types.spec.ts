@@ -72,7 +72,7 @@ const numArrayValue = coerceType('Element', [ 1 ]);
 expectType<number[]>(numArrayValue);
 
 
-// additional assert valid type values
+// asset valid type values
 expectType<StringType>('String');
 expectType<BooleanType>('Boolean');
 expectType<IntegerType>('Integer');

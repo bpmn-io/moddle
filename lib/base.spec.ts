@@ -1,7 +1,4 @@
-import { expectType } from 'ts-expect';
-
 import Base from './base.js';
-
 
 const baseElement = new Base();
 
