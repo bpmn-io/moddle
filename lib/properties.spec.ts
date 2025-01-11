@@ -4,7 +4,7 @@ import Properties from './properties.js';
 import { Moddle } from './index.js';
 import { ModdleElement } from './factory.js';
 import { EffectiveDescriptor } from './registry.js';
-import { AnyTypeDescriptor, PropertyDesc } from './descriptor-builder.js';
+import { AnyTypeDescriptor, PropertyDescriptor as PropertyDesc } from './descriptor-builder.js';
 
 
 const properties = new Properties({} as Moddle);

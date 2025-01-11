@@ -1,10 +1,10 @@
 import { Moddle } from './index.js';
-import { PackageDef } from './moddle.js';
+import { PackageDefinition } from './moddle.js';
 import { ModdleElement } from './factory.js';
 import { expectType } from 'ts-expect';
 import { EffectiveDescriptor, RegisteredPackage } from './registry.js';
 
-const packages: PackageDef[] = [
+const packages: PackageDefinition[] = [
   {
     $schema: 'http://localhost/example/scheme',
     uri: 'http://localhost/example',
