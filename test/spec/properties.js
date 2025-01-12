@@ -288,6 +288,202 @@ describe('properties', function() {
       });
 
 
+      describe('parent', function() {
+
+        describe('create', function() {
+
+          it('should set parent if model element', function() {
+
+            // when
+            var complexNesting = model.create('props:ComplexNesting', {
+              nested: model.create('props:Complex')
+            });
+
+            // then
+            expect(complexNesting.get('nested').$parent).to.equal(complexNesting);
+          });
+
+
+          it('should not set parent if not model element', function() {
+
+            // when
+            var complexNesting = model.create('props:ComplexNesting', {
+              foo: {}
+            });
+
+            // then
+            expect(complexNesting.get('foo').$parent).not.to.exist;
+          });
+
+        });
+
+
+        describe('set', function() {
+
+          describe('one', function() {
+
+            it('should set parent if model element', function() {
+
+              // given
+              var embedding = model.create('props:Embedding');
+
+              var embeddedComplex = model.create('props:Complex');
+
+              // when
+              embedding.set('embeddedComplex', embeddedComplex);
+
+              // then
+              expect(embedding.get('embeddedComplex')).to.equal(embeddedComplex);
+              expect(embeddedComplex.$parent).to.equal(embedding);
+            });
+
+
+            it('should unset parent if model element', function() {
+
+              // given
+              var embeddedComplex = model.create('props:Complex');
+
+              var embedding = model.create('props:Embedding', {
+                embeddedComplex
+              });
+
+              // assume
+              expect(embedding.get('embeddedComplex')).to.equal(embeddedComplex);
+              expect(embeddedComplex.$parent).to.equal(embedding);
+
+              // when
+              embedding.set('embeddedComplex', undefined);
+
+              // then
+              expect(embedding.get('embeddedComplex')).not.to.exist;
+              expect(embeddedComplex.$parent).not.to.exist;
+            });
+
+
+            it('should not set parent if not model element', function() {
+
+              // given
+              var embedding = model.create('props:Embedding');
+
+              // when
+              embedding.set('foo', {});
+
+              // then
+              expect(embedding.get('foo').$parent).not.to.exist;
+            });
+
+
+            it('should not unset parent if not model element', function() {
+
+              // given
+              var foo = { $parent: true };
+
+              var embedding = model.create('props:Embedding', {
+                foo
+              });
+
+              // assume
+              expect(foo.$parent).to.exist;
+
+              // when
+              embedding.set('foo', undefined);
+
+              // then
+              expect(foo.$parent).to.exist;
+            });
+
+
+            it('should not set parent if model element is reference', function() {
+
+              // given
+              var referencingSingle = model.create('props:ReferencingSingle');
+
+              var referencedComplex = model.create('props:Complex');
+
+              // when
+              referencingSingle.set('referencedComplex', referencedComplex);
+
+              // then
+              expect(referencingSingle.get('referencedComplex')).to.equal(referencedComplex);
+              expect(referencedComplex.$parent).not.to.exist;
+            });
+
+          });
+
+
+          describe('many', function() {
+
+            it('should set parent if model elements', function() {
+
+              // given
+              var containedColllection = model.create('props:ContainedCollection');
+
+              var children = [
+                model.create('props:Complex'),
+                model.create('props:Complex')
+              ];
+
+              // when
+              containedColllection.set('children', children);
+
+              // then
+              expect(containedColllection.get('children')).to.eql(children);
+
+              containedColllection.get('children').forEach(child => {
+                expect(child.$parent).to.equal(containedColllection);
+              });
+            });
+
+
+            it('should unset parent if model elements', function() {
+
+              // given
+              var fooChild = model.create('props:Complex'),
+                  barChild = model.create('props:Complex');
+
+              var containedColllection = model.create('props:ContainedCollection', {
+                children: [
+                  fooChild,
+                  barChild
+                ]
+              });
+
+              // when
+              containedColllection.set('children', [
+                fooChild
+              ]);
+
+              // then
+              expect(containedColllection.get('children')).to.eql([ fooChild ]);
+
+              expect(fooChild.$parent).to.equal(containedColllection);
+              expect(barChild.$parent).not.to.exist;
+            });
+
+
+            it('should not set parent if not model element', function() {
+
+              // given
+              var containedCollection = model.create('props:ContainedCollection');
+
+              // when
+              containedCollection.set('foos', [
+                {},
+                {}
+              ]);
+
+              // then
+              containedCollection.get('foos').forEach(foo => {
+                expect(foo.$parent).not.to.exist;
+              });
+            });
+
+          });
+
+        });
+
+      });
+
       forEach([
         false,
         true,
@@ -315,6 +511,7 @@ describe('properties', function() {
         });
 
       });
+
     });
 
 
