@@ -33,7 +33,7 @@ for (const name of Object.keys(descriptor.allTypesByName)) {
 }
 
 descriptor.properties.forEach(p => {
-  if (p.definedBy.name === descriptor.name) {
+  if (p.definedBy?.name === descriptor.name) {
   }
 
   if (p.inherited) {

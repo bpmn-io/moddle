@@ -116,7 +116,7 @@ const anyModdelElement = moddle.createAny(
     { foo: '', bar: 17, baz: {} as ModdleElement },
 );
 
-root.set('anyElements', [anyModdelElement]);
+root.set('anyElements', [ anyModdelElement ]);
 
 anyModdelElement.$parent = root;
 
@@ -148,14 +148,16 @@ const effectiveDescriptor2 = moddle.getElementDescriptor(root);
 expectType<EffectiveDescriptor>(effectiveDescriptor2);
 
 
-const registeredPackage = moddle.getPackage("exmpl");
+const registeredPackage = moddle.getPackage('exmpl');
 expectType<RegisteredPackage>(registeredPackage);
 
 const registeredPackages = moddle.getPackages();
-expectType<string>(registeredPackages[0].types[0].ns.name);
+const firstType = registeredPackages.map(pkg => pkg.types)[0];
+const firstTypeName = firstType?.map(t => t?.ns?.name)[0];
+expectType<string | undefined>(firstTypeName);
 
 
-const attrsPropDesc = moddle.getPropertyDescriptor(attrs, "attribute");
+const attrsPropDesc = moddle.getPropertyDescriptor(attrs, 'attribute');
 if (attrsPropDesc.isMany === true) {
   // good
 }
@@ -166,7 +168,7 @@ attrPropDesc.isAttr ? void 0 : void 0;
 
 const typeDef = moddle.getTypeDescriptor('exmpl:Root');
 
-if (typeDef.superClass[1] === 'BaseElement') {
+if (typeDef?.superClass?.[1] === 'BaseElement') {
   // it's OK
 }
 
