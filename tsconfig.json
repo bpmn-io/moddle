@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "lib": [
+      "ES2018"
+    ],
+    "strict": true,
+    "module": "nodenext"
+  },
+  "include": [
+    "./lib/*.js",
+    "./lib/*.d.ts",
+    "./lib/*.spec.ts"
+  ]
+}
