@@ -52,7 +52,7 @@
     "eslint-plugin-bpmn-io": "^2.2.0",
     "fast-glob": "^3.3.3",
     "mocha": "^11.7.5",
-    "npm-run-all": "^4.1.2",
+    "npm-run-all2": "^8.0.4",
     "rollup": "^4.54.0"
   },
   "dependencies": {
