@@ -46,6 +46,8 @@
   "license": "MIT",
   "sideEffects": false,
   "devDependencies": {
+    "@types/chai": "^5.2.3",
+    "@types/mocha": "^10.0.10",
     "ajv": "^8.17.1",
     "ajv-cli": "^5.0.0",
     "bio-dts": "^0.14.1",
