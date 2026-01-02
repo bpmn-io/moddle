@@ -11,6 +11,7 @@
   "include": [
     "./lib/**/*.js",
     "./lib/**/*.d.ts",
-    "./lib/**/*.spec.ts"
+    "./lib/**/*.spec.ts",
+    "./test/**/*.ts"
   ]
 }
