@@ -9,7 +9,7 @@
     "dev": "npm test -- --watch",
     "test": "mocha --reporter=spec --recursive test",
     "test:schema": "ajv -s resources/schema/moddle.json -d 'test/fixtures/**/*.json'",
-    "build": "rollup -c",
+    "build": "rollup -c --bundleConfigAsCjs",
     "prepare": "run-s build"
   },
   "type": "module",
