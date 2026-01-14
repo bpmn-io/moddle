@@ -82,17 +82,17 @@ const AttributeType = moddle.getType<{ key: string, value: string }>('exmpl:Attr
 
 const attribute = AttributeType.$model.create(AttributeType.$descriptor, { key: 'guid', value: '44e3-4a40-a0a0' });
 
-type RootModdelType = { location: string, attributes: ModdleElement<{ attribute: [] }> };
+type RootModdelType = { location: string, attributes: ModdleElement<{ attribute: ModdleElement[] }> };
 
 const root = moddle.create<RootModdelType>('exmpl:Root');
 
-root.get('code');
+expectType<unknown>(root.get('code'));
 
 const attrs = moddle.create<{ attribute: ModdleElement[] }>('exmpl:Attributes', { attribute: [ attribute ] });
 
 attrs.$parent = root;
 
-root.set('attributes', [ attrs ]);
+root.set('attributes', attrs);
 
 attribute.$parent = attrs;
 
@@ -113,7 +113,7 @@ if (attrs.hasType('unknown:Type') || attrs.$instanceOf(root, 'exmpl:Attributes')
 const anyModdelElement = moddle.createAny(
     'anyElement1',
     'http://localhost/anyElement1',
-    { foo: '', bar: 17, baz: {} as ModdleElement },
+    { foo: '', bar: 17, baz: {} as ModdleElement | undefined },
 );
 
 root.set('anyElements', [ anyModdelElement ]);
@@ -131,7 +131,7 @@ const barVal = anyModdelElement.bar;
 expectType<number>(barVal);
 
 const bazVal = anyModdelElement.baz;
-expectType<ModdleElement>(bazVal);
+expectType<ModdleElement | undefined>(bazVal);
 
 const anyElementType = anyModdelElement.$type;
 expectType<string>(anyElementType);
