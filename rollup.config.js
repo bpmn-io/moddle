@@ -6,8 +6,7 @@ export default [
   {
     input: srcEntry,
     output: [
-      { file: pkgExports.require, format: 'cjs', sourcemap: true },
-      { file: pkgExports.import, format: 'es', sourcemap: true }
+      { file: pkg.exports['.'], format: 'es', sourcemap: true }
     ],
     external: [
       'min-dash'
