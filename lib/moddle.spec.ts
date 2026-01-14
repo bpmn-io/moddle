@@ -108,12 +108,15 @@ if (attrs.hasType('unknown:Type') || attrs.$instanceOf(root, 'exmpl:Attributes')
   // mmm..... nothing
 }
 
+type ComplexObject = {
+  n: number
+};
 
 // work with any type element
 const anyModdelElement = moddle.createAny(
     'anyElement1',
     'http://localhost/anyElement1',
-    { foo: '', bar: 17, baz: {} as ModdleElement | undefined },
+    { foo: '', bar: 17, baz: { n: 10 } as ComplexObject | undefined },
 );
 
 root.set('anyElements', [ anyModdelElement ]);
@@ -131,7 +134,7 @@ const barVal = anyModdelElement.bar;
 expectType<number>(barVal);
 
 const bazVal = anyModdelElement.baz;
-expectType<ModdleElement | undefined>(bazVal);
+expectType<ComplexObject | undefined>(bazVal);
 
 const anyElementType = anyModdelElement.$type;
 expectType<string>(anyElementType);
