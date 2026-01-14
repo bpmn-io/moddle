@@ -56,7 +56,7 @@
     "rollup": "^4.54.0"
   },
   "dependencies": {
-    "min-dash": "^4.2.1"
+    "min-dash": "^5.0.0"
   },
   "files": [
     "dist",
