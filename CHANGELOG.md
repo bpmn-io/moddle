@@ -7,6 +7,11 @@ All notable changes to [moddle](https://github.com/bpmn-io/moddle) are documente
 ___Note:__ Yet to be released changes appear here._
 
 * `DEPS`: update to `min-dash@5`
+* `CHORE`: drop CJS distribution
+
+### Breaking Changes
+
+* Library is now ESM only, and can be consumed in Node >= 20.12
 
 ## 7.2.0
 
