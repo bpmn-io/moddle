@@ -1,13 +1,4 @@
-import fs from 'node:fs';
-
-
-const pkg = JSON.parse(fs.readFileSync('./package.json'));
-
-const pkgExports = pkg.exports['.'];
-
-function pgl(plugins = []) {
-  return plugins;
-}
+import pkg from './package.json';
 
 const srcEntry = 'lib/index.js';
 
@@ -20,7 +11,6 @@ export default [
     ],
     external: [
       'min-dash'
-    ],
-    plugins: pgl()
+    ]
   }
 ];
