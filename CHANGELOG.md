@@ -6,6 +6,8 @@ All notable changes to [moddle](https://github.com/bpmn-io/moddle) are documente
 
 ___Note:__ Yet to be released changes appear here._
 
+* `DEPS`: update to `min-dash@5`
+
 ## 7.2.0
 
 * `FEAT`: expose moddle schema via well-known folder ([#64](https://github.com/bpmn-io/moddle/pull/64))
