@@ -1,8 +1,4 @@
 import {
-  expect
-} from 'chai';
-
-import {
   Moddle,
   PackageDefinition
 } from 'moddle';
