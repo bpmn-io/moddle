@@ -6,8 +6,10 @@ All notable changes to [moddle](https://github.com/bpmn-io/moddle) are documente
 
 ___Note:__ Yet to be released changes appear here._
 
-* `DEPS`: update to `min-dash@5`
-* `CHORE`: drop CJS distribution
+## 8.0.0
+
+* `DEPS`: update to `min-dash@5` ([#69](https://github.com/bpmn-io/moddle/pull/69))
+* `CHORE`: drop CJS distribution ([#69](https://github.com/bpmn-io/moddle/pull/69))
 
 ### Breaking Changes
 
