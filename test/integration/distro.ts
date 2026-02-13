@@ -100,7 +100,6 @@ describe('integration', function() {
 
       const attr = moddle.create<ExamplAttribute>('exampl:Attribute', { key: 'foo', value: 'bar' });
 
-      const key = attrs.get('key');
 
       expectType<string>(attr.key);
       expectType<string>(attrs.get('key'));
