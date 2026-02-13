@@ -56,7 +56,7 @@ expectType<any>(fuzzyElement.someProperty);
 
 // when
 type RefType = { foo: string, bar: number, baz: ModdleElement };
-const ModdelElementType = {} as ModdleElementType<RefType>;
+const ModdelElementType = class {} as ModdleElementType<RefType>;
 const moddelElementType = new ModdelElementType({ foo: 'bar' });
 // then
 expectType<ModdleElement<RefType>>(moddelElementType);
