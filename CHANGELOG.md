@@ -6,6 +6,10 @@ All notable changes to [moddle](https://github.com/bpmn-io/moddle) are documente
 
 ___Note:__ Yet to be released changes appear here._
 
+## 8.1.0
+
+* `FEAT`: add type declarations to distro ([#65](https://github.com/bpmn-io/moddle/pull/65), [#70](https://github.com/bpmn-io/moddle/pull/70))
+
 ## 8.0.0
 
 * `DEPS`: update to `min-dash@5` ([#69](https://github.com/bpmn-io/moddle/pull/69))
