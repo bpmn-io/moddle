@@ -1,6 +1,9 @@
 import {
   Moddle,
-  PackageDefinition
+  PackageDefinition,
+  ModdleElement,
+  ModdleElementType,
+  AnyModdleElement
 } from 'moddle';
 
 import { expectType } from 'ts-expect';
@@ -108,6 +111,43 @@ describe('integration', function() {
       expectType<unknown>(attrs.get('$attrs'));
 
       attrs.get('attribute').push(attr);
+
+    });
+
+
+    it('should expose element types', function() {
+
+      // given
+      const moddle = new Moddle(packages, { strict: true });
+
+      // ModdleElement<T>
+      const attr = moddle.create<ExamplAttribute>('exampl:Attribute', { key: 'foo', value: 'bar' });
+
+      expectType<ModdleElement<ExamplAttribute>>(attr);
+      expectType<string>(attr.$type);
+      expectType<Record<string, any>>(attr.$attrs);
+      expectType<ModdleElement | AnyModdleElement | undefined>(attr.$parent);
+      expectType<string>(attr.key);
+
+      // ModdleElementType<T>
+      const AttributeType = moddle.getType<ExamplAttribute>('exampl:Attribute');
+
+      expectType<ModdleElementType<ExamplAttribute>>(AttributeType);
+
+      const instance = new AttributeType({ key: 'foo', value: 'bar' });
+
+      expectType<ModdleElement<ExamplAttribute>>(instance);
+      expectType<string>(instance.key);
+
+      // AnyModdleElement<T>
+      const any = moddle.createAny<ExamplAttribute>('vendor:Attribute', 'http://vendor', {
+        key: 'foo',
+        value: 'bar'
+      });
+
+      expectType<AnyModdleElement<ExamplAttribute>>(any);
+      expectType<string>(any.$type);
+      expectType<string>(any.key);
 
     });
 
