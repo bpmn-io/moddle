@@ -69,5 +69,8 @@
     "dist",
     "lib/*.d.ts",
     "resources/schema/moddle.json"
-  ]
+  ],
+  "allowScripts": {
+    "unrs-resolver@1.12.2": true
+  }
 }
