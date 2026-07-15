@@ -6,6 +6,11 @@ All notable changes to [moddle](https://github.com/bpmn-io/moddle) are documente
 
 ___Note:__ Yet to be released changes appear here._
 
+## 8.2.0
+
+* `FEAT`: expose moddle element types ([#71](https://github.com/bpmn-io/moddle/pull/71))
+* `DEPS`: update to `min-dash@5.1.0`
+
 ## 8.1.0
 
 * `FEAT`: add type declarations to distro ([#65](https://github.com/bpmn-io/moddle/pull/65), [#70](https://github.com/bpmn-io/moddle/pull/70))
