@@ -54,6 +54,22 @@ describe('moddle', function() {
     });
 
 
+    it('should NOT return Object properties as package', function() {
+
+      // given
+      var objectProperties = [ 'constructor', 'toString', '__proto__' ];
+
+      for (const property of objectProperties) {
+
+        // when
+        var pkg = model.getPackage(property);
+
+        // then
+        expect(pkg).not.to.exist;
+      }
+    });
+
+
     it('should provide type descriptor', function() {
 
       // given
@@ -359,6 +375,31 @@ describe('moddle', function() {
         expect(simpleBody).to.include.keys([ 'name', 'superClass', 'properties' ]);
       });
 
+
+      it('should NOT resolve Object properties as type / descriptor', function() {
+
+        // given
+        var SimpleBody = model.getType('props:SimpleBody');
+
+        var instance = new SimpleBody();
+
+        var objectProperties = [ 'constructor', 'toString', '__proto__' ];
+
+        for (const property of objectProperties) {
+
+          // then
+          expect(function() {
+            model.getType(property);
+          }, property).to.throw(/unknown type/);
+
+          expect(model.getTypeDescriptor(property), property).not.to.exist;
+
+          expect(model.getPropertyDescriptor(instance, property), property).not.to.exist;
+
+          expect(model.hasType(instance, property), property).to.be.false;
+        }
+      });
+
     });
 
   });
@@ -608,5 +649,4 @@ describe('moddle', function() {
     });
 
   });
-
 });
