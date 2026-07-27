@@ -4,6 +4,8 @@ import {
   createModelBuilder
 } from '../helper.js';
 
+import { Moddle } from 'moddle';
+
 
 describe('meta', function() {
 
@@ -30,6 +32,31 @@ describe('meta', function() {
     // then
     expect(meta.owners).to.exist;
     expect(meta.owners).to.eql([ 'the pope', 'donald trump' ]);
+  });
+
+
+  it('should copy "meta" from type definition', function() {
+
+    // given
+    var typeMeta = { owners: [ 'the pope' ] };
+
+    var pkg = {
+      name: 'Cars',
+      uri: 'http://cars',
+      prefix: 'c',
+      types: [
+        { name: 'Car', meta: typeMeta }
+      ]
+    };
+
+    // when
+    var registeredModel = new Moddle([ pkg ]);
+
+    // then
+    var meta = registeredModel.getTypeDescriptor('c:Car').meta;
+
+    expect(meta).to.eql(typeMeta);
+    expect(meta).not.to.equal(typeMeta);
   });
 
 });
