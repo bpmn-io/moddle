@@ -6,6 +6,11 @@ All notable changes to [moddle](https://github.com/bpmn-io/moddle) are documente
 
 ___Note:__ Yet to be released changes appear here._
 
+## 8.2.1
+
+* `FIX`: do not resolve object prototype members in lookups ([#73](https://github.com/bpmn-io/moddle/pull/73))
+* `FIX`: clone type meta ([#73](https://github.com/bpmn-io/moddle/pull/73))
+
 ## 8.2.0
 
 * `FEAT`: expose moddle element types ([#71](https://github.com/bpmn-io/moddle/pull/71))
