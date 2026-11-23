@@ -84,6 +84,26 @@ cheapCar.get('similar').push(taiga);
 ```
 
 
+### Navigate the tree
+
+Elements assigned to contained (non-reference) properties via `create` or `set` know their parent:
+
+```javascript
+var root = cars.create('c:Root', { cars: [ taiga ] });
+
+console.log(taiga.$parent === root);
+// true
+
+
+root.set('cars', [ cheapCar ]);
+
+console.log(cheapCar.$parent === root, taiga.$parent);
+// true undefined
+```
+
+Replaced or removed elements lose their parent, unless they are still contained in the target or have been moved to another parent. Elements assigned to reference properties keep their parent. Modifying collections in place, e.g. via `push`, does not update `$parent`.
+
+
 ### Introspect things
 
 Then again, given the knowledge [moddle](https://github.com/bpmn-io/moddle) has, you can perform deep introspection:
